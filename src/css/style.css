@@ -94,16 +94,15 @@ textarea {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ffffff;
+  background: transparent;
   border-radius: 16px;
-  padding: 0.65rem;
+  padding: 0.35rem;
   margin-bottom: 1.5rem;
   cursor: pointer;
-  border: 1px solid var(--border-color);
 }
 
 .sidebar__logo-img {
-  height: 76px;
+  height: 82px;
   width: auto;
   object-fit: contain;
 }
@@ -432,18 +431,16 @@ textarea {
 }
 
 .login-logo-box {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 1rem;
+  background: transparent;
+  padding: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1.75rem;
-  border: 1px solid var(--border-color);
+  margin-bottom: 1.5rem;
 }
 
 .login-logo-img {
-  height: 155px;
+  height: 150px;
   width: auto;
   object-fit: contain;
 }
@@ -534,14 +531,12 @@ textarea {
 }
 
 .login-card-logo {
-  background: #ffffff;
-  padding: 0.35rem 0.85rem;
-  border-radius: 14px;
-  border: 1px solid var(--border-color);
+  background: transparent;
+  padding: 0.25rem 0.5rem;
 }
 
 .login-card-logo img {
-  height: 72px;
+  height: 68px;
   width: auto;
   object-fit: contain;
 }
@@ -1391,10 +1386,10 @@ textarea {
 }
 
 .completed-logo {
-  height: 70px;
-  background: #ffffff;
-  padding: 6px;
-  border-radius: 12px;
+  height: 74px;
+  width: auto;
+  background: transparent;
+  object-fit: contain;
 }
 
 .path-node {
@@ -1622,10 +1617,10 @@ textarea {
 }
 
 .shop-logo {
-  height: 58px;
-  background: #ffffff;
-  padding: 4px;
-  border-radius: 10px;
+  height: 60px;
+  width: auto;
+  background: transparent;
+  object-fit: contain;
 }
 
 .shop-filters-bar {
@@ -1758,10 +1753,10 @@ textarea {
 }
 
 .ranking-mini-logo {
-  height: 44px;
-  background: #ffffff;
-  padding: 4px;
-  border-radius: 8px;
+  height: 54px;
+  width: auto;
+  background: transparent;
+  object-fit: contain;
 }
 
 .ranking-desktop-grid {
@@ -2080,10 +2075,10 @@ textarea {
 }
 
 .profile-mini-logo {
-  height: 64px;
-  background: #ffffff;
-  padding: 6px;
-  border-radius: 12px;
+  height: 72px;
+  width: auto;
+  background: transparent;
+  object-fit: contain;
   margin: 1.5rem 0;
 }
 

@@ -16,6 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".theme-label-el").forEach((el) => {
       el.textContent = theme === "dark" ? "Modo Claro" : "Modo Escuro";
     });
+
+    const logoSrc = theme === "dark" ? "assets/logo-inaula-dark.png" : "assets/logo-inaula.png";
+    document.querySelectorAll('img[src*="logo-inaula"]').forEach((img) => {
+      img.src = logoSrc;
+    });
   };
 
   applyTheme(localStorage.getItem("inaula_desktop_theme") || "light");
