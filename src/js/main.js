@@ -1,438 +1,487 @@
 document.addEventListener("DOMContentLoaded", () => {
   // =========================================================================
-  // 1. TEMA CLARO & ESCURO (Funciona tanto na Tela de Login quanto no Painel)
+  // 1. TEMA CLARO E ESCURO (Funciona tanto na Tela de Login quanto no Painel)
   // =========================================================================
-  const htmlRoot = document.documentElement;
-  const themeToggle = document.getElementById("themeToggle");
-  const loginThemeToggle = document.getElementById("loginThemeToggle");
+  const raizHtml = document.documentElement;
+  const botaoAlternarTema = document.getElementById("botaoAlternarTema");
+  const alternarTemaLogin = document.getElementById("alternarTemaLogin");
 
-  const applyTheme = (theme) => {
-    htmlRoot.setAttribute("data-theme", theme);
-    localStorage.setItem("inaula_desktop_theme", theme);
+  const aplicarTema = (tema) => {
+    const temaNormalizado = tema === "escuro" || tema === "dark" ? "escuro" : "claro";
+    raizHtml.setAttribute("data-tema", temaNormalizado);
+    localStorage.setItem("inaula_tema_computador", temaNormalizado);
 
-    document.querySelectorAll(".theme-icon-el").forEach((el) => {
-      el.textContent = theme === "dark" ? "☀️" : "🌙";
+    document.querySelectorAll(".elemento-icone-tema").forEach((elemento) => {
+      elemento.textContent = temaNormalizado === "escuro" ? "☀️" : "🌙";
     });
-    document.querySelectorAll(".theme-label-el").forEach((el) => {
-      el.textContent = theme === "dark" ? "Modo Claro" : "Modo Escuro";
+    document.querySelectorAll(".elemento-rotulo-tema").forEach((elemento) => {
+      elemento.textContent = temaNormalizado === "escuro" ? "Modo Claro" : "Modo Escuro";
     });
 
-    const logoSrc = theme === "dark" ? "assets/logo-inaula-dark.png" : "assets/logo-inaula.png";
-    document.querySelectorAll('img[src*="logo-inaula"]').forEach((img) => {
-      img.src = logoSrc;
+    const caminhoLogo =
+      temaNormalizado === "escuro" ? "assets/logo-inaula-dark.png" : "assets/logo-inaula.png";
+    document.querySelectorAll('img[src*="logo-inaula"]').forEach((imagem) => {
+      imagem.src = caminhoLogo;
     });
   };
 
-  applyTheme(localStorage.getItem("inaula_desktop_theme") || "light");
+  aplicarTema(localStorage.getItem("inaula_tema_computador") || "claro");
 
-  const toggleThemeHandler = () => {
-    const next = htmlRoot.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    applyTheme(next);
+  const manipularAlternanciaTema = () => {
+    const proximoTema = raizHtml.getAttribute("data-tema") === "escuro" ? "claro" : "escuro";
+    aplicarTema(proximoTema);
   };
 
-  themeToggle?.addEventListener("click", toggleThemeHandler);
-  loginThemeToggle?.addEventListener("click", toggleThemeHandler);
+  botaoAlternarTema?.addEventListener("click", manipularAlternanciaTema);
+  alternarTemaLogin?.addEventListener("click", manipularAlternanciaTema);
 
   // =========================================================================
-  // 2. TRANSIÇÃO TELA DE LOGIN FULLSCREEN <-> PAINEL DESKTOP
+  // 2. TRANSIÇÃO TELA DE LOGIN EM TELA CHEIA <-> PAINEL DO SISTEMA
   // =========================================================================
-  const loginFullscreenOverlay = document.getElementById("loginFullscreenOverlay");
-  const mainDesktopApp = document.getElementById("mainDesktopApp");
+  const sobreposicaoTelaCheiaLogin = document.getElementById("sobreposicaoTelaCheiaLogin");
+  const aplicacaoPrincipalComputador = document.getElementById("aplicacaoPrincipalComputador");
 
-  const activeStudentSectorBadge = document.getElementById("activeStudentSectorBadge");
-  const activeStudentSectorLabel = document.getElementById("activeStudentSectorLabel");
-  const activeTeacherSectorBadge = document.getElementById("activeTeacherSectorBadge");
-  const studentNav = document.getElementById("studentNav");
-  const teacherNav = document.getElementById("teacherNav");
-  const topbarAvatar = document.getElementById("topbarAvatar");
-  const topbarName = document.getElementById("topbarName");
-  const topbarRole = document.getElementById("topbarRole");
-  const topbarPointsBox = document.getElementById("topbarPointsBox");
-  const currentViewTitle = document.getElementById("currentViewTitle");
-  const currentViewSubtitle = document.getElementById("currentViewSubtitle");
+  const seloSetorEstudanteAtivo = document.getElementById("seloSetorEstudanteAtivo");
+  const rotuloSetorEstudanteAtivo = document.getElementById("rotuloSetorEstudanteAtivo");
+  const seloSetorProfessoraAtivo = document.getElementById("seloSetorProfessoraAtivo");
+  const navegacaoEstudante = document.getElementById("navegacaoEstudante");
+  const navegacaoProfessora = document.getElementById("navegacaoProfessora");
+  const avatarBarraTopo = document.getElementById("avatarBarraTopo");
+  const nomeBarraTopo = document.getElementById("nomeBarraTopo");
+  const cargoBarraTopo = document.getElementById("cargoBarraTopo");
+  const caixaPontosTopo = document.getElementById("caixaPontosTopo");
+  const tituloTelaAtual = document.getElementById("tituloTelaAtual");
+  const subtituloTelaAtual = document.getElementById("subtituloTelaAtual");
 
   // Setor autenticado no momento do Login: "estudante", "responsaveis" ou "instituicao"
-  let authenticatedSector = null;
+  let setorAutenticado = null;
 
-  const viewTitles = {
-    "student-home": ["Painel do Estudante", "Bruno Delorence • Turma 3°E • Top 1"],
-    "student-activities": ["Atividades & Trilhas Gamificadas", "Complete os níveis e tire dúvidas direto com seu professor"],
-    "student-shop": ["Loja de Pontos IN AULA", "Troque seus pontos acumulados por materiais e prêmios"],
-    "student-ranking": ["Ranking de Engajamento", "Classificação oficial da Turma 3°E"],
-    "student-chat": ["Chat com a Professora Tati", "Canal direto para reforço e dúvidas das atividades"],
-    "student-profile": ["Meu Perfil de Estudante", "Dados cadastrais e configurações da conta"],
-    "teacher-home": ["Painel Docente — Profª. Tatiane Soma", "Gestão de turmas, lembretes de evasão e reforço escolar"],
-    "teacher-attendance": ["Chamada Digital por Turma", "Controle de presença diária e alerta de faltas"],
-    "teacher-grades": ["Gestão de Notas & Frequência", "Boletim bimestral dos estudantes da Turma 3C"],
-    "teacher-chat": ["Central de Dúvidas dos Alunos", "Atendimento virtual para reforço pedagógico"],
+  const titulosTelas = {
+    "estudante-inicio": ["Painel do Estudante", "Bruno Delorence • Turma 3°E • 1º Lugar"],
+    "estudante-atividades": [
+      "Atividades e Trilhas Gamificadas",
+      "Complete os níveis e tire dúvidas direto com seu professor",
+    ],
+    "estudante-loja": [
+      "Loja de Pontos IN AULA",
+      "Troque seus pontos acumulados por materiais e prêmios",
+    ],
+    "estudante-classificacao": [
+      "Classificação de Engajamento",
+      "Classificação oficial da Turma 3°E",
+    ],
+    "estudante-conversa": [
+      "Conversa com a Professora Tati",
+      "Canal direto para reforço e dúvidas das atividades",
+    ],
+    "estudante-perfil": [
+      "Meu Perfil de Estudante",
+      "Dados cadastrais e configurações da conta",
+    ],
+    "professora-inicio": [
+      "Painel Docente — Profª. Tatiane Soma",
+      "Gestão de turmas, lembretes de evasão e reforço escolar",
+    ],
+    "professora-chamada": [
+      "Chamada Digital por Turma",
+      "Controle de presença diária e alerta de faltas",
+    ],
+    "professora-notas": [
+      "Gestão de Notas e Frequência",
+      "Boletim bimestral dos estudantes da Turma 3C",
+    ],
+    "professora-conversa": [
+      "Central de Dúvidas dos Alunos",
+      "Atendimento virtual para reforço pedagógico",
+    ],
   };
 
-  const showView = (viewId) => {
+  const mostrarTela = (identificadorTela) => {
     // Bloqueio estrito: qualquer tela de professora exige login pelo setor INSTITUIÇÃO
-    if (viewId && viewId.startsWith("teacher-") && authenticatedSector !== "instituicao") {
+    if (
+      identificadorTela &&
+      identificadorTela.startsWith("professora-") &&
+      setorAutenticado !== "instituicao"
+    ) {
       return;
     }
-    if (viewId && viewId.startsWith("student-") && authenticatedSector === "instituicao") {
+    if (
+      identificadorTela &&
+      identificadorTela.startsWith("estudante-") &&
+      setorAutenticado === "instituicao"
+    ) {
       return;
     }
 
-    document.querySelectorAll(".view-screen").forEach((sec) => {
-      const isTarget = sec.id === `view-${viewId}`;
-      sec.hidden = !isTarget;
-      sec.style.display = isTarget ? "block" : "none";
-      sec.classList.toggle("active", isTarget);
+    document.querySelectorAll(".tela-visualizacao").forEach((secao) => {
+      const ehAlvo = secao.id === `tela-${identificadorTela}`;
+      secao.hidden = !ehAlvo;
+      secao.style.display = ehAlvo ? "block" : "none";
+      secao.classList.toggle("ativo", ehAlvo);
     });
 
-    document.querySelectorAll(".sidebar .nav-item").forEach((btn) => {
-      btn.classList.toggle("active", btn.dataset.view === viewId);
+    document.querySelectorAll(".barra-lateral .item-navegacao").forEach((botao) => {
+      botao.classList.toggle("ativo", botao.getAttribute("data-tela") === identificadorTela);
     });
 
-    if (viewTitles[viewId] && currentViewTitle && currentViewSubtitle) {
-      currentViewTitle.textContent = viewTitles[viewId][0];
-      currentViewSubtitle.textContent = viewTitles[viewId][1];
+    if (titulosTelas[identificadorTela] && tituloTelaAtual && subtituloTelaAtual) {
+      tituloTelaAtual.textContent = titulosTelas[identificadorTela][0];
+      subtituloTelaAtual.textContent = titulosTelas[identificadorTela][1];
     }
   };
 
-  const setRoleMode = (mode) => {
+  const definirModoPerfil = (modo) => {
     // O perfil de professora só pode ser ativado se o login foi feito pelo setor INSTITUIÇÃO
-    const effectiveMode = mode === "teacher" && authenticatedSector === "instituicao" ? "teacher" : "student";
-    const isStudent = effectiveMode === "student";
+    const modoEfetivo =
+      modo === "professora" && setorAutenticado === "instituicao" ? "professora" : "estudante";
+    const ehEstudante = modoEfetivo === "estudante";
 
-    if (activeStudentSectorBadge) {
-      activeStudentSectorBadge.hidden = !isStudent;
-      activeStudentSectorBadge.style.display = isStudent ? "flex" : "none";
-      if (activeStudentSectorLabel) {
-        activeStudentSectorLabel.textContent =
-          authenticatedSector === "responsaveis" ? "Setor: Responsáveis" : "Setor: Estudante";
+    if (seloSetorEstudanteAtivo) {
+      seloSetorEstudanteAtivo.hidden = !ehEstudante;
+      seloSetorEstudanteAtivo.style.display = ehEstudante ? "flex" : "none";
+      if (rotuloSetorEstudanteAtivo) {
+        rotuloSetorEstudanteAtivo.textContent =
+          setorAutenticado === "responsaveis" ? "Setor: Responsáveis" : "Setor: Estudante";
       }
     }
-    if (activeTeacherSectorBadge) {
-      activeTeacherSectorBadge.hidden = isStudent;
-      activeTeacherSectorBadge.style.display = isStudent ? "none" : "flex";
+    if (seloSetorProfessoraAtivo) {
+      seloSetorProfessoraAtivo.hidden = ehEstudante;
+      seloSetorProfessoraAtivo.style.display = ehEstudante ? "none" : "flex";
     }
-    if (studentNav) {
-      studentNav.hidden = !isStudent;
-      studentNav.style.display = isStudent ? "flex" : "none";
+    if (navegacaoEstudante) {
+      navegacaoEstudante.hidden = !ehEstudante;
+      navegacaoEstudante.style.display = ehEstudante ? "flex" : "none";
     }
-    if (teacherNav) {
-      teacherNav.hidden = isStudent;
-      teacherNav.style.display = isStudent ? "none" : "flex";
+    if (navegacaoProfessora) {
+      navegacaoProfessora.hidden = ehEstudante;
+      navegacaoProfessora.style.display = ehEstudante ? "none" : "flex";
     }
-    if (topbarPointsBox) topbarPointsBox.style.display = isStudent ? "flex" : "none";
+    if (caixaPontosTopo) {
+      caixaPontosTopo.style.display = ehEstudante ? "flex" : "none";
+    }
 
-    if (isStudent) {
-      if (topbarAvatar) topbarAvatar.src = "assets/avatar-bruno.png";
-      if (topbarName) topbarName.textContent = "Bruno Delorence";
-      if (topbarRole) {
-        topbarRole.textContent =
-          authenticatedSector === "responsaveis"
+    if (ehEstudante) {
+      if (avatarBarraTopo) avatarBarraTopo.src = "assets/avatar-bruno.png";
+      if (nomeBarraTopo) nomeBarraTopo.textContent = "Bruno Delorence";
+      if (cargoBarraTopo) {
+        cargoBarraTopo.textContent =
+          setorAutenticado === "responsaveis"
             ? "Acesso Responsável • Bruno Delorence (3°E)"
-            : "Estudante • Top 1 (3°E)";
+            : "Estudante • 1º Lugar (3°E)";
       }
-      showView("student-home");
+      mostrarTela("estudante-inicio");
     } else {
-      if (topbarAvatar) topbarAvatar.src = "assets/avatar-tatiane.png";
-      if (topbarName) topbarName.textContent = "Profª. Tatiane Soma";
-      if (topbarRole) topbarRole.textContent = "Docente • Matemática & Algoritmos";
-      showView("teacher-home");
+      if (avatarBarraTopo) avatarBarraTopo.src = "assets/avatar-tatiane.png";
+      if (nomeBarraTopo) nomeBarraTopo.textContent = "Profª. Tatiane Soma";
+      if (cargoBarraTopo) cargoBarraTopo.textContent = "Docente • Matemática e Algoritmos";
+      mostrarTela("professora-inicio");
     }
   };
 
-  const enterDashboard = (mode) => {
-    if (loginFullscreenOverlay) {
-      loginFullscreenOverlay.hidden = true;
-      loginFullscreenOverlay.style.display = "none";
+  const entrarPainel = (modo) => {
+    if (sobreposicaoTelaCheiaLogin) {
+      sobreposicaoTelaCheiaLogin.hidden = true;
+      sobreposicaoTelaCheiaLogin.style.display = "none";
     }
-    if (mainDesktopApp) {
-      mainDesktopApp.hidden = false;
-      mainDesktopApp.style.display = "grid";
+    if (aplicacaoPrincipalComputador) {
+      aplicacaoPrincipalComputador.hidden = false;
+      aplicacaoPrincipalComputador.style.display = "grid";
     }
-    setRoleMode(mode);
+    definirModoPerfil(modo);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const returnToLoginScreen = () => {
-    authenticatedSector = null;
-    if (mainDesktopApp) {
-      mainDesktopApp.hidden = true;
-      mainDesktopApp.style.display = "none";
+  const voltarTelaLogin = () => {
+    setorAutenticado = null;
+    if (aplicacaoPrincipalComputador) {
+      aplicacaoPrincipalComputador.hidden = true;
+      aplicacaoPrincipalComputador.style.display = "none";
     }
-    if (loginFullscreenOverlay) {
-      loginFullscreenOverlay.hidden = false;
-      loginFullscreenOverlay.style.display = "flex";
+    if (sobreposicaoTelaCheiaLogin) {
+      sobreposicaoTelaCheiaLogin.hidden = false;
+      sobreposicaoTelaCheiaLogin.style.display = "flex";
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const stepSubjectsCatalog = document.getElementById("stepSubjectsCatalog");
-  const stepSubjectTrail = document.getElementById("stepSubjectTrail");
-  const stepModuleLevels = document.getElementById("stepModuleLevels");
-  const stepLevelQuiz = document.getElementById("stepLevelQuiz");
+  const etapaCatalogoMaterias = document.getElementById("etapaCatalogoMaterias");
+  const etapaTrilhaMateria = document.getElementById("etapaTrilhaMateria");
+  const etapaNiveisModulo = document.getElementById("etapaNiveisModulo");
+  const etapaDesafioNivel = document.getElementById("etapaDesafioNivel");
 
-  const setActivityStage = (stage) => {
-    const map = {
-      catalog: stepSubjectsCatalog,
-      trail: stepSubjectTrail,
-      levels: stepModuleLevels,
-      quiz: stepLevelQuiz,
+  const definirEtapaAtividade = (etapa) => {
+    const mapaEtapas = {
+      catalogo: etapaCatalogoMaterias,
+      trilha: etapaTrilhaMateria,
+      niveis: etapaNiveisModulo,
+      desafio: etapaDesafioNivel,
     };
-    Object.entries(map).forEach(([key, el]) => {
-      if (!el) return;
-      const isVisible = key === stage;
-      el.hidden = !isVisible;
-      el.style.display = isVisible ? "block" : "none";
+    Object.entries(mapaEtapas).forEach(([chave, elemento]) => {
+      if (!elemento) return;
+      const estaVisivel = chave === etapa;
+      elemento.hidden = !estaVisivel;
+      elemento.style.display = estaVisivel ? "block" : "none";
     });
   };
 
-  const showSubjectsCatalog = () => setActivityStage("catalog");
+  const mostrarCatalogoMaterias = () => definirEtapaAtividade("catalogo");
 
-  document.querySelectorAll("[data-view]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = btn.getAttribute("data-view");
-      showView(target);
-      if (target === "student-activities") {
-        showSubjectsCatalog();
+  document.querySelectorAll("[data-tela]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      const telaAlvo = botao.getAttribute("data-tela");
+      mostrarTela(telaAlvo);
+      if (telaAlvo === "estudante-atividades") {
+        mostrarCatalogoMaterias();
       }
     });
   });
 
-  document.querySelectorAll("[data-go-view]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = btn.getAttribute("data-go-view");
-      if (!target) return;
-      // Bloqueia navegação para telas de professora se o login não foi pelo setor INSTITUIÇÃO
-      if (target.startsWith("teacher-") && authenticatedSector !== "instituicao") {
+  document.querySelectorAll("[data-ir-tela]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      const telaAlvo = botao.getAttribute("data-ir-tela");
+      if (!telaAlvo) return;
+      if (telaAlvo.startsWith("professora-") && setorAutenticado !== "instituicao") {
         return;
       }
-      if (target.startsWith("student-") && authenticatedSector === "instituicao") {
+      if (telaAlvo.startsWith("estudante-") && setorAutenticado === "instituicao") {
         return;
       }
-      showView(target);
-      if (target === "student-activities") {
-        showSubjectsCatalog();
+      mostrarTela(telaAlvo);
+      if (telaAlvo === "estudante-atividades") {
+        mostrarCatalogoMaterias();
       }
     });
   });
 
-  document.getElementById("openWelcomeBtn")?.addEventListener("click", returnToLoginScreen);
-  document.getElementById("sidebarLogoutBtn")?.addEventListener("click", returnToLoginScreen);
-  document.getElementById("profileLogoutBtn")?.addEventListener("click", returnToLoginScreen);
+  document.getElementById("botaoAbrirBoasVindas")?.addEventListener("click", voltarTelaLogin);
+  document.getElementById("botaoSairBarraLateral")?.addEventListener("click", voltarTelaLogin);
+  document.getElementById("botaoSairPerfil")?.addEventListener("click", voltarTelaLogin);
 
   // =========================================================================
-  // 3. TELA DE LOGIN, CRIAR CONTA E ESQUECEU A SENHA (Figma 21:139, 16:56, 16:269, 16:250)
+  // 3. TELA DE LOGIN, CRIAR CONTA E ESQUECEU A SENHA
   // =========================================================================
-  let chosenProfile = "estudante";
-  const selectedProfileBadge = document.getElementById("selectedProfileBadge");
-  const loginUser = document.getElementById("loginUser");
-  const signupUsername = document.getElementById("signupUsername");
-  const signupEmail = document.getElementById("signupEmail");
-  const loginFeedbackMsg = document.getElementById("loginFeedbackMsg");
-  const signupFeedbackMsg = document.getElementById("signupFeedbackMsg");
+  let perfilEscolhido = "estudante";
+  const seloPerfilSelecionado = document.getElementById("seloPerfilSelecionado");
+  const usuarioLogin = document.getElementById("usuarioLogin");
+  const nomeUsuarioCadastro = document.getElementById("nomeUsuarioCadastro");
+  const emailCadastro = document.getElementById("emailCadastro");
+  const mensagemRetornoLogin = document.getElementById("mensagemRetornoLogin");
+  const mensagemRetornoCadastro = document.getElementById("mensagemRetornoCadastro");
 
-  const clearAuthFeedback = () => {
-    if (loginFeedbackMsg) loginFeedbackMsg.textContent = "";
-    if (signupFeedbackMsg) signupFeedbackMsg.textContent = "";
+  const limparMensagensAutenticacao = () => {
+    if (mensagemRetornoLogin) mensagemRetornoLogin.textContent = "";
+    if (mensagemRetornoCadastro) mensagemRetornoCadastro.textContent = "";
   };
 
-  const profilePresets = {
+  const predefinicoesPerfil = {
     responsaveis: {
-      label: "RESPONSÁVEIS",
-      user: "responsavel.bruno@gmail.com",
-      username: "responsavel.bruno",
-      mode: "student",
+      rotulo: "RESPONSÁVEIS",
+      usuario: "responsavel.bruno@gmail.com",
+      nomeUsuario: "responsavel.bruno",
+      modo: "estudante",
     },
     estudante: {
-      label: "ESTUDANTE",
-      user: "brunodelorence@gmail.com",
-      username: "brunodelorence",
-      mode: "student",
+      rotulo: "ESTUDANTE",
+      usuario: "brunodelorence@gmail.com",
+      nomeUsuario: "brunodelorence",
+      modo: "estudante",
     },
     instituicao: {
-      label: "INSTITUIÇÃO / PROFESSOR",
-      user: "tatianesoma@gmail.com",
-      username: "Tatiane Soma",
-      mode: "teacher",
+      rotulo: "INSTITUIÇÃO / PROFESSOR",
+      usuario: "tatianesoma@gmail.com",
+      nomeUsuario: "Tatiane Soma",
+      modo: "professora",
     },
   };
 
-  document.querySelectorAll("[data-select-profile]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll("[data-select-profile]").forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      chosenProfile = btn.getAttribute("data-select-profile") || "estudante";
-      const preset = profilePresets[chosenProfile] || profilePresets.estudante;
+  document.querySelectorAll("[data-selecionar-perfil]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      document
+        .querySelectorAll("[data-selecionar-perfil]")
+        .forEach((item) => item.classList.remove("ativo"));
+      botao.classList.add("ativo");
+      perfilEscolhido = botao.getAttribute("data-selecionar-perfil") || "estudante";
+      const predefinicao = predefinicoesPerfil[perfilEscolhido] || predefinicoesPerfil.estudante;
 
-      clearAuthFeedback();
-      if (selectedProfileBadge) {
-        selectedProfileBadge.innerHTML = `Perfil: <strong>${preset.label}</strong>`;
+      limparMensagensAutenticacao();
+      if (seloPerfilSelecionado) {
+        seloPerfilSelecionado.innerHTML = `Perfil: <strong>${predefinicao.rotulo}</strong>`;
       }
-      if (loginUser) loginUser.value = preset.user;
-      if (signupUsername) signupUsername.value = preset.username;
-      if (signupEmail) signupEmail.value = preset.user;
+      if (usuarioLogin) usuarioLogin.value = predefinicao.usuario;
+      if (nomeUsuarioCadastro) nomeUsuarioCadastro.value = predefinicao.nomeUsuario;
+      if (emailCadastro) emailCadastro.value = predefinicao.usuario;
     });
   });
 
-  const switchAuthTab = (tabName) => {
-    clearAuthFeedback();
-    document.querySelectorAll("[data-auth-tab]").forEach((t) => {
-      t.classList.toggle("active", t.getAttribute("data-auth-tab") === tabName);
+  const alternarAbaAutenticacao = (nomeAba) => {
+    limparMensagensAutenticacao();
+    document.querySelectorAll("[data-aba-autenticacao]").forEach((aba) => {
+      aba.classList.toggle("ativo", aba.getAttribute("data-aba-autenticacao") === nomeAba);
     });
-    const loginForm = document.getElementById("loginForm");
-    const signupForm = document.getElementById("signupForm");
-    const recoverForm = document.getElementById("recoverForm");
+    const formularioLogin = document.getElementById("formularioLogin");
+    const formularioCadastro = document.getElementById("formularioCadastro");
+    const formularioRecuperacao = document.getElementById("formularioRecuperacao");
 
-    if (loginForm) {
-      loginForm.hidden = tabName !== "login";
-      loginForm.style.display = tabName === "login" ? "block" : "none";
+    if (formularioLogin) {
+      formularioLogin.hidden = nomeAba !== "login";
+      formularioLogin.style.display = nomeAba === "login" ? "block" : "none";
     }
-    if (signupForm) {
-      signupForm.hidden = tabName !== "signup";
-      signupForm.style.display = tabName === "signup" ? "block" : "none";
+    if (formularioCadastro) {
+      formularioCadastro.hidden = nomeAba !== "signup";
+      formularioCadastro.style.display = nomeAba === "signup" ? "block" : "none";
     }
-    if (recoverForm) {
-      recoverForm.hidden = tabName !== "recover";
-      recoverForm.style.display = tabName === "recover" ? "block" : "none";
+    if (formularioRecuperacao) {
+      formularioRecuperacao.hidden = nomeAba !== "recover";
+      formularioRecuperacao.style.display = nomeAba === "recover" ? "block" : "none";
     }
   };
 
-  document.querySelectorAll("[data-auth-tab]").forEach((btn) => {
-    btn.addEventListener("click", () => switchAuthTab(btn.getAttribute("data-auth-tab")));
+  document.querySelectorAll("[data-aba-autenticacao]").forEach((botao) => {
+    botao.addEventListener("click", () =>
+      alternarAbaAutenticacao(botao.getAttribute("data-aba-autenticacao"))
+    );
   });
 
-  document.querySelectorAll("[data-auth-switch]").forEach((btn) => {
-    btn.addEventListener("click", () => switchAuthTab(btn.getAttribute("data-auth-switch")));
+  document.querySelectorAll("[data-trocar-autenticacao]").forEach((botao) => {
+    botao.addEventListener("click", () =>
+      alternarAbaAutenticacao(botao.getAttribute("data-trocar-autenticacao"))
+    );
   });
 
-  document.getElementById("authBackArrowBtn")?.addEventListener("click", () => {
-    switchAuthTab("login");
+  document.getElementById("botaoSetaVoltarAutenticacao")?.addEventListener("click", () => {
+    alternarAbaAutenticacao("login");
   });
 
   // Botão Olho (Mostrar/Ocultar Senha)
-  document.querySelectorAll("[data-toggle-pass]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const targetId = btn.getAttribute("data-toggle-pass");
-      const input = document.getElementById(targetId);
-      if (!input) return;
-      input.type = input.type === "password" ? "text" : "password";
+  document.querySelectorAll("[data-alternar-senha]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      const idCampoAlvo = botao.getAttribute("data-alternar-senha");
+      const campoInput = document.getElementById(idCampoAlvo);
+      if (!campoInput) return;
+      campoInput.type = campoInput.type === "password" ? "text" : "password";
     });
   });
 
-  // Função direta de Login / Cadastro com validação estrita do setor INSTITUIÇÃO
-  const handleAuthAccess = (e) => {
-    if (e) e.preventDefault();
-    clearAuthFeedback();
+  // Função de Autenticação com validação estrita do setor INSTITUIÇÃO
+  const processarAcessoAutenticacao = (evento) => {
+    if (evento) evento.preventDefault();
+    limparMensagensAutenticacao();
 
-    const userVal = (document.getElementById("loginUser")?.value || "").toLowerCase();
-    const signupEmailVal = (document.getElementById("signupEmail")?.value || "").toLowerCase();
-    const isTryingTeacherAccount =
-      userVal.includes("tatiane") ||
-      userVal.includes("prof") ||
-      signupEmailVal.includes("tatiane") ||
-      signupEmailVal.includes("prof");
+    const valorUsuario = (document.getElementById("usuarioLogin")?.value || "").toLowerCase();
+    const valorEmailCadastro = (document.getElementById("emailCadastro")?.value || "").toLowerCase();
+    const tentandoContaProfessora =
+      valorUsuario.includes("tatiane") ||
+      valorUsuario.includes("prof") ||
+      valorEmailCadastro.includes("tatiane") ||
+      valorEmailCadastro.includes("prof");
 
     // Regra estrita: O perfil de professora SÓ pode ter acesso se fizer login pelo setor de INSTITUIÇÃO
-    if (chosenProfile === "instituicao") {
-      authenticatedSector = "instituicao";
-      enterDashboard("teacher");
+    if (perfilEscolhido === "instituicao") {
+      setorAutenticado = "instituicao";
+      entrarPainel("professora");
       return;
     }
 
-    if (isTryingTeacherAccount && chosenProfile !== "instituicao") {
-      const msg = "⚠️ Acesso negado: O perfil de Professora só pode ser acessado selecionando o setor INSTITUIÇÃO ao lado.";
-      if (loginFeedbackMsg) {
-        loginFeedbackMsg.style.color = "#ef4444";
-        loginFeedbackMsg.textContent = msg;
+    if (tentandoContaProfessora && perfilEscolhido !== "instituicao") {
+      const aviso =
+        "⚠️ Acesso negado: O perfil de Professora só pode ser acessado selecionando o setor INSTITUIÇÃO ao lado.";
+      if (mensagemRetornoLogin) {
+        mensagemRetornoLogin.style.color = "#ef4444";
+        mensagemRetornoLogin.textContent = aviso;
       }
-      if (signupFeedbackMsg) {
-        signupFeedbackMsg.style.color = "#ef4444";
-        signupFeedbackMsg.textContent = msg;
+      if (mensagemRetornoCadastro) {
+        mensagemRetornoCadastro.style.color = "#ef4444";
+        mensagemRetornoCadastro.textContent = aviso;
       }
       return;
     }
 
-    authenticatedSector = chosenProfile;
-    enterDashboard("student");
+    setorAutenticado = perfilEscolhido;
+    entrarPainel("estudante");
   };
 
-  // Submit Login
-  document.getElementById("loginForm")?.addEventListener("submit", handleAuthAccess);
-  document.querySelector("#loginForm .figma-submit-btn")?.addEventListener("click", handleAuthAccess);
+  document.getElementById("formularioLogin")?.addEventListener("submit", processarAcessoAutenticacao);
+  document
+    .querySelector("#formularioLogin .botao-enviar-figma")
+    ?.addEventListener("click", processarAcessoAutenticacao);
 
-  // Submit Criar Conta
-  document.getElementById("signupForm")?.addEventListener("submit", handleAuthAccess);
-  document.querySelector("#signupForm .figma-submit-btn")?.addEventListener("click", handleAuthAccess);
+  document
+    .getElementById("formularioCadastro")
+    ?.addEventListener("submit", processarAcessoAutenticacao);
+  document
+    .querySelector("#formularioCadastro .botao-enviar-figma")
+    ?.addEventListener("click", processarAcessoAutenticacao);
 
-  // Submit Esqueceu a Senha
-  document.getElementById("recoverForm")?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const recoverFeedbackMsg = document.getElementById("recoverFeedbackMsg");
-    const emailVal = document.getElementById("recoverEmailInput")?.value || "";
-    if (recoverFeedbackMsg) {
-      recoverFeedbackMsg.textContent = `✅ Link de redefinição enviado para ${emailVal}!`;
+  document.getElementById("formularioRecuperacao")?.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+    const mensagemRetornoRecuperacao = document.getElementById("mensagemRetornoRecuperacao");
+    const valorEmail = document.getElementById("campoEmailRecuperacao")?.value || "";
+    if (mensagemRetornoRecuperacao) {
+      mensagemRetornoRecuperacao.textContent = `✅ Link de redefinição enviado para ${valorEmail}!`;
     }
     setTimeout(() => {
-      if (recoverFeedbackMsg) recoverFeedbackMsg.textContent = "";
-      switchAuthTab("login");
+      if (mensagemRetornoRecuperacao) mensagemRetornoRecuperacao.textContent = "";
+      alternarAbaAutenticacao("login");
     }, 2500);
   });
 
   // =========================================================================
-  // 4. PONTOS DO ESTUDANTE, ATIVIDADES & QUIZ DE ÂNGULOS (Figma 16:582, 24:3046)
+  // 4. PONTOS DO ESTUDANTE, ATIVIDADES E DESAFIO DE ÂNGULOS
   // =========================================================================
-  let studentPoints = 2564;
-  let studyProgress = 20;
-  const globalStudentPoints = document.getElementById("globalStudentPoints");
-  const studyProgressLabel = document.getElementById("studyProgressLabel");
-  const studyProgressBar = document.getElementById("studyProgressBar");
+  let pontosEstudante = 2564;
+  let progressoEstudos = 20;
+  const pontosGlobaisEstudante = document.getElementById("pontosGlobaisEstudante");
+  const rotuloProgressoEstudos = document.getElementById("rotuloProgressoEstudos");
+  const barraProgressoEstudos = document.getElementById("barraProgressoEstudos");
 
-  const updatePointsDisplay = () => {
-    if (globalStudentPoints) {
-      globalStudentPoints.textContent = String(studentPoints);
+  const atualizarExibicaoPontos = () => {
+    if (pontosGlobaisEstudante) {
+      pontosGlobaisEstudante.textContent = String(pontosEstudante);
     }
   };
 
-  const activitySearchInput = document.getElementById("activitySearchInput");
-  activitySearchInput?.addEventListener("input", () => {
-    const query = activitySearchInput.value.toLowerCase().trim();
-    document.querySelectorAll("#subjectsGrid .subject-card").forEach((card) => {
-      const subject = (card.getAttribute("data-subject") || "").toLowerCase();
-      card.style.display = subject.includes(query) ? "" : "none";
+  const campoBuscaAtividade = document.getElementById("campoBuscaAtividade");
+  campoBuscaAtividade?.addEventListener("input", () => {
+    const termoBusca = campoBuscaAtividade.value.toLowerCase().trim();
+    document.querySelectorAll("#gradeMaterias .cartao-materia").forEach((cartao) => {
+      const nomeMateria = (cartao.getAttribute("data-materia") || "").toLowerCase();
+      cartao.style.display = nomeMateria.includes(termoBusca) ? "" : "none";
     });
   });
 
-  const selectedSubjectHeading = document.getElementById("selectedSubjectHeading");
-  const activeSubjectProgressPill = document.getElementById("activeSubjectProgressPill");
-  const activeSubjectBannerCard = document.getElementById("activeSubjectBannerCard");
-  const activeSubjectTiles = document.getElementById("activeSubjectTiles");
-  const subjectDetailCounterBadge = document.getElementById("subjectDetailCounterBadge");
-  const learningPathList = document.getElementById("learningPathList");
-  const subjectLevelsGrid = document.getElementById("subjectLevelsGrid");
-  const activeModuleBadge = document.getElementById("activeModuleBadge");
-  const activeQuizProgressBadge = document.getElementById("activeQuizProgressBadge");
-  const quizBannerTitle = document.getElementById("quizBannerTitle");
-  const angleDiagramBox = document.getElementById("angleDiagramBox");
-  const quizQuestionText = document.getElementById("quizQuestionText");
-  const quizOptionsGrid = document.getElementById("quizOptionsGrid");
-  const quizFeedbackMsg = document.getElementById("quizFeedbackMsg");
-  const quizActiveCard = document.getElementById("quizActiveCard");
-  const quizCompletedCard = document.getElementById("quizCompletedCard");
+  const tituloMateriaSelecionada = document.getElementById("tituloMateriaSelecionada");
+  const pilulaProgressoMateriaAtiva = document.getElementById("pilulaProgressoMateriaAtiva");
+  const cartaoBannerMateriaAtiva = document.getElementById("cartaoBannerMateriaAtiva");
+  const blocosIconesMateriaAtiva = document.getElementById("blocosIconesMateriaAtiva");
+  const seloContadorDetalheMateria = document.getElementById("seloContadorDetalheMateria");
+  const listaTrilhaAprendizagem = document.getElementById("listaTrilhaAprendizagem");
+  const gradeNiveisMateria = document.getElementById("gradeNiveisMateria");
+  const seloModuloAtivo = document.getElementById("seloModuloAtivo");
+  const seloProgressoDesafioAtivo = document.getElementById("seloProgressoDesafioAtivo");
+  const tituloBannerDesafio = document.getElementById("tituloBannerDesafio");
+  const caixaDiagramaAngulo = document.getElementById("caixaDiagramaAngulo");
+  const textoPerguntaDesafio = document.getElementById("textoPerguntaDesafio");
+  const gradeOpcoesDesafio = document.getElementById("gradeOpcoesDesafio");
+  const mensagemRetornoDesafio = document.getElementById("mensagemRetornoDesafio");
+  const cartaoDesafioAtivo = document.getElementById("cartaoDesafioAtivo");
+  const cartaoDesafioConcluido = document.getElementById("cartaoDesafioConcluido");
 
-  // Dados exclusivos por matéria: A trilha de Operações/Equações/Soma de Ângulos pertence SOMENTE a Matemática!
-  const subjectsCurriculum = {
+  // Dados exclusivos por matéria: A trilha de Operações/Equações/Soma de Ângulos pertence SOMENTE a Matemática
+  const curriculoMaterias = {
     Matemática: {
-      counter: "03/30",
-      bgClass: "bg-math",
-      tilesHtml: `
-        <div class="tile tile--front"><img src="assets/icon-math-plus.svg" alt="" /></div>
-        <div class="tile tile--back"><img src="assets/icon-math-percent.svg" alt="" /></div>
+      contador: "03/30",
+      classeFundo: "fundo-matematica",
+      htmlBlocos: `
+        <div class="bloco bloco--frente"><img src="assets/icon-math-plus.svg" alt="" /></div>
+        <div class="bloco bloco--fundo"><img src="assets/icon-math-percent.svg" alt="" /></div>
       `,
-      modules: [
-        { title: "Operações", desc: "Aprenda as operações básicas", done: true, locked: false },
-        { title: "Equações de 1º grau", desc: "Aprenda a resolver equações", done: false, locked: false },
-        { title: "Equações de 2º grau", desc: "Aprenda equações complexas", done: false, locked: false },
-        { title: "Grupos numéricos", desc: "Aprenda conjuntos (Atividade Bloqueada)", done: false, locked: true },
+      modulos: [
+        { titulo: "Operações", descricao: "Aprenda as operações básicas", concluido: true, bloqueado: false },
+        { titulo: "Equações de 1º grau", descricao: "Aprenda a resolver equações", concluido: false, bloqueado: false },
+        { titulo: "Equações de 2º grau", descricao: "Aprenda equações complexas", concluido: false, bloqueado: false },
+        { titulo: "Grupos numéricos", descricao: "Aprenda conjuntos (Atividade Bloqueada)", concluido: false, bloqueado: true },
       ],
-      levels: [
+      niveis: [
         "Nível 1: Soma",
         "Nível 2: Subtração",
         "Nível 3: Divisão",
@@ -446,208 +495,209 @@ document.addEventListener("DOMContentLoaded", () => {
         "Nível 11: Raiz cúbica",
         "Nível 12: Raiz quarta",
       ],
-      questions: [
+      questoes: [
         {
-          banner: "Soma",
-          hasAngle36: true,
-          question: "Some o ângulo por eles mesmo:",
-          options: ["45º", "55º", "71º", "72º"],
-          correctIndex: 3,
+          tituloBanner: "Soma",
+          possuiAngulo36: true,
+          enunciado: "Some o ângulo por eles mesmo:",
+          alternativas: ["45º", "55º", "71º", "72º"],
+          indiceCorreto: 3,
         },
         {
-          banner: "Soma — Questão 2",
-          hasAngle9042: true,
-          question: "1- Dados os ângulos abaixo, 90º e 42º, some-os como apresentado em sala:",
-          options: ["132º", "133º", "134º", "135º"],
-          correctIndex: 0,
+          tituloBanner: "Soma — Questão 2",
+          possuiAngulo9042: true,
+          enunciado: "1- Dados os ângulos abaixo, 90º e 42º, some-os como apresentado em sala:",
+          alternativas: ["132º", "133º", "134º", "135º"],
+          indiceCorreto: 0,
         },
       ],
     },
     Português: {
-      counter: "0/30",
-      bgClass: "bg-port",
-      tilesHtml: `
-        <div class="tile tile--front"><img src="assets/icon-port-a.svg" alt="" /></div>
-        <div class="tile tile--back"><img src="assets/icon-port-j.svg" alt="" /></div>
+      contador: "0/30",
+      classeFundo: "fundo-portugues",
+      htmlBlocos: `
+        <div class="bloco bloco--frente"><img src="assets/icon-port-a.svg" alt="" /></div>
+        <div class="bloco bloco--fundo"><img src="assets/icon-port-j.svg" alt="" /></div>
       `,
-      modules: [
-        { title: "Interpretação Textual", desc: "Compreensão de textos e artigos", done: false, locked: false },
-        { title: "Classes Gramaticais", desc: "Substantivos, verbos e adjetivos", done: false, locked: false },
-        { title: "Redação Dissertativa", desc: "Estrutura e argumentação", done: false, locked: true },
+      modulos: [
+        { titulo: "Interpretação Textual", descricao: "Compreensão de textos e artigos", concluido: false, bloqueado: false },
+        { titulo: "Classes Gramaticais", descricao: "Substantivos, verbos e adjetivos", concluido: false, bloqueado: false },
+        { titulo: "Redação Dissertativa", descricao: "Estrutura e argumentação", concluido: false, bloqueado: true },
       ],
-      levels: ["Nível 1: Ortografia", "Nível 2: Acentuação", "Nível 3: Pontuação"],
-      questions: [
+      niveis: ["Nível 1: Ortografia", "Nível 2: Acentuação", "Nível 3: Pontuação"],
+      questoes: [
         {
-          banner: "Português",
-          hasAngle36: false,
-          question: "Qual das palavras abaixo está grafada corretamente segundo a norma-padrão?",
-          options: ["Exceção", "Excessão", "Eceção", "Exceon"],
-          correctIndex: 0,
+          tituloBanner: "Português",
+          possuiAngulo36: false,
+          enunciado: "Qual das palavras abaixo está grafada corretamente segundo a norma-padrão?",
+          alternativas: ["Exceção", "Excessão", "Eceção", "Exceon"],
+          indiceCorreto: 0,
         },
       ],
     },
     Biologia: {
-      counter: "07/30",
-      bgClass: "bg-bio",
-      tilesHtml: `
-        <div class="tile tile--front"><img src="assets/icon-bio-lungs.svg" alt="" /></div>
-        <div class="tile tile--back"><img src="assets/icon-bio-heart.svg" alt="" /></div>
+      contador: "07/30",
+      classeFundo: "fundo-biologia",
+      htmlBlocos: `
+        <div class="bloco bloco--frente"><img src="assets/icon-bio-lungs.svg" alt="" /></div>
+        <div class="bloco bloco--fundo"><img src="assets/icon-bio-heart.svg" alt="" /></div>
       `,
-      modules: [
-        { title: "Fisiologia Humana", desc: "Sistemas respiratório e circulatório", done: true, locked: false },
-        { title: "Citologia", desc: "Estrutura das células e organelas", done: false, locked: false },
-        { title: "Genética Básica", desc: "Leis de Mendel e DNA", done: false, locked: true },
+      modulos: [
+        { titulo: "Fisiologia Humana", descricao: "Sistemas respiratório e circulatório", concluido: true, bloqueado: false },
+        { titulo: "Citologia", descricao: "Estrutura das células e organelas", concluido: false, bloqueado: false },
+        { titulo: "Genética Básica", descricao: "Leis de Mendel e DNA", concluido: false, bloqueado: true },
       ],
-      levels: ["Nível 1: Sistema Respiratório", "Nível 2: Sistema Cardíaco", "Nível 3: Células"],
-      questions: [
+      niveis: ["Nível 1: Sistema Respiratório", "Nível 2: Sistema Cardíaco", "Nível 3: Células"],
+      questoes: [
         {
-          banner: "Biologia",
-          hasAngle36: false,
-          question: "Qual organela celular é responsável pela respiração celular e produção de ATP?",
-          options: ["Complexo de Golgi", "Mitocôndria", "Lisossomo", "Ribossomo"],
-          correctIndex: 1,
+          tituloBanner: "Biologia",
+          possuiAngulo36: false,
+          enunciado: "Qual organela celular é responsável pela respiração celular e produção de ATP?",
+          alternativas: ["Complexo de Golgi", "Mitocôndria", "Lisossomo", "Ribossomo"],
+          indiceCorreto: 1,
         },
       ],
     },
     Química: {
-      counter: "16/30",
-      bgClass: "bg-chem",
-      tilesHtml: `
-        <div class="tile tile--front"><img src="assets/icon-chem-drop.svg" alt="" /></div>
-        <div class="tile tile--back"><img src="assets/icon-chem-hazard.svg" alt="" /></div>
+      contador: "16/30",
+      classeFundo: "fundo-quimica",
+      htmlBlocos: `
+        <div class="bloco bloco--frente"><img src="assets/icon-chem-drop.svg" alt="" /></div>
+        <div class="bloco bloco--fundo"><img src="assets/icon-chem-hazard.svg" alt="" /></div>
       `,
-      modules: [
-        { title: "Tabela Periódica", desc: "Elementos, famílias e períodos", done: true, locked: false },
-        { title: "Ligações Químicas", desc: "Iônica, covalente e metálica", done: false, locked: false },
+      modulos: [
+        { titulo: "Tabela Periódica", descricao: "Elementos, famílias e períodos", concluido: true, bloqueado: false },
+        { titulo: "Ligações Químicas", descricao: "Iônica, covalente e metálica", concluido: false, bloqueado: false },
       ],
-      levels: ["Nível 1: Átomos", "Nível 2: Tabela Periódica", "Nível 3: Reações"],
-      questions: [
+      niveis: ["Nível 1: Átomos", "Nível 2: Tabela Periódica", "Nível 3: Reações"],
+      questoes: [
         {
-          banner: "Química",
-          hasAngle36: false,
-          question: "Qual é o símbolo químico do elemento Oxigênio e seu número atômico?",
-          options: ["O (Z = 8)", "Ox (Z = 6)", "Og (Z = 16)", "O (Z = 12)"],
-          correctIndex: 0,
+          tituloBanner: "Química",
+          possuiAngulo36: false,
+          enunciado: "Qual é o símbolo químico do elemento Oxigênio e seu número atômico?",
+          alternativas: ["O (Z = 8)", "Ox (Z = 6)", "Og (Z = 16)", "O (Z = 12)"],
+          indiceCorreto: 0,
         },
       ],
     },
     Física: {
-      counter: "18/30",
-      bgClass: "bg-phys",
-      tilesHtml: `
-        <div class="tile tile--front"><img src="assets/icon-phys-atom.svg" alt="" /></div>
-        <div class="tile tile--back"><img src="assets/icon-phys-energy.svg" alt="" /></div>
+      contador: "18/30",
+      classeFundo: "fundo-fisica",
+      htmlBlocos: `
+        <div class="bloco bloco--frente"><img src="assets/icon-phys-atom.svg" alt="" /></div>
+        <div class="bloco bloco--fundo"><img src="assets/icon-phys-energy.svg" alt="" /></div>
       `,
-      modules: [
-        { title: "Cinemática", desc: "Velocidade média e MRU", done: true, locked: false },
-        { title: "Leis de Newton", desc: "Dinâmica e forças", done: false, locked: false },
+      modulos: [
+        { titulo: "Cinemática", descricao: "Velocidade média e MRU", concluido: true, bloqueado: false },
+        { titulo: "Leis de Newton", descricao: "Dinâmica e forças", concluido: false, bloqueado: false },
       ],
-      levels: ["Nível 1: Velocidade Média", "Nível 2: Aceleração", "Nível 3: Força Resultante"],
-      questions: [
+      niveis: ["Nível 1: Velocidade Média", "Nível 2: Aceleração", "Nível 3: Força Resultante"],
+      questoes: [
         {
-          banner: "Física",
-          hasAngle36: false,
-          question: "Um móvel percorre 100 metros em 10 segundos. Qual é a sua velocidade média?",
-          options: ["5 m/s", "10 m/s", "20 m/s", "100 m/s"],
-          correctIndex: 1,
+          tituloBanner: "Física",
+          possuiAngulo36: false,
+          enunciado: "Um móvel percorre 100 metros em 10 segundos. Qual é a sua velocidade média?",
+          alternativas: ["5 m/s", "10 m/s", "20 m/s", "100 m/s"],
+          indiceCorreto: 1,
         },
       ],
     },
     Inglês: {
-      counter: "22/30",
-      bgClass: "bg-math",
-      tilesHtml: `
-        <div class="tile tile--front"><span class="tile-letter">EN</span></div>
-        <div class="tile tile--back"><img src="assets/icon-eng-lang.svg" alt="" /></div>
+      contador: "22/30",
+      classeFundo: "fundo-matematica",
+      htmlBlocos: `
+        <div class="bloco bloco--frente"><span class="letra-bloco">EN</span></div>
+        <div class="bloco bloco--fundo"><img src="assets/icon-eng-lang.svg" alt="" /></div>
       `,
-      modules: [
-        { title: "Basic Grammar", desc: "Verb To Be & Simple Present", done: true, locked: false },
-        { title: "Reading Comprehension", desc: "Leitura e vocabulário", done: false, locked: false },
+      modulos: [
+        { titulo: "Gramática Básica", descricao: "Verbo To Be e Presente Simples", concluido: true, bloqueado: false },
+        { titulo: "Compreensão de Leitura", descricao: "Leitura e vocabulário em inglês", concluido: false, bloqueado: false },
       ],
-      levels: ["Nível 1: Verb To Be", "Nível 2: Simple Present", "Nível 3: Vocabulary"],
-      questions: [
+      niveis: ["Nível 1: Verbo To Be", "Nível 2: Presente Simples", "Nível 3: Vocabulário"],
+      questoes: [
         {
-          banner: "Inglês",
-          hasAngle36: false,
-          question: "Complete a frase corretamente: 'She ___ a dedicated student at In Aula.'",
-          options: ["am", "are", "is", "be"],
-          correctIndex: 2,
+          tituloBanner: "Inglês",
+          possuiAngulo36: false,
+          enunciado: "Complete a frase corretamente: 'She ___ a dedicated student at In Aula.'",
+          alternativas: ["am", "are", "is", "be"],
+          indiceCorreto: 2,
         },
       ],
     },
     História: {
-      counter: "09/30",
-      bgClass: "bg-port",
-      tilesHtml: `
-        <div class="tile tile--front"><img src="assets/icon-hist-temple.svg" alt="" /></div>
-        <div class="tile tile--back"><span class="tile-letter">🏛️</span></div>
+      contador: "09/30",
+      classeFundo: "fundo-portugues",
+      htmlBlocos: `
+        <div class="bloco bloco--frente"><img src="assets/icon-hist-temple.svg" alt="" /></div>
+        <div class="bloco bloco--fundo"><span class="letra-bloco">🏛️</span></div>
       `,
-      modules: [
-        { title: "Idade Antiga", desc: "Grécia, Roma e Império Bizantino", done: true, locked: false },
-        { title: "História do Brasil", desc: "Período Colonial e República", done: false, locked: false },
+      modulos: [
+        { titulo: "Idade Antiga", descricao: "Grécia, Roma e Império Bizantino", concluido: true, bloqueado: false },
+        { titulo: "História do Brasil", descricao: "Período Colonial e República", concluido: false, bloqueado: false },
       ],
-      levels: ["Nível 1: Antiguidade", "Nível 2: Idade Média", "Nível 3: Brasil República"],
-      questions: [
+      niveis: ["Nível 1: Antiguidade", "Nível 2: Idade Média", "Nível 3: Brasil República"],
+      questoes: [
         {
-          banner: "História",
-          hasAngle36: false,
-          question: "Em que ano ocorreu a Proclamação da República no Brasil?",
-          options: ["1822", "1888", "1889", "1930"],
-          correctIndex: 2,
+          tituloBanner: "História",
+          possuiAngulo36: false,
+          enunciado: "Em que ano ocorreu a Proclamação da República no Brasil?",
+          alternativas: ["1822", "1888", "1889", "1930"],
+          indiceCorreto: 2,
         },
       ],
     },
   };
 
-  let currentSubjectKey = "Matemática";
-  let currentModuleTitle = "Operações";
-  let currentQuestionIdx = 0;
+  let chaveMateriaAtual = "Matemática";
+  let tituloModuloAtual = "Operações";
+  let indiceQuestaoAtual = 0;
 
   // Renderiza o Passo 2: Trilha de Módulos da Matéria Selecionada
-  const openSubjectTrail = (subjName) => {
-    currentSubjectKey = subjectsCurriculum[subjName] ? subjName : "Matemática";
-    const data = subjectsCurriculum[currentSubjectKey];
+  const abrirTrilhaMateria = (nomeMateria) => {
+    chaveMateriaAtual = curriculoMaterias[nomeMateria] ? nomeMateria : "Matemática";
+    const dadosMateria = curriculoMaterias[chaveMateriaAtual];
 
-    showView("student-activities");
-    setActivityStage("trail");
+    mostrarTela("estudante-atividades");
+    definirEtapaAtividade("trilha");
 
-    if (subjectDetailCounterBadge) {
-      subjectDetailCounterBadge.textContent = `Matéria: ${currentSubjectKey} • ${data.counter}`;
+    if (seloContadorDetalheMateria) {
+      seloContadorDetalheMateria.textContent = `Matéria: ${chaveMateriaAtual} • ${dadosMateria.contador}`;
     }
-    if (activeSubjectProgressPill) {
-      activeSubjectProgressPill.textContent = data.counter;
+    if (pilulaProgressoMateriaAtiva) {
+      pilulaProgressoMateriaAtiva.textContent = dadosMateria.contador;
     }
-    if (selectedSubjectHeading) {
-      selectedSubjectHeading.textContent = currentSubjectKey;
+    if (tituloMateriaSelecionada) {
+      tituloMateriaSelecionada.textContent = chaveMateriaAtual;
     }
-    if (activeSubjectBannerCard) {
-      activeSubjectBannerCard.className = `subject-banner-header ${data.bgClass}`;
+    if (cartaoBannerMateriaAtiva) {
+      cartaoBannerMateriaAtiva.className = `cabecalho-banner-materia ${dadosMateria.classeFundo}`;
     }
-    if (activeSubjectTiles) {
-      activeSubjectTiles.innerHTML = data.tilesHtml;
+    if (blocosIconesMateriaAtiva) {
+      blocosIconesMateriaAtiva.innerHTML = dadosMateria.htmlBlocos;
     }
 
-    if (learningPathList) {
-      learningPathList.innerHTML = data.modules
+    if (listaTrilhaAprendizagem) {
+      listaTrilhaAprendizagem.innerHTML = dadosMateria.modulos
         .map(
-          (m) => `
-          <div class="path-node ${m.done ? "done" : ""} ${m.locked ? "locked" : ""}" data-module="${m.title}" data-locked="${m.locked}">
-            <div class="path-node__circle">${m.done ? "✓" : m.locked ? "🔒" : "🏆"}</div>
-            <div class="path-node__text">
-              <strong>${m.title}</strong>
-              <span>${m.desc}</span>
+          (modulo) => `
+          <div class="no-trilha ${modulo.concluido ? "concluido" : ""} ${modulo.bloqueado ? "bloqueado" : ""}" data-modulo="${modulo.titulo}" data-bloqueado="${modulo.bloqueado}">
+            <div class="no-trilha__circulo">${modulo.concluido ? "✓" : modulo.bloqueado ? "🔒" : "🏆"}</div>
+            <div class="no-trilha__texto">
+              <strong>${modulo.titulo}</strong>
+              <span>${modulo.descricao}</span>
             </div>
-            <span class="path-node__arrow">${m.locked ? "Bloqueada" : "❯"}</span>
+            <span class="no-trilha__seta">${modulo.bloqueado ? "Bloqueada" : "❯"}</span>
           </div>
         `
         )
         .join("");
 
-      learningPathList.querySelectorAll(".path-node").forEach((node) => {
-        node.addEventListener("click", () => {
-          if (node.getAttribute("data-locked") === "true") return;
-          const modName = node.getAttribute("data-module") || data.modules[0].title;
-          openModuleLevels(modName);
+      listaTrilhaAprendizagem.querySelectorAll(".no-trilha").forEach((noModulo) => {
+        noModulo.addEventListener("click", () => {
+          if (noModulo.getAttribute("data-bloqueado") === "true") return;
+          const nomeModulo =
+            noModulo.getAttribute("data-modulo") || dadosMateria.modulos[0].titulo;
+          abrirNiveisModulo(nomeModulo);
         });
       });
     }
@@ -655,31 +705,31 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Renderiza o Passo 3: Níveis do Módulo Selecionado (Figma Atividade 2 - LEVEL 1)
-  const openModuleLevels = (modName) => {
-    currentModuleTitle = modName;
-    const data = subjectsCurriculum[currentSubjectKey];
-    setActivityStage("levels");
+  // Renderiza o Passo 3: Níveis do Módulo Selecionado (NÍVEL 1)
+  const abrirNiveisModulo = (nomeModulo) => {
+    tituloModuloAtual = nomeModulo;
+    const dadosMateria = curriculoMaterias[chaveMateriaAtual];
+    definirEtapaAtividade("niveis");
 
-    if (activeModuleBadge) {
-      activeModuleBadge.textContent = `${currentSubjectKey} • Módulo: ${currentModuleTitle}`;
+    if (seloModuloAtivo) {
+      seloModuloAtivo.textContent = `${chaveMateriaAtual} • Módulo: ${tituloModuloAtual}`;
     }
 
-    if (subjectLevelsGrid) {
-      subjectLevelsGrid.innerHTML = data.levels
+    if (gradeNiveisMateria) {
+      gradeNiveisMateria.innerHTML = dadosMateria.niveis
         .map(
-          (lvl) => `
-          <button type="button" class="level-tile-btn" data-level="${lvl}">
-            ${lvl}
+          (rotuloNivel) => `
+          <button type="button" class="botao-bloco-nivel" data-nivel="${rotuloNivel}">
+            ${rotuloNivel}
           </button>
         `
         )
         .join("");
 
-      subjectLevelsGrid.querySelectorAll(".level-tile-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const lvlLabel = btn.getAttribute("data-level") || data.levels[0];
-          openLevelQuiz(lvlLabel, 0);
+      gradeNiveisMateria.querySelectorAll(".botao-bloco-nivel").forEach((botao) => {
+        botao.addEventListener("click", () => {
+          const rotuloNivel = botao.getAttribute("data-nivel") || dadosMateria.niveis[0];
+          abrirDesafioNivel(rotuloNivel, 0);
         });
       });
     }
@@ -687,37 +737,40 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Renderiza o Passo 4: Exercício / Desafio do Nível (Figma Atividade 3, 14 e 5)
-  const openLevelQuiz = (levelLabel, questionIndex = 0) => {
-    const data = subjectsCurriculum[currentSubjectKey];
-    currentQuestionIdx = questionIndex;
-    const qList = data.questions;
-    const q = qList[currentQuestionIdx] || qList[0];
+  // Renderiza o Passo 4: Exercício / Desafio do Nível
+  const abrirDesafioNivel = (rotuloNivel, indiceQuestao = 0) => {
+    const dadosMateria = curriculoMaterias[chaveMateriaAtual];
+    indiceQuestaoAtual = indiceQuestao;
+    const listaQuestoes = dadosMateria.questoes;
+    const questaoAtual = listaQuestoes[indiceQuestaoAtual] || listaQuestoes[0];
 
-    setActivityStage("quiz");
+    definirEtapaAtividade("desafio");
 
-    if (quizActiveCard) {
-      quizActiveCard.hidden = false;
-      quizActiveCard.style.display = "block";
+    if (cartaoDesafioAtivo) {
+      cartaoDesafioAtivo.hidden = false;
+      cartaoDesafioAtivo.style.display = "block";
     }
-    if (quizCompletedCard) {
-      quizCompletedCard.hidden = true;
-      quizCompletedCard.style.display = "none";
-    }
-
-    if (activeQuizProgressBadge) {
-      activeQuizProgressBadge.textContent = `${currentSubjectKey} • ${levelLabel} (${currentQuestionIdx + 1}/${qList.length})`;
+    if (cartaoDesafioConcluido) {
+      cartaoDesafioConcluido.hidden = true;
+      cartaoDesafioConcluido.style.display = "none";
     }
 
-    const shortTitle = levelLabel.includes(":") ? levelLabel.split(":")[1].trim() : q.banner;
-    if (quizBannerTitle) {
-      quizBannerTitle.textContent = currentQuestionIdx === 0 ? shortTitle : q.banner;
+    if (seloProgressoDesafioAtivo) {
+      seloProgressoDesafioAtivo.textContent = `${chaveMateriaAtual} • ${rotuloNivel} (${indiceQuestaoAtual + 1}/${listaQuestoes.length})`;
     }
 
-    if (angleDiagramBox) {
-      if (q.hasAngle36) {
-        angleDiagramBox.style.display = "flex";
-        angleDiagramBox.innerHTML = `
+    const tituloCurto = rotuloNivel.includes(":")
+      ? rotuloNivel.split(":")[1].trim()
+      : questaoAtual.tituloBanner;
+    if (tituloBannerDesafio) {
+      tituloBannerDesafio.textContent =
+        indiceQuestaoAtual === 0 ? tituloCurto : questaoAtual.tituloBanner;
+    }
+
+    if (caixaDiagramaAngulo) {
+      if (questaoAtual.possuiAngulo36) {
+        caixaDiagramaAngulo.style.display = "flex";
+        caixaDiagramaAngulo.innerHTML = `
           <svg width="220" height="120" viewBox="0 0 220 120" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35 100 L145 20 M145 20 L125 20 M145 20 L145 38" stroke="#164A68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M35 100 L185 100 M185 100 L172 88 M185 100 L172 112" stroke="#164A68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -725,9 +778,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <text x="102" y="82" fill="#164A68" font-family="Nunito, sans-serif" font-weight="800" font-size="22">36°</text>
           </svg>
         `;
-      } else if (q.hasAngle9042) {
-        angleDiagramBox.style.display = "flex";
-        angleDiagramBox.innerHTML = `
+      } else if (questaoAtual.possuiAngulo9042) {
+        caixaDiagramaAngulo.style.display = "flex";
+        caixaDiagramaAngulo.innerHTML = `
           <svg width="280" height="120" viewBox="0 0 280 120" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M25 25 L25 100 L110 100" stroke="#164A68" stroke-width="4" stroke-linecap="round"/>
             <rect x="25" y="82" width="18" height="18" stroke="#164A68" stroke-width="3" fill="none"/>
@@ -737,66 +790,67 @@ document.addEventListener("DOMContentLoaded", () => {
           </svg>
         `;
       } else {
-        angleDiagramBox.style.display = "none";
-        angleDiagramBox.innerHTML = "";
+        caixaDiagramaAngulo.style.display = "none";
+        caixaDiagramaAngulo.innerHTML = "";
       }
     }
 
-    if (quizQuestionText) {
-      quizQuestionText.textContent = q.question;
+    if (textoPerguntaDesafio) {
+      textoPerguntaDesafio.textContent = questaoAtual.enunciado;
     }
-    if (quizFeedbackMsg) {
-      quizFeedbackMsg.textContent = "";
+    if (mensagemRetornoDesafio) {
+      mensagemRetornoDesafio.textContent = "";
     }
 
-    if (quizOptionsGrid) {
-      quizOptionsGrid.innerHTML = q.options
+    if (gradeOpcoesDesafio) {
+      gradeOpcoesDesafio.innerHTML = questaoAtual.alternativas
         .map(
-          (opt, idx) =>
-            `<button type="button" class="quiz-option-btn" data-correct="${idx === q.correctIndex}">${opt}</button>`
+          (alternativa, indice) =>
+            `<button type="button" class="botao-opcao-desafio" data-correta="${indice === questaoAtual.indiceCorreto}">${alternativa}</button>`
         )
         .join("");
 
-      quizOptionsGrid.querySelectorAll(".quiz-option-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const isCorrect = btn.getAttribute("data-correct") === "true";
-          quizOptionsGrid.querySelectorAll(".quiz-option-btn").forEach((b) => {
-            b.classList.remove("correct", "wrong");
+      gradeOpcoesDesafio.querySelectorAll(".botao-opcao-desafio").forEach((botao) => {
+        botao.addEventListener("click", () => {
+          const acertou = botao.getAttribute("data-correta") === "true";
+          gradeOpcoesDesafio.querySelectorAll(".botao-opcao-desafio").forEach((item) => {
+            item.classList.remove("correta", "incorreta");
           });
 
-          if (isCorrect) {
-            btn.classList.add("correct");
-            studentPoints += 10;
-            studyProgress = Math.min(100, studyProgress + 5);
-            updatePointsDisplay();
-            if (studyProgressLabel && studyProgressBar) {
-              studyProgressLabel.textContent = `${studyProgress}% de seu progresso!`;
-              studyProgressBar.style.width = `${studyProgress}%`;
+          if (acertou) {
+            botao.classList.add("correta");
+            pontosEstudante += 10;
+            progressoEstudos = Math.min(100, progressoEstudos + 5);
+            atualizarExibicaoPontos();
+            if (rotuloProgressoEstudos && barraProgressoEstudos) {
+              rotuloProgressoEstudos.textContent = `${progressoEstudos}% de seu progresso!`;
+              barraProgressoEstudos.style.width = `${progressoEstudos}%`;
             }
-            if (quizFeedbackMsg) {
-              quizFeedbackMsg.style.color = "#16a34a";
-              quizFeedbackMsg.textContent = "🎉 Resposta certa! Avançando...";
+            if (mensagemRetornoDesafio) {
+              mensagemRetornoDesafio.style.color = "#16a34a";
+              mensagemRetornoDesafio.textContent = "🎉 Resposta certa! Avançando...";
             }
 
             setTimeout(() => {
-              if (currentQuestionIdx + 1 < qList.length) {
-                openLevelQuiz(levelLabel, currentQuestionIdx + 1);
+              if (indiceQuestaoAtual + 1 < listaQuestoes.length) {
+                abrirDesafioNivel(rotuloNivel, indiceQuestaoAtual + 1);
               } else {
-                if (quizActiveCard) {
-                  quizActiveCard.hidden = true;
-                  quizActiveCard.style.display = "none";
+                if (cartaoDesafioAtivo) {
+                  cartaoDesafioAtivo.hidden = true;
+                  cartaoDesafioAtivo.style.display = "none";
                 }
-                if (quizCompletedCard) {
-                  quizCompletedCard.hidden = false;
-                  quizCompletedCard.style.display = "block";
+                if (cartaoDesafioConcluido) {
+                  cartaoDesafioConcluido.hidden = false;
+                  cartaoDesafioConcluido.style.display = "block";
                 }
               }
             }, 900);
           } else {
-            btn.classList.add("wrong");
-            if (quizFeedbackMsg) {
-              quizFeedbackMsg.style.color = "#dc2626";
-              quizFeedbackMsg.textContent = "🤔 Resposta incorreta! Tente novamente ou envie sua dúvida abaixo.";
+            botao.classList.add("incorreta");
+            if (mensagemRetornoDesafio) {
+              mensagemRetornoDesafio.style.color = "#dc2626";
+              mensagemRetornoDesafio.textContent =
+                "🤔 Resposta incorreta! Tente novamente ou envie sua dúvida abaixo.";
             }
           }
         });
@@ -805,75 +859,81 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Botões de navegação de volta entre as 4 etapas
-  document.getElementById("backToSubjectsBtn")?.addEventListener("click", () => {
-    setActivityStage("catalog");
+  document.getElementById("botaoVoltarMaterias")?.addEventListener("click", () => {
+    definirEtapaAtividade("catalogo");
   });
-  document.getElementById("backToTrailBtn")?.addEventListener("click", () => {
-    setActivityStage("trail");
+  document.getElementById("botaoVoltarTrilha")?.addEventListener("click", () => {
+    definirEtapaAtividade("trilha");
   });
-  document.getElementById("backToLevelsBtn")?.addEventListener("click", () => {
-    setActivityStage("levels");
+  document.getElementById("botaoVoltarNiveis")?.addEventListener("click", () => {
+    definirEtapaAtividade("niveis");
   });
-  document.getElementById("finishBackToLevelsBtn")?.addEventListener("click", () => {
-    setActivityStage("levels");
+  document.getElementById("botaoConcluirVoltarNiveis")?.addEventListener("click", () => {
+    definirEtapaAtividade("niveis");
   });
-  document.getElementById("reviewQuizBtn")?.addEventListener("click", () => {
-    openLevelQuiz("Nível 1: Soma", 0);
+  document.getElementById("botaoRevisarDesafio")?.addEventListener("click", () => {
+    abrirDesafioNivel("Nível 1: Soma", 0);
   });
 
-  // Clicar em uma matéria abre o Passo 2 (Trilha exclusiva daquela matéria!)
-  document.querySelectorAll("[data-subject], [data-open-subject]").forEach((card) => {
-    card.addEventListener("click", () => {
-      const subj = card.getAttribute("data-subject") || card.getAttribute("data-open-subject") || "Matemática";
-      openSubjectTrail(subj);
+  // Clicar em uma matéria abre o Passo 2 (Trilha exclusiva daquela matéria)
+  document.querySelectorAll("[data-materia], [data-abrir-materia]").forEach((cartao) => {
+    cartao.addEventListener("click", () => {
+      const materiaSelecionada =
+        cartao.getAttribute("data-materia") ||
+        cartao.getAttribute("data-abrir-materia") ||
+        "Matemática";
+      abrirTrilhaMateria(materiaSelecionada);
     });
   });
 
   // =========================================================================
-  // 5. LOJA DE RECOMPENSAS (16 Produtos Oficiais do Figma 24:4419)
+  // 5. LOJA DE RECOMPENSAS (16 Produtos Oficiais)
   // =========================================================================
-  const shopProducts = [
-    { name: "Caderno", pts: 10, cat: "objeto", bg: "#a4deff", img: "assets/shop-caderno.png" },
-    { name: "Mochila", pts: 25, cat: "objeto", bg: "rgba(64,154,186,0.45)", img: "assets/shop-mochila.png" },
-    { name: "Fones de ouvido", pts: 50, cat: "eletronicos", bg: "rgba(0,149,255,0.22)", img: "assets/shop-fones.png" },
-    { name: "Notebook", pts: 800, cat: "eletronicos", bg: "rgba(183,223,245,0.35)", img: "assets/shop-notebook.png" },
-    { name: "Tênis nike", pts: 100, cat: "objeto", bg: "rgba(202,247,147,0.35)", img: "assets/shop-tenis.png" },
-    { name: "Camiseta Addidas", pts: 150, cat: "objeto", bg: "rgba(187,45,240,0.22)", img: "assets/shop-camiseta.png" },
-    { name: "Calça Supreme", pts: 120, cat: "objeto", bg: "rgba(239,185,11,0.25)", img: "assets/shop-calca.png" },
-    { name: "Cd Victor e Leo", pts: 500, cat: "objeto", bg: "rgba(216,17,10,0.22)", img: "assets/shop-cd.png" },
-    { name: "DVD Crepúsculo", pts: 520, cat: "objeto", bg: "rgba(83,52,7,0.22)", img: "assets/shop-dvd.png" },
-    { name: "Blur ay", pts: 415, cat: "eletronicos", bg: "rgba(211,176,224,0.35)", img: "assets/shop-bluray.png" },
-    { name: "Ps3 desbloqueado", pts: 3000, cat: "eletronicos", bg: "rgba(253,229,152,0.35)", img: "assets/shop-ps3.png" },
-    { name: "Vale presente", pts: 80, cat: "objeto", bg: "rgba(24,216,149,0.25)", img: "assets/shop-vale.png" },
-    { name: "Cesta básica", pts: 65, cat: "objeto", bg: "rgba(247,165,147,0.3)", img: "assets/shop-cesta.png" },
-    { name: "coca-cola", pts: 40, cat: "objeto", bg: "rgba(205,7,178,0.22)", img: "assets/shop-coca.png" },
-    { name: "Ovo de páscoa", pts: 25, cat: "objeto", bg: "rgba(253,229,152,0.35)", img: "assets/shop-ovo.png" },
-    { name: "Canetinhas", pts: 5, cat: "objeto", bg: "rgba(183,223,245,0.35)", img: "assets/shop-canetinhas.png" },
+  const produtosLoja = [
+    { nome: "Caderno", pontos: 10, categoria: "objeto", corFundo: "#a4deff", imagem: "assets/shop-caderno.png" },
+    { nome: "Mochila", pontos: 25, categoria: "objeto", corFundo: "rgba(64,154,186,0.45)", imagem: "assets/shop-mochila.png" },
+    { nome: "Fones de ouvido", pontos: 50, categoria: "eletronicos", corFundo: "rgba(0,149,255,0.22)", imagem: "assets/shop-fones.png" },
+    { nome: "Notebook", pontos: 800, categoria: "eletronicos", corFundo: "rgba(183,223,245,0.35)", imagem: "assets/shop-notebook.png" },
+    { nome: "Tênis esportivo", pontos: 100, categoria: "objeto", corFundo: "rgba(202,247,147,0.35)", imagem: "assets/shop-tenis.png" },
+    { nome: "Camiseta esportiva", pontos: 150, categoria: "objeto", corFundo: "rgba(187,45,240,0.22)", imagem: "assets/shop-camiseta.png" },
+    { nome: "Calça moletom", pontos: 120, categoria: "objeto", corFundo: "rgba(239,185,11,0.25)", imagem: "assets/shop-calca.png" },
+    { nome: "CD Musical", pontos: 500, categoria: "objeto", corFundo: "rgba(216,17,10,0.22)", imagem: "assets/shop-cd.png" },
+    { nome: "DVD Filme", pontos: 520, categoria: "objeto", corFundo: "rgba(83,52,7,0.22)", imagem: "assets/shop-dvd.png" },
+    { nome: "Aparelho Blu-ray", pontos: 415, categoria: "eletronicos", corFundo: "rgba(211,176,224,0.35)", imagem: "assets/shop-bluray.png" },
+    { nome: "Videogame PS3", pontos: 3000, categoria: "eletronicos", corFundo: "rgba(253,229,152,0.35)", imagem: "assets/shop-ps3.png" },
+    { nome: "Vale-presente", pontos: 80, categoria: "objeto", corFundo: "rgba(24,216,149,0.25)", imagem: "assets/shop-vale.png" },
+    { nome: "Cesta básica", pontos: 65, categoria: "objeto", corFundo: "rgba(247,165,147,0.3)", imagem: "assets/shop-cesta.png" },
+    { nome: "Refrigerante", pontos: 40, categoria: "objeto", corFundo: "rgba(205,7,178,0.22)", imagem: "assets/shop-coca.png" },
+    { nome: "Ovo de Páscoa", pontos: 25, categoria: "objeto", corFundo: "rgba(253,229,152,0.35)", imagem: "assets/shop-ovo.png" },
+    { nome: "Kit Canetinhas", pontos: 5, categoria: "objeto", corFundo: "rgba(183,223,245,0.35)", imagem: "assets/shop-canetinhas.png" },
   ];
 
-  let activeShopCategory = "all";
-  const shopProductsGrid = document.getElementById("shopProductsGrid");
-  const shopSearchInput = document.getElementById("shopSearchInput");
-  const shopFeedbackMsg = document.getElementById("shopFeedbackMsg");
+  let categoriaAtivaLoja = "todos";
+  const gradeProdutosLoja = document.getElementById("gradeProdutosLoja");
+  const campoBuscaLoja = document.getElementById("campoBuscaLoja");
+  const mensagemRetornoLoja = document.getElementById("mensagemRetornoLoja");
 
-  const renderShopProducts = () => {
-    if (!shopProductsGrid) return;
-    const query = (shopSearchInput?.value || "").toLowerCase().trim();
+  const renderizarProdutosLoja = () => {
+    if (!gradeProdutosLoja) return;
+    const termoBusca = (campoBuscaLoja?.value || "").toLowerCase().trim();
 
-    const filtered = shopProducts.filter((item) => {
-      const matchCat = activeShopCategory === "all" || item.cat === activeShopCategory;
-      const matchQuery = item.name.toLowerCase().includes(query);
-      return matchCat && matchQuery;
+    const produtosFiltrados = produtosLoja.filter((produto) => {
+      const correspondeCategoria =
+        categoriaAtivaLoja === "todos" ||
+        categoriaAtivaLoja === "all" ||
+        produto.categoria === categoriaAtivaLoja;
+      const correspondeBusca = produto.nome.toLowerCase().includes(termoBusca);
+      return correspondeCategoria && correspondeBusca;
     });
 
-    shopProductsGrid.innerHTML = filtered
+    gradeProdutosLoja.innerHTML = produtosFiltrados
       .map(
-        (item) => `
-        <article class="shop-item-card" style="background: ${item.bg}">
-          <img src="${item.img}" alt="${item.name}" class="shop-item-card__img" />
-          <h4 class="shop-item-card__name">${item.name}</h4>
-          <p class="shop-item-card__pts">${item.pts} pts</p>
-          <button type="button" class="shop-redeem-btn" data-name="${item.name}" data-pts="${item.pts}">
+        (produto) => `
+        <article class="cartao-item-loja" style="background: ${produto.corFundo}">
+          <img src="${produto.imagem}" alt="${produto.nome}" class="cartao-item-loja__imagem" />
+          <h4 class="cartao-item-loja__nome">${produto.nome}</h4>
+          <p class="cartao-item-loja__pontos">${produto.pontos} pts</p>
+          <button type="button" class="botao-resgatar-loja" data-nome="${produto.nome}" data-pontos="${produto.pontos}">
             Resgatar Prêmio
           </button>
         </article>
@@ -881,388 +941,402 @@ document.addEventListener("DOMContentLoaded", () => {
       )
       .join("");
 
-    shopProductsGrid.querySelectorAll(".shop-redeem-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const cost = Number(btn.getAttribute("data-pts"));
-        const prodName = btn.getAttribute("data-name");
+    gradeProdutosLoja.querySelectorAll(".botao-resgatar-loja").forEach((botao) => {
+      botao.addEventListener("click", () => {
+        const custoPontos = Number(botao.getAttribute("data-pontos"));
+        const nomeProduto = botao.getAttribute("data-nome");
 
-        if (studentPoints >= cost) {
-          studentPoints -= cost;
-          updatePointsDisplay();
-          if (shopFeedbackMsg) {
-            shopFeedbackMsg.style.color = "#16a34a";
-            shopFeedbackMsg.textContent = `🎁 Parabéns! Você resgatou "${prodName}" por ${cost} pts! Saldo atual: ${studentPoints} pts.`;
+        if (pontosEstudante >= custoPontos) {
+          pontosEstudante -= custoPontos;
+          atualizarExibicaoPontos();
+          if (mensagemRetornoLoja) {
+            mensagemRetornoLoja.style.color = "#16a34a";
+            mensagemRetornoLoja.textContent = `🎁 Parabéns! Você resgatou "${nomeProduto}" por ${custoPontos} pts! Saldo atual: ${pontosEstudante} pts.`;
           }
-        } else if (shopFeedbackMsg) {
-          shopFeedbackMsg.style.color = "#dc2626";
-          shopFeedbackMsg.textContent = `⚠️ Saldo insuficiente para "${prodName}" (${cost} pts). Conclua mais atividades para ganhar pontos!`;
+        } else if (mensagemRetornoLoja) {
+          mensagemRetornoLoja.style.color = "#dc2626";
+          mensagemRetornoLoja.textContent = `⚠️ Saldo insuficiente para "${nomeProduto}" (${custoPontos} pts). Conclua mais atividades para ganhar pontos!`;
         }
       });
     });
   };
 
-  renderShopProducts();
+  renderizarProdutosLoja();
 
-  shopSearchInput?.addEventListener("input", renderShopProducts);
-  document.querySelectorAll("[data-shop-cat]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll("[data-shop-cat]").forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      activeShopCategory = btn.getAttribute("data-shop-cat");
-      renderShopProducts();
+  campoBuscaLoja?.addEventListener("input", renderizarProdutosLoja);
+  document.querySelectorAll("[data-categoria-loja]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      document
+        .querySelectorAll("[data-categoria-loja]")
+        .forEach((item) => item.classList.remove("ativo"));
+      botao.classList.add("ativo");
+      categoriaAtivaLoja = botao.getAttribute("data-categoria-loja") || "todos";
+      renderizarProdutosLoja();
     });
   });
 
   // =========================================================================
-  // 6. RANKING DA TURMA (Figma 34:805)
+  // 6. CLASSIFICAÇÃO DA TURMA (Nomes e textos 100% em Português do Brasil)
   // =========================================================================
-  const rankingEntries = [
-    { pos: "04", name: "Jessica Anderson", pts: 992, avatar: "assets/avatar-rank4.png", up: true },
-    { pos: "05", name: "Sophia Anderson", pts: 777, avatar: "assets/avatar-rank5.png", up: false },
-    { pos: "06", name: "Ethan Carter", pts: 448, avatar: "assets/avatar-rank6.png", up: true },
-    { pos: "07", name: "Liam Johnson", pts: 580, avatar: "assets/avatar-rank7.png", up: true },
-    { pos: "07", name: "Oliver Smith", pts: 580, avatar: "assets/avatar-rank8.png", up: false },
-    { pos: "08", name: "Rebeca Anderson", pts: 584, avatar: "assets/avatar-rank5.png", up: false },
-    { pos: "09", name: "Jean Carter", pts: 448, avatar: "assets/avatar-rank6.png", up: true },
-    { pos: "10", name: "Whillyan Johnson", pts: 580, avatar: "assets/avatar-rank7.png", up: true },
-    { pos: "11", name: "Guilherme Smith", pts: 580, avatar: "assets/avatar-rank8.png", up: false },
-    { pos: "12", name: "Samantha Atilho", pts: 584, avatar: "assets/avatar-rank4.png", up: false },
-    { pos: "13", name: "Heryk Carter", pts: 448, avatar: "assets/avatar-rank6.png", up: true },
-    { pos: "14", name: "Enrique Johnson", pts: 446, avatar: "assets/avatar-rank7.png", up: true },
-    { pos: "15", name: "Luiz Smith", pts: 446, avatar: "assets/avatar-rank8.png", up: false },
-    { pos: "16", name: "Samila lizboa", pts: 445, avatar: "assets/avatar-rank4.png", up: false },
+  const registrosClassificacao = [
+    { posicao: "04", nome: "Jéssica Andrade", pontos: 992, avatar: "assets/avatar-rank4.png", subiu: true },
+    { posicao: "05", nome: "Sofia Andrade", pontos: 777, avatar: "assets/avatar-rank5.png", subiu: false },
+    { posicao: "06", nome: "Heitor Castro", pontos: 448, avatar: "assets/avatar-rank6.png", subiu: true },
+    { posicao: "07", nome: "Lucas Martins", pontos: 580, avatar: "assets/avatar-rank7.png", subiu: true },
+    { posicao: "08", nome: "Otávio Silva", pontos: 580, avatar: "assets/avatar-rank8.png", subiu: false },
+    { posicao: "09", nome: "Rebeca Andrade", pontos: 584, avatar: "assets/avatar-rank5.png", subiu: false },
+    { posicao: "10", nome: "João Castro", pontos: 448, avatar: "assets/avatar-rank6.png", subiu: true },
+    { posicao: "11", nome: "William Martins", pontos: 580, avatar: "assets/avatar-rank7.png", subiu: true },
+    { posicao: "12", nome: "Guilherme Silva", pontos: 580, avatar: "assets/avatar-rank8.png", subiu: false },
+    { posicao: "13", nome: "Samanta Atilho", pontos: 584, avatar: "assets/avatar-rank4.png", subiu: false },
+    { posicao: "14", nome: "Henrique Castro", pontos: 448, avatar: "assets/avatar-rank6.png", subiu: true },
+    { posicao: "15", nome: "Enzo Martins", pontos: 446, avatar: "assets/avatar-rank7.png", subiu: true },
+    { posicao: "16", nome: "Luiz Silva", pontos: 446, avatar: "assets/avatar-rank8.png", subiu: false },
+    { posicao: "17", nome: "Sâmila Lisboa", pontos: 445, avatar: "assets/avatar-rank4.png", subiu: false },
   ];
 
-  const leaderboardList = document.getElementById("leaderboardList");
-  const renderLeaderboard = (multiplier = 1) => {
-    if (!leaderboardList) return;
-    leaderboardList.innerHTML = rankingEntries
+  const listaClassificacaoGeral = document.getElementById("listaClassificacaoGeral");
+  const renderizarClassificacao = (multiplicador = 1) => {
+    if (!listaClassificacaoGeral) return;
+    listaClassificacaoGeral.innerHTML = registrosClassificacao
       .map(
-        (r) => `
-        <div class="leaderboard-row">
-          <div class="leaderboard-row__left">
-            <span class="leaderboard-pos">${r.pos}</span>
-            <img src="${r.avatar}" alt="${r.name}" class="leaderboard-avatar" />
+        (registro) => `
+        <div class="linha-classificacao">
+          <div class="linha-classificacao__esquerda">
+            <span class="posicao-classificacao">${registro.posicao}</span>
+            <img src="${registro.avatar}" alt="${registro.nome}" class="avatar-classificacao" />
             <div>
-              <div class="leaderboard-name">${r.name}</div>
-              <div class="leaderboard-points">${Math.round(r.pts * multiplier)} points</div>
+              <div class="nome-classificacao">${registro.nome}</div>
+              <div class="pontos-classificacao">${Math.round(registro.pontos * multiplicador)} pontos</div>
             </div>
           </div>
-          <span class="trend-badge ${r.up ? "trend--up" : "trend--down"}">${r.up ? "▲" : "▼"}</span>
+          <span class="selo-tendencia ${registro.subiu ? "tendencia--alta" : "tendencia--baixa"}">${registro.subiu ? "▲" : "▼"}</span>
         </div>
       `
       )
       .join("");
   };
 
-  renderLeaderboard(1);
+  renderizarClassificacao(1);
 
-  document.querySelectorAll("[data-period]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll("[data-period]").forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      const p = btn.getAttribute("data-period");
-      const mult = p === "mes" ? 3.2 : p === "semana" ? 1.5 : 1;
-      renderLeaderboard(mult);
+  document.querySelectorAll("[data-periodo]").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      document.querySelectorAll("[data-periodo]").forEach((item) => item.classList.remove("ativo"));
+      botao.classList.add("ativo");
+      const periodoSelecionado = botao.getAttribute("data-periodo");
+      const multiplicador =
+        periodoSelecionado === "mes" ? 3.2 : periodoSelecionado === "semana" ? 1.5 : 1;
+      renderizarClassificacao(multiplicador);
     });
   });
 
   // =========================================================================
-  // 7. CHAT SINCRONIZADO ALUNO <-> PROFESSORA TATI (Figma 24:911 & 101:922)
+  // 7. CONVERSA SINCRONIZADA ALUNO <-> PROFESSORA TATI
   // =========================================================================
-  const conversations = [
+  const listaConversas = [
     {
       id: "bruno",
-      studentName: "Bruno Dolarence",
-      topic: "Atividade de Operações",
-      time: "2m",
+      nomeEstudante: "Bruno Delorence",
+      topico: "Atividade de Operações",
+      horario: "2 min",
       avatar: "assets/avatar-bruno.png",
-      unread: true,
-      messages: [
-        { from: "student", text: "Professora, como faço a soma de dois números?" },
-        { from: "teacher", text: "Basta pegar a quantidade e contar mais a outra!!" },
-        { from: "student", text: "Verdade! Havia esquecido! Obrigado!!! :D" },
-        { from: "teacher", text: "Por nada, qualquer outra dúvida é só chamar." },
-        { from: "student", text: "Tá bom professora, você é a melhor!" },
-        { from: "teacher", text: "Muito obrigado! Você também é um ótimo aluno." },
+      naoLida: true,
+      mensagens: [
+        { remetente: "estudante", texto: "Professora, como faço a soma de dois números?" },
+        { remetente: "professora", texto: "Basta pegar a quantidade e contar mais a outra!!" },
+        { remetente: "estudante", texto: "Verdade! Havia esquecido! Obrigado!!! :D" },
+        { remetente: "professora", texto: "Por nada, qualquer outra dúvida é só chamar." },
+        { remetente: "estudante", texto: "Tá bom professora, você é a melhor!" },
+        { remetente: "professora", texto: "Muito obrigada! Você também é um ótimo aluno." },
       ],
     },
     {
-      id: "david",
-      studentName: "David",
-      topic: "Atividade de Operações",
-      time: "5m",
+      id: "davi",
+      nomeEstudante: "Davi Almeida",
+      topico: "Atividade de Operações",
+      horario: "5 min",
       avatar: "assets/avatar-david.png",
-      unread: true,
-      messages: [
-        { from: "student", text: "Professora Tati, fiquei com dúvida na soma dos ângulos de 36°." },
+      naoLida: true,
+      mensagens: [
+        { remetente: "estudante", texto: "Professora Tati, fiquei com dúvida na soma dos ângulos de 36°." },
       ],
     },
     {
-      id: "theresa",
-      studentName: "Theresa",
-      topic: "Atividade de Operações",
-      time: "8m",
+      id: "teresa",
+      nomeEstudante: "Teresa Souza",
+      topico: "Atividade de Operações",
+      horario: "8 min",
       avatar: "assets/avatar-theresa.png",
-      unread: true,
-      messages: [
-        { from: "student", text: "Posso entregar a lista de revisão até amanhã?" },
+      naoLida: true,
+      mensagens: [
+        { remetente: "estudante", texto: "Posso entregar a lista de revisão até amanhã?" },
       ],
     },
     {
-      id: "marvin",
-      studentName: "Marvin",
-      topic: "Atividade de Operações",
-      time: "30m",
+      id: "marcos",
+      nomeEstudante: "Marcos Oliveira",
+      topico: "Atividade de Operações",
+      horario: "30 min",
       avatar: "assets/avatar-marvin.png",
-      unread: true,
-      messages: [
-        { from: "student", text: "Não entendi o exercício 4 da trilha de Matemática." },
+      naoLida: true,
+      mensagens: [
+        { remetente: "estudante", texto: "Não entendi o exercício 4 da trilha de Matemática." },
       ],
     },
     {
-      id: "devon",
-      studentName: "Devon Lane",
-      topic: "Atividade de Equações",
-      time: "58m",
+      id: "diego",
+      nomeEstudante: "Diego Lima",
+      topico: "Atividade de Equações",
+      horario: "58 min",
       avatar: "assets/avatar-devon.png",
-      unread: false,
-      messages: [
-        { from: "student", text: "Obrigado pela explicação de Equações de 1º grau!" },
-        { from: "teacher", text: "Excelente evolução, Devon! Continue praticando." },
+      naoLida: false,
+      mensagens: [
+        { remetente: "estudante", texto: "Obrigado pela explicação de Equações de 1º grau!" },
+        { remetente: "professora", texto: "Excelente evolução, Diego! Continue praticando." },
       ],
     },
     {
-      id: "eleanor",
-      studentName: "Eleanor Pena",
-      topic: "Atividade de Operações",
-      time: "17h",
+      id: "helena",
+      nomeEstudante: "Helena Pena",
+      topico: "Atividade de Operações",
+      horario: "17 h",
       avatar: "assets/avatar-eleanor.png",
-      unread: false,
-      messages: [
-        { from: "student", text: "Concluí todos os níveis da semana!" },
-        { from: "teacher", text: "Parabéns, Eleanor!" },
+      naoLida: false,
+      mensagens: [
+        { remetente: "estudante", texto: "Concluí todos os níveis da semana!" },
+        { remetente: "professora", texto: "Parabéns, Helena!" },
       ],
     },
   ];
 
-  let activeConversationId = "bruno";
-  const studentChatMessages = document.getElementById("studentChatMessages");
-  const teacherInboxList = document.getElementById("teacherInboxList");
-  const teacherChatMessages = document.getElementById("teacherChatMessages");
-  const teacherUnreadBadge = document.getElementById("teacherUnreadBadge");
-  const filterUnrepliedCheck = document.getElementById("filterUnrepliedCheck");
+  let idConversaAtiva = "bruno";
+  const mensagensConversaEstudante = document.getElementById("mensagensConversaEstudante");
+  const listaEntradaProfessora = document.getElementById("listaEntradaProfessora");
+  const mensagensConversaProfessora = document.getElementById("mensagensConversaProfessora");
+  const seloNaoLidasProfessora = document.getElementById("seloNaoLidasProfessora");
+  const caixaFiltrarNaoRespondidas = document.getElementById("caixaFiltrarNaoRespondidas");
 
-  const renderStudentChat = () => {
-    if (!studentChatMessages) return;
-    const brunoConv = conversations.find((c) => c.id === "bruno");
-    if (!brunoConv) return;
+  const renderizarConversaEstudante = () => {
+    if (!mensagensConversaEstudante) return;
+    const conversaBruno = listaConversas.find((conversa) => conversa.id === "bruno");
+    if (!conversaBruno) return;
 
-    studentChatMessages.innerHTML = brunoConv.messages
+    mensagensConversaEstudante.innerHTML = conversaBruno.mensagens
       .map(
-        (m) => `
-        <div class="chat-bubble ${m.from === "student" ? "chat-bubble--incoming" : "chat-bubble--outgoing"}">
-          ${m.text}
+        (mensagem) => `
+        <div class="balao-conversa ${mensagem.remetente === "estudante" ? "balao-conversa--recebido" : "balao-conversa--enviado"}">
+          ${mensagem.texto}
         </div>
       `
       )
       .join("");
-    studentChatMessages.scrollTop = studentChatMessages.scrollHeight;
+    mensagensConversaEstudante.scrollTop = mensagensConversaEstudante.scrollHeight;
   };
 
-  const renderTeacherChat = () => {
-    if (!teacherInboxList || !teacherChatMessages) return;
-    const onlyUnreplied = filterUnrepliedCheck?.checked;
+  const renderizarConversaProfessora = () => {
+    if (!listaEntradaProfessora || !mensagensConversaProfessora) return;
+    const apenasNaoRespondidas = caixaFiltrarNaoRespondidas?.checked;
 
-    const unreadCount = conversations.filter((c) => c.unread).length;
-    if (teacherUnreadBadge) {
-      teacherUnreadBadge.textContent = String(unreadCount);
+    const totalNaoLidas = listaConversas.filter((conversa) => conversa.naoLida).length;
+    if (seloNaoLidasProfessora) {
+      seloNaoLidasProfessora.textContent = String(totalNaoLidas);
     }
 
-    const visibleList = conversations.filter((c) => (!onlyUnreplied ? true : c.unread));
-    teacherInboxList.innerHTML = visibleList
+    const conversasVisiveis = listaConversas.filter((conversa) =>
+      !apenasNaoRespondidas ? true : conversa.naoLida
+    );
+    listaEntradaProfessora.innerHTML = conversasVisiveis
       .map(
-        (c) => `
-        <div class="inbox-item ${c.unread ? "unread" : ""} ${c.id === activeConversationId ? "active" : ""}" data-conv-id="${c.id}">
-          ${c.unread ? '<span class="inbox-dot"></span>' : ""}
-          <img src="${c.avatar}" alt="${c.studentName}" class="inbox-avatar" />
-          <div class="inbox-info">
-            <strong>${c.studentName}</strong>
-            <span>${c.topic}</span>
+        (conversa) => `
+        <div class="item-entrada ${conversa.naoLida ? "nao-lida" : ""} ${conversa.id === idConversaAtiva ? "ativo" : ""}" data-id-conversa="${conversa.id}">
+          ${conversa.naoLida ? '<span class="ponto-entrada"></span>' : ""}
+          <img src="${conversa.avatar}" alt="${conversa.nomeEstudante}" class="avatar-entrada" />
+          <div class="informacoes-entrada">
+            <strong>${conversa.nomeEstudante}</strong>
+            <span>${conversa.topico}</span>
           </div>
-          <span class="inbox-time">${c.time}</span>
+          <span class="horario-entrada">${conversa.horario}</span>
         </div>
       `
       )
       .join("");
 
-    teacherInboxList.querySelectorAll(".inbox-item").forEach((item) => {
+    listaEntradaProfessora.querySelectorAll(".item-entrada").forEach((item) => {
       item.addEventListener("click", () => {
-        activeConversationId = item.getAttribute("data-conv-id");
-        renderTeacherChat();
+        idConversaAtiva = item.getAttribute("data-id-conversa") || "bruno";
+        renderizarConversaProfessora();
       });
     });
 
-    const activeConv = conversations.find((c) => c.id === activeConversationId) || conversations[0];
-    if (activeConv) {
-      document.getElementById("activeChatStudentAvatar").src = activeConv.avatar;
-      document.getElementById("activeChatStudentName").textContent = activeConv.studentName;
-      document.getElementById("activeChatStudentTopic").textContent = `${activeConv.topic} • Turma 3C`;
+    const conversaAtiva =
+      listaConversas.find((conversa) => conversa.id === idConversaAtiva) || listaConversas[0];
+    if (conversaAtiva) {
+      const avatarAtivo = document.getElementById("avatarEstudanteConversaAtiva");
+      const nomeAtivo = document.getElementById("nomeEstudanteConversaAtiva");
+      const topicoAtivo = document.getElementById("topicoEstudanteConversaAtiva");
 
-      teacherChatMessages.innerHTML = activeConv.messages
+      if (avatarAtivo) avatarAtivo.src = conversaAtiva.avatar;
+      if (nomeAtivo) nomeAtivo.textContent = conversaAtiva.nomeEstudante;
+      if (topicoAtivo) topicoAtivo.textContent = `${conversaAtiva.topico} • Turma 3C`;
+
+      mensagensConversaProfessora.innerHTML = conversaAtiva.mensagens
         .map(
-          (m) => `
-          <div class="chat-bubble ${m.from === "student" ? "chat-bubble--incoming" : "chat-bubble--outgoing"}">
-            ${m.text}
+          (mensagem) => `
+          <div class="balao-conversa ${mensagem.remetente === "estudante" ? "balao-conversa--recebido" : "balao-conversa--enviado"}">
+            ${mensagem.texto}
           </div>
         `
         )
         .join("");
-      teacherChatMessages.scrollTop = teacherChatMessages.scrollHeight;
+      mensagensConversaProfessora.scrollTop = mensagensConversaProfessora.scrollHeight;
     }
   };
 
-  renderStudentChat();
-  renderTeacherChat();
+  renderizarConversaEstudante();
+  renderizarConversaProfessora();
 
-  filterUnrepliedCheck?.addEventListener("change", renderTeacherChat);
+  caixaFiltrarNaoRespondidas?.addEventListener("change", renderizarConversaProfessora);
 
-  document.getElementById("studentChatForm")?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const input = document.getElementById("studentChatInput");
-    const text = input.value.trim();
-    if (!text) return;
+  document.getElementById("formularioConversaEstudante")?.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+    const campoMensagem = document.getElementById("campoConversaEstudante");
+    const textoMensagem = campoMensagem.value.trim();
+    if (!textoMensagem) return;
 
-    const brunoConv = conversations.find((c) => c.id === "bruno");
-    brunoConv.messages.push({ from: "student", text });
-    brunoConv.unread = true;
-    brunoConv.time = "agora";
-    input.value = "";
-    renderStudentChat();
-    renderTeacherChat();
+    const conversaBruno = listaConversas.find((conversa) => conversa.id === "bruno");
+    conversaBruno.mensagens.push({ remetente: "estudante", texto: textoMensagem });
+    conversaBruno.naoLida = true;
+    conversaBruno.horario = "agora";
+    campoMensagem.value = "";
+    renderizarConversaEstudante();
+    renderizarConversaProfessora();
   });
 
-  document.getElementById("activityDoubtForm")?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const input = document.getElementById("activityDoubtInput");
-    const text = input.value.trim();
-    if (!text) return;
+  document.getElementById("formularioDuvidaAtividade")?.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+    const campoDuvida = document.getElementById("campoDuvidaAtividade");
+    const textoDuvida = campoDuvida.value.trim();
+    if (!textoDuvida) return;
 
-    const brunoConv = conversations.find((c) => c.id === "bruno");
-    brunoConv.messages.push({ from: "student", text });
-    brunoConv.unread = true;
-    brunoConv.time = "agora";
-    input.value = "";
-    renderStudentChat();
-    renderTeacherChat();
-    showView("student-chat");
+    const conversaBruno = listaConversas.find((conversa) => conversa.id === "bruno");
+    conversaBruno.mensagens.push({ remetente: "estudante", texto: textoDuvida });
+    conversaBruno.naoLida = true;
+    conversaBruno.horario = "agora";
+    campoDuvida.value = "";
+    renderizarConversaEstudante();
+    renderizarConversaProfessora();
+    mostrarTela("estudante-conversa");
   });
 
-  document.getElementById("teacherChatForm")?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const input = document.getElementById("teacherChatInput");
-    const text = input.value.trim();
-    if (!text) return;
+  document.getElementById("formularioConversaProfessora")?.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+    const campoResposta = document.getElementById("campoConversaProfessora");
+    const textoResposta = campoResposta.value.trim();
+    if (!textoResposta) return;
 
-    const activeConv = conversations.find((c) => c.id === activeConversationId);
-    if (activeConv) {
-      activeConv.messages.push({ from: "teacher", text });
-      activeConv.unread = false;
-      input.value = "";
-      renderTeacherChat();
-      renderStudentChat();
+    const conversaAtiva = listaConversas.find((conversa) => conversa.id === idConversaAtiva);
+    if (conversaAtiva) {
+      conversaAtiva.mensagens.push({ remetente: "professora", texto: textoResposta });
+      conversaAtiva.naoLida = false;
+      campoResposta.value = "";
+      renderizarConversaProfessora();
+      renderizarConversaEstudante();
     }
   });
 
   // =========================================================================
-  // 8. CHAMADA DIGITAL & NOTAS DA TURMA 3C (Figma 107:1587, 111:1709, 111:2201)
+  // 8. CHAMADA DIGITAL E NOTAS DA TURMA 3C
   // =========================================================================
-  const class3CStudents = [
-    { num: "#1", name: "Agnaldo Abreu", avatar: "assets/avatar-wilson.png", present: true },
-    { num: "#2", name: "Bruno Dolarence", avatar: "assets/avatar-bruno.png", present: true },
-    { num: "#3", name: "Caroço Demanga", avatar: "assets/avatar-david.png", present: true },
-    { num: "#4", name: "Darley Deley", avatar: "assets/avatar-marvin.png", present: false },
-    { num: "#5", name: "Edmundo Cabrito", avatar: "assets/avatar-devon.png", present: true },
-    { num: "#6", name: "Ferdinando Propolis", avatar: "assets/avatar-wilson.png", present: true },
-    { num: "#7", name: "Groot Darvore", avatar: "assets/avatar-david.png", present: true },
-    { num: "#8", name: "Henrique Alves", avatar: "assets/avatar-marvin.png", present: true },
-    { num: "#9", name: "Irineu Nemeu", avatar: "assets/avatar-devon.png", present: true },
-    { num: "#10", name: "Jozué Barbosa", avatar: "assets/avatar-bruno.png", present: true },
+  const estudantesTurma3C = [
+    { numero: "#1", nome: "Agnaldo Abreu", avatar: "assets/avatar-wilson.png", presente: true },
+    { numero: "#2", nome: "Bruno Delorence", avatar: "assets/avatar-bruno.png", presente: true },
+    { numero: "#3", nome: "Carlos Eduardo", avatar: "assets/avatar-david.png", presente: true },
+    { numero: "#4", nome: "Darley Souza", avatar: "assets/avatar-marvin.png", presente: false },
+    { numero: "#5", nome: "Edmundo Brito", avatar: "assets/avatar-devon.png", presente: true },
+    { numero: "#6", nome: "Fernando Prado", avatar: "assets/avatar-wilson.png", presente: true },
+    { numero: "#7", nome: "Gabriel Rocha", avatar: "assets/avatar-david.png", presente: true },
+    { numero: "#8", nome: "Henrique Alves", avatar: "assets/avatar-marvin.png", presente: true },
+    { numero: "#9", nome: "Irineu Neves", avatar: "assets/avatar-devon.png", presente: true },
+    { numero: "#10", nome: "Josué Barbosa", avatar: "assets/avatar-bruno.png", presente: true },
   ];
 
-  const attendanceList = document.getElementById("attendanceList");
-  const renderAttendance = () => {
-    if (!attendanceList) return;
-    attendanceList.innerHTML = class3CStudents
+  const listaPresencaChamada = document.getElementById("listaPresencaChamada");
+  const renderizarChamada = () => {
+    if (!listaPresencaChamada) return;
+    listaPresencaChamada.innerHTML = estudantesTurma3C
       .map(
-        (s, idx) => `
-        <label class="student-row-card">
-          <div class="student-row-card__left">
-            <img src="${s.avatar}" alt="${s.name}" class="student-row-card__avatar" />
-            <span class="student-row-card__num">${s.num}</span>
-            <span class="student-row-card__name">${s.name}</span>
+        (estudante, indice) => `
+        <label class="cartao-linha-estudante">
+          <div class="cartao-linha-estudante__esquerda">
+            <img src="${estudante.avatar}" alt="${estudante.nome}" class="cartao-linha-estudante__avatar" />
+            <span class="cartao-linha-estudante__numero">${estudante.numero}</span>
+            <span class="cartao-linha-estudante__nome">${estudante.nome}</span>
           </div>
-          <input type="checkbox" class="attendance-circle-check" data-idx="${idx}" ${s.present ? "checked" : ""} />
+          <input type="checkbox" class="marcador-circular-presenca" data-indice="${indice}" ${estudante.presente ? "checked" : ""} />
         </label>
       `
       )
       .join("");
   };
 
-  renderAttendance();
+  renderizarChamada();
 
-  document.querySelectorAll("#attendanceClassSelector .turma-select-item").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll("#attendanceClassSelector .turma-select-item").forEach((b) => {
-        b.classList.remove("active");
-        const box = b.querySelector(".turma-checkbox");
-        if (box) box.textContent = "";
+  document.querySelectorAll("#seletorTurmaChamada .item-selecao-turma").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      document.querySelectorAll("#seletorTurmaChamada .item-selecao-turma").forEach((item) => {
+        item.classList.remove("ativo");
+        const caixa = item.querySelector(".caixa-selecao-turma");
+        if (caixa) caixa.textContent = "";
       });
-      btn.classList.add("active");
-      const box = btn.querySelector(".turma-checkbox");
-      if (box) box.textContent = "✓";
-      const turmaName = btn.getAttribute("data-turma");
-      document.getElementById("attendanceHeaderTitle").textContent = `Chamada: ${turmaName}`;
+      botao.classList.add("ativo");
+      const caixa = botao.querySelector(".caixa-selecao-turma");
+      if (caixa) caixa.textContent = "✓";
+      const nomeTurma = botao.getAttribute("data-turma");
+      const tituloCabecalhoChamada = document.getElementById("tituloCabecalhoChamada");
+      if (tituloCabecalhoChamada) {
+        tituloCabecalhoChamada.textContent = `Chamada: ${nomeTurma}`;
+      }
     });
   });
 
-  document.getElementById("saveAttendanceBtn")?.addEventListener("click", () => {
-    const feedback = document.getElementById("attendanceFeedbackMsg");
-    if (feedback) {
-      feedback.textContent = "✅ Chamada registrada com sucesso! Relatório de frequência sincronizado com a coordenação.";
+  document.getElementById("botaoSalvarChamada")?.addEventListener("click", () => {
+    const retornoChamada = document.getElementById("mensagemRetornoChamada");
+    if (retornoChamada) {
+      retornoChamada.textContent =
+        "✅ Chamada registrada com sucesso! Relatório de frequência sincronizado com a coordenação.";
       setTimeout(() => {
-        feedback.textContent = "";
+        retornoChamada.textContent = "";
       }, 5000);
     }
   });
 
-  const studentGradesData = [
-    { subject: "Mat", freq: "90%", grade: "8,1" },
-    { subject: "Port", freq: "85%", grade: "8,4" },
-    { subject: "Geo", freq: "93%", grade: "7,2" },
-    { subject: "Bio", freq: "89%", grade: "6,1" },
-    { subject: "Fis", freq: "98%", grade: "9,0" },
-    { subject: "qic", freq: "99,9%", grade: "9,6" },
-    { subject: "Hist", freq: "86%", grade: "8,5" },
-    { subject: "Eng", freq: "84%", grade: "8,8" },
-    { subject: "art", freq: "76%", grade: "9,3" },
-    { subject: "Mus", freq: "81%", grade: "4,1" },
+  const dadosNotasEstudante = [
+    { disciplina: "Mat", frequencia: "90%", nota: "8,1" },
+    { disciplina: "Port", frequencia: "85%", nota: "8,4" },
+    { disciplina: "Geo", frequencia: "93%", nota: "7,2" },
+    { disciplina: "Bio", frequencia: "89%", nota: "6,1" },
+    { disciplina: "Fís", frequencia: "98%", nota: "9,0" },
+    { disciplina: "Quí", frequencia: "99,9%", nota: "9,6" },
+    { disciplina: "Hist", frequencia: "86%", nota: "8,5" },
+    { disciplina: "Ing", frequencia: "84%", nota: "8,8" },
+    { disciplina: "Art", frequencia: "76%", nota: "9,3" },
+    { disciplina: "Mús", frequencia: "81%", nota: "4,1" },
   ];
 
-  const gradesStudentPicker = document.getElementById("gradesStudentPicker");
-  const teacherGradesTableBody = document.getElementById("teacherGradesTableBody");
-  const gradesSelectedStudentTitle = document.getElementById("gradesSelectedStudentTitle");
+  const seletorEstudanteNotas = document.getElementById("seletorEstudanteNotas");
+  const corpoTabelaNotasProfessora = document.getElementById("corpoTabelaNotasProfessora");
+  const tituloEstudanteSelecionadoNotas = document.getElementById("tituloEstudanteSelecionadoNotas");
 
-  if (gradesStudentPicker) {
-    gradesStudentPicker.innerHTML = class3CStudents
+  if (seletorEstudanteNotas) {
+    seletorEstudanteNotas.innerHTML = estudantesTurma3C
       .slice(0, 8)
       .map(
-        (s) => `
-        <div class="student-row-card" style="cursor:pointer" data-student-grade="${s.name}">
-          <div class="student-row-card__left">
-            <img src="${s.avatar}" alt="${s.name}" class="student-row-card__avatar" />
-            <span class="student-row-card__num">${s.num}</span>
-            <span class="student-row-card__name">${s.name}</span>
+        (estudante) => `
+        <div class="cartao-linha-estudante" style="cursor:pointer" data-nota-estudante="${estudante.nome}">
+          <div class="cartao-linha-estudante__esquerda">
+            <img src="${estudante.avatar}" alt="${estudante.nome}" class="cartao-linha-estudante__avatar" />
+            <span class="cartao-linha-estudante__numero">${estudante.numero}</span>
+            <span class="cartao-linha-estudante__nome">${estudante.nome}</span>
           </div>
           <span>→</span>
         </div>
@@ -1270,47 +1344,47 @@ document.addEventListener("DOMContentLoaded", () => {
       )
       .join("");
 
-    gradesStudentPicker.querySelectorAll("[data-student-grade]").forEach((row) => {
-      row.addEventListener("click", () => {
-        const name = row.getAttribute("data-student-grade");
-        if (gradesSelectedStudentTitle) {
-          gradesSelectedStudentTitle.textContent = `Notas: ${name}`;
+    seletorEstudanteNotas.querySelectorAll("[data-nota-estudante]").forEach((linha) => {
+      linha.addEventListener("click", () => {
+        const nomeEstudante = linha.getAttribute("data-nota-estudante");
+        if (tituloEstudanteSelecionadoNotas) {
+          tituloEstudanteSelecionadoNotas.textContent = `Notas: ${nomeEstudante}`;
         }
       });
     });
   }
 
-  if (teacherGradesTableBody) {
-    teacherGradesTableBody.innerHTML = studentGradesData
+  if (corpoTabelaNotasProfessora) {
+    corpoTabelaNotasProfessora.innerHTML = dadosNotasEstudante
       .map(
-        (row) => `
+        (linhaNota) => `
         <tr>
-          <td><span class="row-bar"></span><strong>${row.subject}</strong></td>
-          <td>${row.freq}</td>
-          <td><input type="text" class="grade-input" value="${row.grade}" /></td>
+          <td><span class="barra-linha"></span><strong>${linhaNota.disciplina}</strong></td>
+          <td>${linhaNota.frequencia}</td>
+          <td><input type="text" class="entrada-nota" value="${linhaNota.nota}" /></td>
         </tr>
       `
       )
       .join("");
   }
 
-  document.getElementById("saveGradesBtn")?.addEventListener("click", () => {
-    const feedback = document.getElementById("gradesFeedbackMsg");
-    if (feedback) {
-      feedback.textContent = "✅ Boletim atualizado com sucesso no sistema IN AULA!";
+  document.getElementById("botaoSalvarNotas")?.addEventListener("click", () => {
+    const retornoNotas = document.getElementById("mensagemRetornoNotas");
+    if (retornoNotas) {
+      retornoNotas.textContent = "✅ Boletim atualizado com sucesso no sistema IN AULA!";
       setTimeout(() => {
-        feedback.textContent = "";
+        retornoNotas.textContent = "";
       }, 5000);
     }
   });
 
-  document.getElementById("studentProfileForm")?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const msg = document.getElementById("profileSavedFeedback");
-    if (msg) {
-      msg.textContent = "✅ Dados do perfil atualizados com sucesso!";
+  document.getElementById("formularioPerfilEstudante")?.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+    const retornoPerfil = document.getElementById("retornoPerfilSalvo");
+    if (retornoPerfil) {
+      retornoPerfil.textContent = "✅ Dados do perfil atualizados com sucesso!";
       setTimeout(() => {
-        msg.textContent = "";
+        retornoPerfil.textContent = "";
       }, 4000);
     }
   });

@@ -2,43 +2,43 @@
    IN AULA — Design System Desktop (Fiel ao Protótipo Figma)
    ========================================================================== */
 :root,
-[data-theme="light"] {
-  --figma-blue: #38b6ff;
-  --figma-blue-dark: #2d80ee;
-  --figma-navy: #00297a;
-  --figma-purple: #686bff;
-  --figma-port-blue: #466cff;
-  --figma-coral: #e3576e;
-  --figma-green-subject: #82c974;
-  --figma-pink-subject: #ee97bc;
-  --figma-orange: #ff7322;
-  --figma-mint: #71e9af;
-  --figma-kpi-bg: #dceded;
+[data-tema="claro"] {
+  --azul-figma: #38b6ff;
+  --azul-escuro-figma: #2d80ee;
+  --marinho-figma: #00297a;
+  --roxo-figma: #686bff;
+  --azul-portugues-figma: #466cff;
+  --coral-figma: #e3576e;
+  --verde-materia-figma: #82c974;
+  --rosa-materia-figma: #ee97bc;
+  --laranja-figma: #ff7322;
+  --menta-figma: #71e9af;
+  --fundo-indicador-figma: #dceded;
 
-  --bg-app: #f4f7fb;
-  --bg-surface: #ffffff;
-  --bg-surface-soft: #f2f3f8;
-  --bg-sidebar: #ffffff;
-  --text-primary: #181725;
-  --text-secondary: #525f7f;
-  --text-muted: #8193ab;
-  --border-color: #e2e8f0;
-  --shadow-card: 0 8px 24px rgba(18, 40, 61, 0.06);
-  --shadow-hover: 0 14px 32px rgba(56, 182, 255, 0.16);
+  --fundo-aplicacao: #f4f7fb;
+  --fundo-superficie: #ffffff;
+  --fundo-superficie-suave: #f2f3f8;
+  --fundo-barra-lateral: #ffffff;
+  --texto-primario: #181725;
+  --texto-secundario: #525f7f;
+  --texto-suave: #8193ab;
+  --cor-borda: #e2e8f0;
+  --sombra-cartao: 0 8px 24px rgba(18, 40, 61, 0.06);
+  --sombra-destaque: 0 14px 32px rgba(56, 182, 255, 0.16);
 }
 
-[data-theme="dark"] {
-  --figma-kpi-bg: #152b44;
-  --bg-app: #081221;
-  --bg-surface: #0f1f38;
-  --bg-surface-soft: #162a4a;
-  --bg-sidebar: #0b182c;
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
-  --border-color: #1e3a5f;
-  --shadow-card: 0 10px 28px rgba(0, 0, 0, 0.35);
-  --shadow-hover: 0 14px 32px rgba(56, 182, 255, 0.25);
+[data-tema="escuro"] {
+  --fundo-indicador-figma: #152b44;
+  --fundo-aplicacao: #081221;
+  --fundo-superficie: #0f1f38;
+  --fundo-superficie-suave: #162a4a;
+  --fundo-barra-lateral: #0b182c;
+  --texto-primario: #f8fafc;
+  --texto-secundario: #cbd5e1;
+  --texto-suave: #94a3b8;
+  --cor-borda: #1e3a5f;
+  --sombra-cartao: 0 10px 28px rgba(0, 0, 0, 0.35);
+  --sombra-destaque: 0 14px 32px rgba(56, 182, 255, 0.25);
 }
 
 *,
@@ -55,8 +55,8 @@
 
 body {
   font-family: "Montserrat", system-ui, -apple-system, sans-serif;
-  background-color: var(--bg-app);
-  color: var(--text-primary);
+  background-color: var(--fundo-aplicacao);
+  color: var(--texto-primario);
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
@@ -73,15 +73,15 @@ textarea {
 /* ==========================================================================
    Estrutura Desktop (Sidebar Fixa + Workspace Widescreen)
    ========================================================================== */
-.desktop-app {
+.aplicacao-computador {
   display: grid;
   grid-template-columns: 280px 1fr;
   min-height: 100vh;
 }
 
-.sidebar {
-  background: var(--bg-sidebar);
-  border-right: 1px solid var(--border-color);
+.barraLateral {
+  background: var(--fundo-barra-lateral);
+  border-right: 1px solid var(--cor-borda);
   display: flex;
   flex-direction: column;
   padding: 1.5rem 1.25rem;
@@ -91,7 +91,7 @@ textarea {
   z-index: 30;
 }
 
-.sidebar__brand {
+.barra-lateral__marca {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,36 +102,36 @@ textarea {
   cursor: pointer;
 }
 
-.sidebar__logo-img {
+.barra-lateral__imagem-logo {
   height: 82px;
   width: auto;
   object-fit: contain;
 }
 
-.sidebar__section-label {
+.barra-lateral__rotulo-secao {
   display: block;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.08em;
-  color: var(--text-muted);
+  color: var(--texto-suave);
   margin-bottom: 0.6rem;
   padding-left: 0.4rem;
 }
 
-.sidebar__role-switch {
+.barra-lateral__seletor-setor {
   margin-bottom: 1.5rem;
 }
 
-.role-pills {
+.pilulas-setor {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
-  background: var(--bg-surface-soft);
+  background: var(--fundo-superficie-suave);
   padding: 0.35rem;
   border-radius: 12px;
 }
 
-.role-pill {
+.pilula-setor {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,33 +140,33 @@ textarea {
   border: none;
   border-radius: 10px;
   background: transparent;
-  color: var(--text-secondary);
+  color: var(--texto-secundario);
   font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.role-pill img {
+.pilula-setor img {
   width: 24px;
   height: 24px;
   object-fit: contain;
 }
 
-.role-pill.active {
-  background: var(--figma-blue);
+.pilula-setor.ativo {
+  background: var(--azul-figma);
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(56, 182, 255, 0.35);
 }
 
-.sidebar__nav {
+.barra-lateral__navegacao {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
   flex: 1;
 }
 
-.nav-item {
+.item-navegacao {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -175,7 +175,7 @@ textarea {
   border: none;
   border-radius: 12px;
   background: transparent;
-  color: var(--text-secondary);
+  color: var(--texto-secundario);
   font-size: 0.92rem;
   font-weight: 600;
   text-align: left;
@@ -183,29 +183,29 @@ textarea {
   transition: all 0.2s ease;
 }
 
-.nav-item:hover {
-  background: var(--bg-surface-soft);
-  color: var(--figma-blue);
+.item-navegacao:hover {
+  background: var(--fundo-superficie-suave);
+  color: var(--azul-figma);
 }
 
-.nav-item.active {
+.item-navegacao.ativo {
   background: rgba(56, 182, 255, 0.14);
-  color: var(--figma-blue-dark);
+  color: var(--azul-escuro-figma);
   font-weight: 800;
-  border-left: 4px solid var(--figma-blue);
+  border-left: 4px solid var(--azul-figma);
 }
 
-[data-theme="dark"] .nav-item.active {
-  color: var(--figma-blue);
+[data-tema="escuro"] .item-navegacao.ativo {
+  color: var(--azul-figma);
 }
 
-.nav-item__icon {
+.item-navegacao__icone {
   font-size: 1.15rem;
 }
 
-.nav-item__badge {
+.item-navegacao__selo {
   margin-left: auto;
-  background: var(--figma-blue);
+  background: var(--azul-figma);
   color: #ffffff;
   font-size: 0.75rem;
   font-weight: 800;
@@ -213,43 +213,43 @@ textarea {
   border-radius: 999px;
 }
 
-.sidebar__footer {
+.barra-lateral__rodape {
   margin-top: auto;
   padding-top: 1rem;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--cor-borda);
 }
 
-.btn-portal-entry {
+.botao-entrada-portal {
   width: 100%;
   padding: 0.8rem 1rem;
   border-radius: 12px;
-  border: 1px dashed var(--figma-blue);
-  background: var(--bg-surface-soft);
-  color: var(--text-primary);
+  border: 1px dashed var(--azul-figma);
+  background: var(--fundo-superficie-suave);
+  color: var(--texto-primario);
   font-weight: 700;
   font-size: 0.88rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.btn-portal-entry:hover {
-  background: var(--figma-blue);
+.botao-entrada-portal:hover {
+  background: var(--azul-figma);
   color: #ffffff;
 }
 
 /* ==========================================================================
    Topbar Desktop
    ========================================================================== */
-.main-workspace {
+.area-trabalho-principal {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-.topbar {
+.barra-topo {
   height: 82px;
-  background: var(--bg-surface);
-  border-bottom: 1px solid var(--border-color);
+  background: var(--fundo-superficie);
+  border-bottom: 1px solid var(--cor-borda);
   padding: 0 2.25rem;
   display: flex;
   align-items: center;
@@ -259,106 +259,106 @@ textarea {
   z-index: 20;
 }
 
-.topbar__title {
+.barra-topo__titulo {
   font-size: 1.35rem;
   font-weight: 800;
 }
 
-.topbar__subtitle {
+.barra-topo__subtitulo {
   font-size: 0.84rem;
-  color: var(--text-muted);
+  color: var(--texto-suave);
 }
 
-.topbar__right {
+.barra-topo__direita {
   display: flex;
   align-items: center;
   gap: 1.15rem;
 }
 
-.points-pill {
+.pilula-pontos {
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  background: var(--bg-surface-soft);
-  border: 1px solid var(--border-color);
+  background: var(--fundo-superficie-suave);
+  border: 1px solid var(--cor-borda);
   padding: 0.5rem 1rem;
   border-radius: 999px;
   font-size: 0.95rem;
 }
 
-.points-pill__icon {
+.pilula-pontos__icone {
   width: 20px;
   height: 20px;
 }
 
-.points-pill strong {
-  color: var(--figma-blue-dark);
+.pilula-pontos strong {
+  color: var(--azul-escuro-figma);
   font-weight: 800;
 }
 
-[data-theme="dark"] .points-pill strong {
-  color: var(--figma-blue);
+[data-tema="escuro"] .pilula-pontos strong {
+  color: var(--azul-figma);
 }
 
-.theme-switch-btn {
+.botao-alternar-tema {
   display: flex;
   align-items: center;
   gap: 0.45rem;
   padding: 0.55rem 1rem;
   border-radius: 999px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-surface-soft);
-  color: var(--text-primary);
+  border: 1px solid var(--cor-borda);
+  background: var(--fundo-superficie-suave);
+  color: var(--texto-primario);
   font-weight: 700;
   font-size: 0.85rem;
   cursor: pointer;
 }
 
-.user-chip {
+.bloco-usuario {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding-left: 0.75rem;
-  border-left: 1px solid var(--border-color);
+  border-left: 1px solid var(--cor-borda);
 }
 
-.user-chip__avatar {
+.bloco-usuario__avatar {
   width: 44px;
   height: 44px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--figma-blue);
+  border: 2px solid var(--azul-figma);
 }
 
-.user-chip__info strong {
+.bloco-usuario__informacoes strong {
   display: block;
   font-size: 0.92rem;
 }
 
-.user-chip__info span {
+.bloco-usuario__informacoes span {
   font-size: 0.78rem;
-  color: var(--text-muted);
+  color: var(--texto-suave);
 }
 
 /* ==========================================================================
    Container de Telas
    ========================================================================== */
-.views-container {
+.conteiner-telas {
   padding: 2rem 2.25rem 3rem;
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
 }
 
-.desktop-panel {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
+.painel-computador {
+  background: var(--fundo-superficie);
+  border: 1px solid var(--cor-borda);
   border-radius: 20px;
   padding: 1.65rem;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--sombra-cartao);
 }
 
-.desktop-panel__header {
+.painel-computador__cabecalho {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -366,49 +366,49 @@ textarea {
   margin-bottom: 1.25rem;
 }
 
-.text-muted {
-  color: var(--text-muted);
+.texto-suave {
+  color: var(--texto-suave);
   font-size: 0.88rem;
 }
 
 /* ==========================================================================
    TELA DE LOGIN FULLSCREEN DESKTOP (Figma 21:139, 16:56, 16:269, 41:646, 16:250)
    ========================================================================== */
-.login-fullscreen-overlay {
+.sobreposicao-tela-cheia-login {
   min-height: 100vh;
   width: 100%;
-  background: radial-gradient(circle at top left, rgba(56, 182, 255, 0.14), transparent 55%), var(--bg-app);
+  background: radial-gradient(circle at top left, rgba(56, 182, 255, 0.14), transparent 55%), var(--fundo-aplicacao);
   display: flex;
   flex-direction: column;
 }
 
-.login-topbar {
+.barra-topo-login {
   height: 70px;
   padding: 0 3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border-color);
-  background: var(--bg-surface);
+  border-bottom: 1px solid var(--cor-borda);
+  background: var(--fundo-superficie);
 }
 
-.login-topbar__brand {
+.barra-topo-login__marca {
   display: flex;
   align-items: center;
   gap: 0.65rem;
   font-size: 0.95rem;
-  color: var(--text-secondary);
+  color: var(--texto-secundario);
 }
 
-.status-dot {
+.ponto-status {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--figma-blue);
+  background: var(--azul-figma);
   box-shadow: 0 0 0 4px rgba(56, 182, 255, 0.22);
 }
 
-.login-desktop-showcase {
+.vitrine-computador-login {
   flex: 1;
   max-width: 1180px;
   width: 100%;
@@ -420,18 +420,18 @@ textarea {
   align-items: center;
 }
 
-.login-left-panel,
-.login-right-panel {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
+.painel-esquerdo-login,
+.painel-direito-login {
+  background: var(--fundo-superficie);
+  border: 1px solid var(--cor-borda);
   border-radius: 26px;
   padding: 2.5rem 2.75rem;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--sombra-cartao);
   display: flex;
   flex-direction: column;
 }
 
-.login-logo-box {
+.caixa-logo-login {
   background: transparent;
   padding: 0.5rem;
   display: flex;
@@ -440,39 +440,39 @@ textarea {
   margin-bottom: 1.5rem;
 }
 
-.login-logo-img {
+.imagem-logo-login {
   height: 150px;
   width: auto;
   object-fit: contain;
 }
 
-.login-profile-title {
+.titulo-perfil-login {
   font-size: 1.7rem;
   font-weight: 800;
-  color: var(--text-primary);
+  color: var(--texto-primario);
   margin-bottom: 0.45rem;
 }
 
-.login-profile-subtitle {
+.subtitulo-perfil-login {
   font-size: 0.92rem;
-  color: var(--text-muted);
+  color: var(--texto-suave);
   margin-bottom: 1.65rem;
 }
 
-.figma-profile-buttons {
+.botoes-perfil-figma {
   display: flex;
   flex-direction: column;
   gap: 1.15rem;
 }
 
-.figma-profile-btn {
+.botao-perfil-figma {
   display: flex;
   align-items: center;
   gap: 1.5rem;
   width: 100%;
   height: 80px;
   padding: 0 1.75rem;
-  background: var(--figma-blue);
+  background: var(--azul-figma);
   color: #ffffff;
   border: 3px solid transparent;
   border-radius: 15px;
@@ -484,14 +484,14 @@ textarea {
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.figma-profile-btn:hover,
-.figma-profile-btn.active {
+.botao-perfil-figma:hover,
+.botao-perfil-figma.ativo {
   transform: translateY(-2px);
-  border-color: var(--figma-navy);
+  border-color: var(--marinho-figma);
   box-shadow: 0 12px 26px rgba(56, 182, 255, 0.42);
 }
 
-.figma-profile-btn__icon-wrap {
+.botao-perfil-figma__envoltorio-icone {
   width: 50px;
   height: 50px;
   display: flex;
@@ -500,101 +500,101 @@ textarea {
   flex-shrink: 0;
 }
 
-.figma-profile-btn__icon-wrap img {
+.botao-perfil-figma__envoltorio-icone img {
   width: 48px;
   height: 48px;
   object-fit: contain;
 }
 
-.login-card-top {
+.topo-cartao-login {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1.35rem;
 }
 
-.login-back-arrow {
+.seta-voltar-login {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-surface-soft);
-  color: var(--text-primary);
+  border: 1px solid var(--cor-borda);
+  background: var(--fundo-superficie-suave);
+  color: var(--texto-primario);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 }
 
-.login-back-arrow:hover {
-  border-color: var(--figma-blue);
-  color: var(--figma-blue);
+.seta-voltar-login:hover {
+  border-color: var(--azul-figma);
+  color: var(--azul-figma);
 }
 
-.login-card-logo {
+.logo-cartao-login {
   background: transparent;
   padding: 0.25rem 0.5rem;
 }
 
-.login-card-logo img {
+.logo-cartao-login img {
   height: 68px;
   width: auto;
   object-fit: contain;
 }
 
-.login-profile-pill {
+.pilula-perfil-login {
   background: rgba(56, 182, 255, 0.16);
-  color: var(--figma-blue-dark);
+  color: var(--azul-escuro-figma);
   padding: 0.4rem 0.9rem;
   border-radius: 999px;
   font-size: 0.82rem;
   font-weight: 600;
 }
 
-[data-theme="dark"] .login-profile-pill {
-  color: var(--figma-blue);
+[data-tema="escuro"] .pilula-perfil-login {
+  color: var(--azul-figma);
 }
 
-.auth-tabs {
+.abas-autenticacao {
   display: flex;
   gap: 0.5rem;
-  background: var(--bg-surface-soft);
+  background: var(--fundo-superficie-suave);
   padding: 0.35rem;
   border-radius: 12px;
   margin-bottom: 1.65rem;
 }
 
-.auth-tab {
+.aba-autenticacao {
   flex: 1;
   padding: 0.65rem;
   border: none;
   border-radius: 9px;
   background: transparent;
-  color: var(--text-secondary);
+  color: var(--texto-secundario);
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
 }
 
-.auth-tab.active {
-  background: var(--bg-surface);
-  color: var(--figma-blue-dark);
+.aba-autenticacao.ativo {
+  background: var(--fundo-superficie);
+  color: var(--azul-escuro-figma);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-[data-theme="dark"] .auth-tab.active {
-  color: var(--figma-blue);
+[data-tema="escuro"] .aba-autenticacao.ativo {
+  color: var(--azul-figma);
 }
 
-.figma-auth-heading {
+.titulo-autenticacao-figma {
   font-size: 2.15rem;
   font-weight: 800;
   line-height: 1.15;
-  color: var(--text-primary);
+  color: var(--texto-primario);
   margin-bottom: 1.5rem;
 }
 
-.figma-field {
+.campo-figma {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -607,35 +607,35 @@ textarea {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-[data-theme="dark"] .figma-field {
-  background: var(--bg-surface-soft);
-  border-color: var(--border-color);
+[data-tema="escuro"] .campo-figma {
+  background: var(--fundo-superficie-suave);
+  border-color: var(--cor-borda);
 }
 
-.figma-field:focus-within {
-  border-color: var(--figma-blue);
+.campo-figma:focus-within {
+  border-color: var(--azul-figma);
   box-shadow: 0 0 0 3px rgba(56, 182, 255, 0.2);
 }
 
-.figma-field__icon {
+.campo-figma__icone {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.figma-field input {
+.campo-figma input {
   flex: 1;
   height: 100%;
   border: none;
   background: transparent;
-  color: var(--text-primary);
+  color: var(--texto-primario);
   font-size: 0.95rem;
   font-weight: 500;
   outline: none;
 }
 
-.figma-field__eye {
+.campo-figma__olho {
   background: none;
   border: none;
   font-size: 1.1rem;
@@ -643,46 +643,46 @@ textarea {
   opacity: 0.75;
 }
 
-.figma-field__eye:hover {
+.campo-figma__olho:hover {
   opacity: 1;
 }
 
-.figma-forgot-row {
+.linha-esqueceu-figma {
   display: flex;
   justify-content: flex-end;
   margin-top: -0.35rem;
   margin-bottom: 1.5rem;
 }
 
-.figma-forgot-link {
+.link-esqueceu-figma {
   background: none;
   border: none;
-  color: var(--figma-blue);
+  color: var(--azul-figma);
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
 }
 
-.figma-forgot-link:hover {
+.link-esqueceu-figma:hover {
   text-decoration: underline;
 }
 
-.figma-terms-note {
+.nota-termos-figma {
   font-size: 0.82rem;
-  color: var(--text-secondary);
+  color: var(--texto-secundario);
   line-height: 1.45;
   margin-bottom: 1.35rem;
 }
 
-.text-danger {
+.texto-perigo {
   color: #ef4444;
   font-weight: 800;
 }
 
-.figma-submit-btn {
+.botao-enviar-figma {
   width: 100%;
   height: 55px;
-  background: var(--figma-blue);
+  background: var(--azul-figma);
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -692,44 +692,44 @@ textarea {
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.figma-submit-btn:hover {
-  background: var(--figma-blue-dark);
+.botao-enviar-figma:hover {
+  background: var(--azul-escuro-figma);
   transform: translateY(-1px);
 }
 
-.figma-bottom-switch {
+.troca-inferior-figma {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.45rem;
   margin-top: 1.65rem;
   font-size: 0.92rem;
-  color: var(--text-secondary);
+  color: var(--texto-secundario);
 }
 
-.figma-switch-link {
+.link-troca-figma {
   background: none;
   border: none;
-  color: var(--figma-blue);
+  color: var(--azul-figma);
   font-weight: 700;
   font-size: 0.92rem;
   text-decoration: underline;
   cursor: pointer;
 }
 
-.login-bottom-bar-decor {
+.decoracao-barra-inferior-login {
   width: 220px;
   height: 7px;
-  background: var(--text-primary);
+  background: var(--texto-primario);
   border-radius: 20px;
   margin: 2rem auto 0;
   opacity: 0.85;
 }
 
-.btn-figma-primary {
+.botao-primario-figma {
   width: 100%;
   height: 54px;
-  background: var(--figma-blue);
+  background: var(--azul-figma);
   color: #ffffff;
   border: none;
   border-radius: 12px;
@@ -739,43 +739,43 @@ textarea {
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.btn-figma-primary:hover {
-  background: var(--figma-blue-dark);
+.botao-primario-figma:hover {
+  background: var(--azul-escuro-figma);
   transform: translateY(-1px);
 }
 
-.btn-figma-primary--sm {
+.botao-primario-figma--pequeno {
   width: auto;
   height: 42px;
   padding: 0 1.35rem;
   font-size: 0.9rem;
 }
 
-.link-btn {
+.botao-link {
   background: none;
   border: none;
-  color: var(--figma-blue-dark);
+  color: var(--azul-escuro-figma);
   font-size: 0.9rem;
   cursor: pointer;
 }
 
-.link-btn--bold {
+.botao-link--negrito {
   font-weight: 800;
 }
 
 /* ==========================================================================
    VIEW 1: HOME DO ESTUDANTE (Figma 40:506)
    ========================================================================== */
-.student-hero-banner {
+.banner-principal-estudante {
   border-radius: 22px;
   background-size: cover;
   background-position: center;
   overflow: hidden;
   margin-bottom: 1.75rem;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--sombra-cartao);
 }
 
-.student-hero-banner__overlay {
+.banner-principal-estudante__sobreposicao {
   background: linear-gradient(90deg, rgba(0, 41, 122, 0.72), rgba(45, 128, 238, 0.55));
   padding: 2rem 2.5rem;
   display: flex;
@@ -784,13 +784,13 @@ textarea {
   color: #ffffff;
 }
 
-.student-hero-banner__profile {
+.banner-principal-estudante__perfil {
   display: flex;
   align-items: center;
   gap: 1.5rem;
 }
 
-.student-hero-banner__avatar {
+.banner-principal-estudante__avatar {
   width: 96px;
   height: 96px;
   border-radius: 50%;
@@ -798,13 +798,13 @@ textarea {
   object-fit: cover;
 }
 
-.student-hero-banner__details h2 {
+.banner-principal-estudante__detalhes h2 {
   font-size: 1.85rem;
   font-weight: 700;
   margin-bottom: 0.45rem;
 }
 
-.student-hero-banner__meta {
+.banner-principal-estudante__metadados {
   display: flex;
   align-items: center;
   gap: 1.25rem;
@@ -812,25 +812,25 @@ textarea {
   font-weight: 600;
 }
 
-.meta-item {
+.item-metadado {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
 }
 
-.meta-item img {
+.item-metadado img {
   width: 22px;
   height: 22px;
 }
 
-.student-hero-banner__right {
+.banner-principal-estudante__direita {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 0.85rem;
 }
 
-.banner-score-pill {
+.pilula-pontuacao-banner {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -841,14 +841,14 @@ textarea {
   font-weight: 700;
 }
 
-.banner-score-pill img {
+.pilula-pontuacao-banner img {
   width: 20px;
   height: 20px;
 }
 
-.btn-banner-action {
+.botao-acao-banner {
   background: #ffffff;
-  color: var(--figma-navy);
+  color: var(--marinho-figma);
   border: none;
   padding: 0.65rem 1.25rem;
   border-radius: 999px;
@@ -857,64 +857,64 @@ textarea {
 }
 
 /* Os 4 Cards KPI do Estudante (Figma 45:638..634) */
-.status-kpi-grid {
+.grade-indicadores-status {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.35rem;
   margin-bottom: 1.75rem;
 }
 
-.status-kpi-card {
-  background: var(--figma-kpi-bg);
+.cartao-indicador-status {
+  background: var(--fundo-indicador-figma);
   border-radius: 16px;
   padding: 1.35rem 1.5rem;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--cor-borda);
 }
 
-.status-kpi-card:hover {
+.cartao-indicador-status:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-hover);
+  box-shadow: var(--sombra-destaque);
 }
 
-.status-kpi-card__top {
+.cartao-indicador-status__topo {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.85rem;
 }
 
-.status-kpi-card__icon {
+.cartao-indicador-status__icone {
   width: 42px;
   height: 42px;
   object-fit: contain;
 }
 
-.status-kpi-card__number {
+.cartao-indicador-status__numero {
   font-size: 2.3rem;
   font-weight: 800;
   line-height: 1;
 }
 
-.num--blue { color: #38b6ff; }
-.num--red { color: #ff0000; }
-.num--yellow { color: #d4b106; }
-.num--green { color: #0dd650; }
+.numero--azul { color: #38b6ff; }
+.numero--vermelho { color: #ff0000; }
+.numero--amarelo { color: #d4b106; }
+.numero--verde { color: #0dd650; }
 
-.status-kpi-card__label p {
+.cartao-indicador-status__rotulo p {
   font-size: 0.95rem;
   font-weight: 800;
   line-height: 1.25;
 }
 
-.home-desktop-columns {
+.colunas-computador-inicio {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: 1.75rem;
 }
 
-.mini-progress-track {
+.trilha-mini-progresso {
   width: 100%;
   height: 8px;
   background: #eef0f7;
@@ -923,9 +923,9 @@ textarea {
   margin-bottom: 1.35rem;
 }
 
-.mini-progress-fill {
+.preenchimento-mini-progresso {
   height: 100%;
-  background: var(--figma-mint);
+  background: var(--menta-figma);
   border-radius: 31px;
   transition: width 0.35s ease;
 }
@@ -933,38 +933,38 @@ textarea {
 /* ==========================================================================
    Cards de Disciplinas Coloridos (Figma 16:582)
    ========================================================================== */
-.subject-cards-grid {
+.grade-cartoes-materias {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.25rem;
 }
 
-.subject-cards-grid--full {
+.grade-cartoes-materias--completa {
   grid-template-columns: repeat(3, 1fr);
   gap: 1.4rem;
 }
 
-.subject-cards-grid--compact {
+.grade-cartoes-materias--compacta {
   grid-template-columns: 1fr 1fr;
 }
 
-.subject-detail-topbar {
+.barra-topo-detalhe-materia {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
+  background: var(--fundo-superficie);
+  border: 1px solid var(--cor-borda);
   border-radius: 16px;
   padding: 1rem 1.5rem;
   margin-bottom: 1.5rem;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--sombra-cartao);
 }
 
-.btn-back-subjects {
+.botao-voltar-materias {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--figma-blue);
+  background: var(--azul-figma);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -975,25 +975,25 @@ textarea {
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.btn-back-subjects:hover {
-  background: var(--figma-blue-dark);
+.botao-voltar-materias:hover {
+  background: var(--azul-escuro-figma);
   transform: translateX(-2px);
 }
 
-.subject-detail-badge {
+.selo-detalhe-materia {
   background: rgba(56, 182, 255, 0.14);
-  color: var(--figma-blue-dark);
+  color: var(--azul-escuro-figma);
   padding: 0.45rem 1rem;
   border-radius: 999px;
   font-size: 0.88rem;
   font-weight: 700;
 }
 
-[data-theme="dark"] .subject-detail-badge {
-  color: var(--figma-blue);
+[data-tema="escuro"] .selo-detalhe-materia {
+  color: var(--azul-figma);
 }
 
-.subject-card {
+.cartao-materia {
   position: relative;
   height: 165px;
   border-radius: 14px;
@@ -1004,18 +1004,18 @@ textarea {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.subject-card:hover {
+.cartao-materia:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
 }
 
-.bg-math { background-color: var(--figma-purple); }
-.bg-port { background-color: var(--figma-port-blue); }
-.bg-bio  { background-color: var(--figma-coral); }
-.bg-chem { background-color: var(--figma-green-subject); }
-.bg-phys { background-color: var(--figma-pink-subject); }
+.fundo-matematica { background-color: var(--roxo-figma); }
+.fundo-portugues { background-color: var(--azul-portugues-figma); }
+.fundo-biologia  { background-color: var(--coral-figma); }
+.fundo-quimica { background-color: var(--verde-materia-figma); }
+.fundo-fisica { background-color: var(--rosa-materia-figma); }
 
-.subject-card__counter {
+.cartao-materia__contador {
   position: absolute;
   top: 16px;
   right: 16px;
@@ -1026,7 +1026,7 @@ textarea {
   font-weight: 600;
 }
 
-.subject-card__title {
+.cartao-materia__titulo {
   font-size: 1.25rem;
   font-weight: 600;
   margin-top: 2.1rem;
@@ -1035,7 +1035,7 @@ textarea {
   z-index: 2;
 }
 
-.subject-card__btn {
+.cartao-materia__botao {
   position: relative;
   z-index: 2;
   background: #ffffff;
@@ -1048,11 +1048,11 @@ textarea {
   cursor: pointer;
 }
 
-.subject-card__btn--blue {
+.cartao-materia__botao--azul {
   color: #4565ea;
 }
 
-.subject-card__wave {
+.cartao-materia__onda {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -1062,7 +1062,7 @@ textarea {
   opacity: 0.9;
 }
 
-.subject-card__tiles {
+.cartao-materia__blocos {
   position: absolute;
   right: 22px;
   bottom: 16px;
@@ -1071,7 +1071,7 @@ textarea {
   z-index: 2;
 }
 
-.tile {
+.bloco {
   position: absolute;
   width: 58px;
   height: 58px;
@@ -1082,26 +1082,26 @@ textarea {
   justify-content: center;
 }
 
-.tile img {
+.bloco img {
   width: 38px;
   height: 38px;
   object-fit: contain;
 }
 
-.tile-letter {
+.letra-bloco {
   font-size: 1.35rem;
   font-weight: 900;
   color: #ffffff;
 }
 
-.tile--front {
+.bloco--frente {
   left: 0;
   top: 0;
   background: #625cbc;
   z-index: 2;
 }
 
-.tile--back {
+.bloco--fundo {
   right: 0;
   bottom: 0;
   background: #444089;
@@ -1111,42 +1111,42 @@ textarea {
 /* ==========================================================================
    Tabela de Notas & Frequência (Figma 111:2201)
    ========================================================================== */
-.figma-table {
+.tabela-figma {
   width: 100%;
   border-collapse: collapse;
 }
 
-.figma-table th {
+.tabela-figma th {
   text-align: left;
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--texto-suave);
   padding: 0.65rem 0.75rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--cor-borda);
 }
 
-.figma-table td {
+.tabela-figma td {
   padding: 0.85rem 0.75rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--cor-borda);
   font-size: 0.95rem;
 }
 
-.row-bar {
+.barra-linha {
   display: inline-block;
   width: 6px;
   height: 18px;
-  background: var(--figma-blue);
+  background: var(--azul-figma);
   border-radius: 4px;
   vertical-align: middle;
   margin-right: 0.6rem;
 }
 
-.grade-input {
+.entrada-nota {
   width: 72px;
   padding: 0.35rem 0.5rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--cor-borda);
   border-radius: 8px;
-  background: var(--bg-surface-soft);
-  color: var(--text-primary);
+  background: var(--fundo-superficie-suave);
+  color: var(--texto-primario);
   font-weight: 700;
   text-align: center;
 }
@@ -1154,61 +1154,61 @@ textarea {
 /* ==========================================================================
    VIEW 2: ATIVIDADES, TRILHA & DESAFIO (Figma 16:582, 24:653, 24:2416, 24:3046)
    ========================================================================== */
-.activities-header-bar {
+.barra-cabecalho-atividades {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
+  background: var(--fundo-superficie);
+  border: 1px solid var(--cor-borda);
   border-radius: 18px;
   padding: 1.25rem 1.75rem;
   margin-bottom: 1.75rem;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--sombra-cartao);
 }
 
-.search-box-figma {
+.caixa-busca-figma {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  background: var(--bg-surface-soft);
-  border: 1px solid var(--border-color);
+  background: var(--fundo-superficie-suave);
+  border: 1px solid var(--cor-borda);
   border-radius: 12px;
   padding: 0 1rem;
   height: 46px;
   min-width: 340px;
 }
 
-.search-box-figma input {
+.caixa-busca-figma input {
   border: none;
   background: transparent;
   width: 100%;
-  color: var(--text-primary);
+  color: var(--texto-primario);
   font-size: 0.92rem;
   outline: none;
 }
 
-.studies-progress-summary {
+.resumo-progresso-estudos {
   display: flex;
   align-items: center;
   gap: 1.25rem;
   min-width: 340px;
 }
 
-.studies-progress-summary strong {
+.resumo-progresso-estudos strong {
   display: block;
   font-size: 1.05rem;
-  color: var(--text-secondary);
+  color: var(--texto-secundario);
 }
 
-.studies-progress-summary span {
+.resumo-progresso-estudos span {
   display: block;
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--texto-suave);
   margin-bottom: 0.4rem;
 }
 
-.cup-circle {
+.circulo-trofeu {
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -1219,38 +1219,38 @@ textarea {
   flex-shrink: 0;
 }
 
-.cup-circle img {
+.circulo-trofeu img {
   width: 22px;
   height: 22px;
 }
 
-.activities-desktop-layout {
+.layout-computador-atividades {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: 1.75rem;
   align-items: start;
 }
 
-.panel-section-title {
+.titulo-secao-painel {
   font-size: 1.15rem;
   margin-bottom: 1.15rem;
 }
 
-.activity-interactive-column {
+.coluna-interativa-atividade {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.trail-stage-panel,
-.levels-stage-panel,
-.quiz-box-figma--centered,
-.quiz-completed-card {
+.painel-etapa-trilha,
+.painel-etapa-niveis,
+.caixa-desafio-figma--centralizada,
+.cartao-desafio-concluido {
   max-width: 860px;
   margin: 0 auto;
 }
 
-.subject-banner-header {
+.cabecalho-banner-materia {
   position: relative;
   border-radius: 16px;
   padding: 1.75rem 2rem;
@@ -1263,7 +1263,7 @@ textarea {
   justify-content: space-between;
 }
 
-.subject-banner-header__tag {
+.cabecalho-banner-materia__etiqueta {
   display: inline-block;
   background: rgba(255, 255, 255, 0.22);
   padding: 0.2rem 0.85rem;
@@ -1273,86 +1273,86 @@ textarea {
   margin-bottom: 0.5rem;
 }
 
-.subject-banner-header h3 {
+.cabecalho-banner-materia h3 {
   font-size: 1.65rem;
   margin-bottom: 0.3rem;
 }
 
-.subject-banner-header p {
+.cabecalho-banner-materia p {
   font-size: 0.9rem;
   opacity: 0.9;
 }
 
-.learning-path-list {
+.lista-trilha-aprendizagem {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
   margin-bottom: 1.5rem;
 }
 
-.learning-path-list--clickable .path-node {
+.lista-trilha-aprendizagem--clicavel .no-trilha {
   cursor: pointer;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--cor-borda);
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.learning-path-list--clickable .path-node:hover {
+.lista-trilha-aprendizagem--clicavel .no-trilha:hover {
   transform: translateX(4px);
-  border-color: var(--figma-blue);
-  box-shadow: var(--shadow-hover);
+  border-color: var(--azul-figma);
+  box-shadow: var(--sombra-destaque);
 }
 
-.path-node.locked {
+.no-trilha.bloqueado {
   opacity: 0.65;
   cursor: not-allowed !important;
 }
 
-.path-node__arrow {
+.no-trilha__seta {
   margin-left: auto;
   font-weight: 800;
-  color: var(--text-muted);
+  color: var(--texto-suave);
   font-size: 1.1rem;
 }
 
-.trail-doubt-bar {
+.barra-duvida-trilha {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-top: 1.25rem;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--cor-borda);
 }
 
-.trail-doubt-bar strong {
+.barra-duvida-trilha strong {
   display: block;
   font-size: 1rem;
-  color: var(--text-secondary);
+  color: var(--texto-secundario);
 }
 
-.trail-doubt-bar span {
+.barra-duvida-trilha span {
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--texto-suave);
 }
 
-.levels-grid--large {
+.grade-niveis--grande {
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 
-.levels-grid--large .level-tile-btn {
+.grade-niveis--grande .botao-bloco-nivel {
   height: 60px;
   font-size: 0.98rem;
 }
 
-.quiz-completed-card {
+.cartao-desafio-concluido {
   text-align: center;
   padding: 3rem 2rem;
 }
 
-.completed-check-circle {
+.circulo-verificacao-concluido {
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  background: var(--figma-blue);
+  background: var(--azul-figma);
   color: #ffffff;
   font-size: 3.5rem;
   font-weight: 900;
@@ -1363,10 +1363,10 @@ textarea {
   box-shadow: 0 12px 28px rgba(56, 182, 255, 0.38);
 }
 
-.completed-pts-pill {
+.pilula-pontos-concluido {
   display: inline-block;
   background: rgba(56, 182, 255, 0.16);
-  color: var(--figma-blue-dark);
+  color: var(--azul-escuro-figma);
   padding: 0.35rem 1rem;
   border-radius: 999px;
   font-weight: 800;
@@ -1374,40 +1374,40 @@ textarea {
   margin-bottom: 0.75rem;
 }
 
-.quiz-completed-card h3 {
+.cartao-desafio-concluido h3 {
   font-size: 1.75rem;
   margin-bottom: 0.5rem;
 }
 
-.completed-actions {
+.acoes-concluido {
   display: flex;
   justify-content: center;
   gap: 1rem;
   margin: 1.75rem 0;
 }
 
-.completed-logo {
+.logo-concluido {
   height: 74px;
   width: auto;
   background: transparent;
   object-fit: contain;
 }
 
-.path-node {
+.no-trilha {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 0.65rem 0.85rem;
   border-radius: 12px;
-  background: var(--bg-surface-soft);
+  background: var(--fundo-superficie-suave);
 }
 
-.path-node__circle {
+.no-trilha__circulo {
   width: 46px;
   height: 46px;
   border-radius: 50%;
   background: #eef0f7;
-  color: var(--text-secondary);
+  color: var(--texto-secundario);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1415,23 +1415,23 @@ textarea {
   flex-shrink: 0;
 }
 
-.path-node.done .path-node__circle {
-  background: var(--figma-blue);
+.no-trilha.concluido .no-trilha__circulo {
+  background: var(--azul-figma);
   color: #ffffff;
 }
 
-.path-node__text strong {
+.no-trilha__texto strong {
   display: block;
   font-size: 0.95rem;
 }
 
-.path-node__text span {
+.no-trilha__texto span {
   font-size: 0.82rem;
-  color: var(--text-muted);
+  color: var(--texto-suave);
 }
 
-.level-header-badge {
-  background: var(--bg-surface-soft);
+.selo-cabecalho-nivel {
+  background: var(--fundo-superficie-suave);
   text-align: center;
   padding: 0.6rem;
   border-radius: 10px;
@@ -1441,17 +1441,17 @@ textarea {
   margin-bottom: 0.9rem;
 }
 
-.levels-grid {
+.grade-niveis {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.65rem;
 }
 
-.level-tile-btn {
+.botao-bloco-nivel {
   padding: 0.65rem 0.5rem;
-  background: var(--bg-surface);
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  background: var(--fundo-superficie);
+  color: var(--texto-primario);
+  border: 1px solid var(--cor-borda);
   border-bottom: 4px solid #7a6328;
   border-radius: 8px;
   font-family: "Nunito", sans-serif;
@@ -1461,16 +1461,16 @@ textarea {
   transition: transform 0.15s ease;
 }
 
-.level-tile-btn:hover,
-.level-tile-btn.active {
+.botao-bloco-nivel:hover,
+.botao-bloco-nivel.ativo {
   background: rgba(56, 182, 255, 0.15);
-  border-color: var(--figma-blue);
-  border-bottom-color: var(--figma-navy);
+  border-color: var(--azul-figma);
+  border-bottom-color: var(--marinho-figma);
 }
 
 /* Quiz Box Soma (Figma 24:3046) */
-.quiz-box-figma__banner {
-  background: var(--figma-blue);
+.caixa-desafio-figma__banner {
+  background: var(--azul-figma);
   color: #ffffff;
   text-align: center;
   padding: 0.85rem;
@@ -1480,13 +1480,13 @@ textarea {
   margin-bottom: 1.25rem;
 }
 
-.angle-diagram {
+.diagrama-angulo {
   display: flex;
   justify-content: center;
   margin-bottom: 0.75rem;
 }
 
-.quiz-box-figma__question {
+.caixa-desafio-figma__pergunta {
   text-align: center;
   color: #164a68;
   font-size: 1.15rem;
@@ -1494,21 +1494,21 @@ textarea {
   margin-bottom: 1.15rem;
 }
 
-[data-theme="dark"] .quiz-box-figma__question {
+[data-tema="escuro"] .caixa-desafio-figma__pergunta {
   color: #93c5fd;
 }
 
-.quiz-options-grid {
+.grade-opcoes-desafio {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin-bottom: 1rem;
 }
 
-.quiz-option-btn {
+.botao-opcao-desafio {
   height: 68px;
-  background: var(--bg-surface);
-  color: var(--text-primary);
+  background: var(--fundo-superficie);
+  color: var(--texto-primario);
   border: 2px solid #e5e5e5;
   box-shadow: 0 4px 0 #e5e5e5;
   border-radius: 16px;
@@ -1518,25 +1518,25 @@ textarea {
   transition: all 0.2s ease;
 }
 
-.quiz-option-btn:hover {
-  border-color: var(--figma-blue);
+.botao-opcao-desafio:hover {
+  border-color: var(--azul-figma);
 }
 
-.quiz-option-btn.correct {
+.botao-opcao-desafio.correta {
   background: #dcfce7;
   border-color: #16a34a;
   box-shadow: 0 4px 0 #16a34a;
   color: #15803d;
 }
 
-.quiz-option-btn.wrong {
+.botao-opcao-desafio.incorreta {
   background: #fee2e2;
   border-color: #dc2626;
   box-shadow: 0 4px 0 #dc2626;
   color: #b91c1c;
 }
 
-.quiz-feedback {
+.retorno-desafio {
   text-align: center;
   font-weight: 700;
   font-size: 0.9rem;
@@ -1544,43 +1544,43 @@ textarea {
   margin-bottom: 1rem;
 }
 
-.doubt-comment-section h5 {
+.secao-comentario-duvida h5 {
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
 
-.doubt-comment-form textarea {
+.formulario-comentario-duvida textarea {
   width: 100%;
-  background: var(--bg-surface-soft);
-  border: 1px solid var(--border-color);
+  background: var(--fundo-superficie-suave);
+  border: 1px solid var(--cor-borda);
   border-radius: 10px;
   padding: 0.75rem;
-  color: var(--text-primary);
+  color: var(--texto-primario);
   margin-bottom: 0.75rem;
 }
 
-.doubt-comment-footer {
+.rodape-comentario-duvida {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.doubt-comment-footer strong {
+.rodape-comentario-duvida strong {
   display: block;
   font-size: 0.95rem;
-  color: var(--text-secondary);
+  color: var(--texto-secundario);
 }
 
-.doubt-comment-footer span {
+.rodape-comentario-duvida span {
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: var(--texto-suave);
 }
 
-.btn-chat-send {
+.botao-enviar-conversa {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--figma-blue);
+  background: var(--azul-figma);
   color: #ffffff;
   border: none;
   border-radius: 12px;
@@ -1589,7 +1589,7 @@ textarea {
   cursor: pointer;
 }
 
-.btn-chat-send img {
+.botao-enviar-conversa img {
   width: 24px;
   height: 24px;
 }
@@ -1597,62 +1597,62 @@ textarea {
 /* ==========================================================================
    VIEW 3: LOJA DE RECOMPENSAS (Figma 24:4661 + 24:4419)
    ========================================================================== */
-.shop-top-header {
+.cabecalho-topo-loja {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 1.5rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
+  background: var(--fundo-superficie);
+  border: 1px solid var(--cor-borda);
   border-radius: 20px;
   padding: 1.25rem 1.75rem;
   margin-bottom: 1.5rem;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--sombra-cartao);
 }
 
-.shop-top-header__left {
+.cabecalho-topo-loja__esquerda {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.shop-logo {
+.logo-loja {
   height: 60px;
   width: auto;
   background: transparent;
   object-fit: contain;
 }
 
-.shop-filters-bar {
+.barra-filtros-loja {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.shop-category-pills {
+.pilulas-categoria-loja {
   display: flex;
   gap: 0.6rem;
 }
 
-.shop-cat-pill {
+.pilula-categoria-loja {
   padding: 0.65rem 1.2rem;
   border-radius: 17px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-surface);
-  color: var(--text-primary);
+  border: 1px solid var(--cor-borda);
+  background: var(--fundo-superficie);
+  color: var(--texto-primario);
   font-size: 0.92rem;
   font-weight: 600;
   cursor: pointer;
 }
 
-.shop-cat-pill.active {
+.pilula-categoria-loja.ativo {
   background: rgba(255, 115, 34, 0.2);
-  border-color: var(--figma-orange);
+  border-color: var(--laranja-figma);
   font-weight: 700;
 }
 
-.shop-feedback {
+.retorno-loja {
   text-align: center;
   font-weight: 700;
   color: #16a34a;
@@ -1660,50 +1660,50 @@ textarea {
   min-height: 1.4rem;
 }
 
-.shop-products-grid {
+.grade-produtos-loja {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.35rem;
 }
 
-.shop-item-card {
+.cartao-item-loja {
   border-radius: 18px;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--cor-borda);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.shop-item-card:hover {
+.cartao-item-loja:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
+  box-shadow: var(--sombra-destaque);
 }
 
-.shop-item-card__img {
+.cartao-item-loja__imagem {
   width: 120px;
   height: 120px;
   object-fit: contain;
   margin-bottom: 0.85rem;
 }
 
-.shop-item-card__name {
+.cartao-item-loja__nome {
   font-size: 1rem;
   font-weight: 700;
   color: #181725;
   margin-bottom: 0.2rem;
 }
 
-.shop-item-card__pts {
+.cartao-item-loja__pontos {
   font-size: 0.95rem;
   font-weight: 600;
   color: #181725;
   margin-bottom: 0.85rem;
 }
 
-.shop-redeem-btn {
+.botao-resgatar-loja {
   padding: 0.45rem 1rem;
   border-radius: 999px;
   border: none;
@@ -1714,14 +1714,14 @@ textarea {
   cursor: pointer;
 }
 
-.shop-redeem-btn:hover {
-  background: var(--figma-blue-dark);
+.botao-resgatar-loja:hover {
+  background: var(--azul-escuro-figma);
 }
 
 /* ==========================================================================
    VIEW 4: RANKING DA TURMA (Figma 29:155 + 34:805)
    ========================================================================== */
-.ranking-header-bar {
+.barra-cabecalho-classificacao {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1730,7 +1730,7 @@ textarea {
   margin-bottom: 1.5rem;
 }
 
-.ranking-period-pills {
+.pilulas-periodo-classificacao {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -1740,7 +1740,7 @@ textarea {
   min-height: 48px;
 }
 
-.period-pill {
+.pilula-periodo {
   padding: 0.45rem 1.25rem;
   border-radius: 999px;
   border: 1px solid transparent;
@@ -1751,35 +1751,35 @@ textarea {
   cursor: pointer;
 }
 
-.period-pill.active {
-  border: 1px dashed var(--figma-navy);
-  color: var(--figma-navy);
+.pilula-periodo.ativo {
+  border: 1px dashed var(--marinho-figma);
+  color: var(--marinho-figma);
   font-weight: 700;
 }
 
-.ranking-mini-logo {
+.mini-logo-classificacao {
   height: 48px;
   width: auto;
   background: transparent;
   object-fit: contain;
 }
 
-.ranking-desktop-grid {
+.grade-computador-classificacao {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.75rem;
   align-items: stretch;
 }
 
-.podium-panel,
-.leaderboard-panel {
+.painel-podio,
+.painel-classificacao {
   display: flex;
   flex-direction: column;
   height: clamp(500px, 65vh, 620px);
   min-width: 0;
 }
 
-.podium-stage {
+.palco-podio {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -1789,7 +1789,7 @@ textarea {
   width: 100%;
 }
 
-.podium-column {
+.coluna-podio {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1798,17 +1798,17 @@ textarea {
   min-width: 82px;
 }
 
-.podium-pts {
+.pontos-podio {
   font-size: 0.85rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
 }
 
-.podium-avatar-wrap {
+.envoltorio-avatar-podio {
   position: relative;
 }
 
-.podium-crown {
+.coroa-podio {
   position: absolute;
   top: -22px;
   right: -12px;
@@ -1816,7 +1816,7 @@ textarea {
   height: 32px;
 }
 
-.podium-avatar {
+.avatar-podio {
   width: 76px;
   height: 76px;
   border-radius: 50%;
@@ -1827,7 +1827,7 @@ textarea {
   z-index: 2;
 }
 
-.podium-pillar {
+.pilar-podio {
   width: 100%;
   border-radius: 16px 16px 8px 8px;
   color: #ffffff;
@@ -1838,21 +1838,21 @@ textarea {
   padding: 2rem 0.75rem 1.25rem;
 }
 
-.pillar--2 {
+.pilar--2 {
   height: clamp(210px, 32vh, 275px);
   background: #0077ff;
 }
 
-.pillar--1 {
+.pilar--1 {
   height: clamp(260px, 39vh, 335px);
   background: #2d80ee;
   padding: 1.25rem 0.5rem 0.6rem;
 }
 
-.pillar-top-box {
+.caixa-superior-pilar {
   width: 100%;
   flex: 1;
-  background: var(--figma-blue);
+  background: var(--azul-figma);
   border-radius: 14px;
   display: flex;
   align-items: center;
@@ -1860,83 +1860,83 @@ textarea {
   margin-bottom: 0.5rem;
 }
 
-.pillar-bottom-box {
+.caixa-inferior-pilar {
   width: 100%;
   height: 82px;
-  background: var(--figma-blue);
+  background: var(--azul-figma);
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.pillar--3 {
+.pilar--3 {
   height: clamp(180px, 27vh, 240px);
   background: #2563eb;
 }
 
-.podium-rank-num {
+.numero-posicao-podio {
   font-size: 2.5rem;
   font-weight: 500;
 }
 
-.podium-name {
+.nome-podio {
   font-size: 1rem;
 }
 
-.leaderboard-list {
+.lista-classificacao {
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  background: var(--bg-surface-soft);
+  background: var(--fundo-superficie-suave);
   padding: 1rem;
   border-radius: 20px;
   overflow-y: auto;
 }
 
-.leaderboard-row {
+.linha-classificacao {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--bg-surface);
+  background: var(--fundo-superficie);
   padding: 0.65rem 1rem;
   border-radius: 12px;
 }
 
-.leaderboard-row__left {
+.linha-classificacao__esquerda {
   display: flex;
   align-items: center;
   gap: 0.85rem;
 }
 
-.leaderboard-pos {
-  background: var(--bg-surface-soft);
+.posicao-classificacao {
+  background: var(--fundo-superficie-suave);
   font-size: 0.78rem;
   font-weight: 700;
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
 }
 
-.leaderboard-avatar {
+.avatar-classificacao {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.leaderboard-name {
+.nome-classificacao {
   font-weight: 600;
   font-size: 0.95rem;
 }
 
-.leaderboard-points {
+.pontos-classificacao {
   font-size: 0.82rem;
-  color: var(--text-muted);
+  color: var(--texto-suave);
 }
 
-.trend-badge {
+.selo-tendencia {
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -1948,57 +1948,57 @@ textarea {
   font-weight: 800;
 }
 
-.trend--up { background: #38b6ff; }
-.trend--down { background: #ef4444; }
+.tendencia--alta { background: #38b6ff; }
+.tendencia--baixa { background: #ef4444; }
 
 /* ==========================================================================
    VIEW 5 & 10: CHAT ALUNO & PROFESSOR (Figma 24:911 & 101:922)
    ========================================================================== */
-.chat-window-panel {
+.painel-janela-conversa {
   display: flex;
   flex-direction: column;
   height: 620px;
 }
 
-.chat-window__header {
+.janela-conversa__cabecalho {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--cor-borda);
   margin-bottom: 1rem;
 }
 
-.chat-window__contact {
+.janela-conversa__contato {
   display: flex;
   align-items: center;
   gap: 0.85rem;
 }
 
-.chat-window__avatar {
+.janela-conversa__avatar {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.chat-window__contact strong {
+.janela-conversa__contato strong {
   display: block;
   font-size: 1rem;
 }
 
-.chat-window__contact span {
+.janela-conversa__contato span {
   font-size: 0.82rem;
-  color: var(--text-muted);
+  color: var(--texto-suave);
 }
 
-.status-online-badge {
+.selo-status-disponivel {
   font-size: 0.82rem;
   font-weight: 700;
   color: #16a34a;
 }
 
-.chat-messages-area {
+.area-mensagens-conversa {
   flex: 1;
   overflow-y: auto;
   display: flex;
@@ -2007,7 +2007,7 @@ textarea {
   padding: 0.5rem;
 }
 
-.chat-bubble {
+.balao-conversa {
   max-width: 68%;
   padding: 0.95rem 1.2rem;
   border-radius: 16px;
@@ -2015,46 +2015,46 @@ textarea {
   line-height: 1.45;
 }
 
-.chat-bubble--incoming {
+.balao-conversa--recebido {
   align-self: flex-start;
   background: #eef2ff;
   color: #252a36;
   border-bottom-left-radius: 4px;
 }
 
-.chat-bubble--outgoing {
+.balao-conversa--enviado {
   align-self: flex-end;
   background: #5b6be1;
   color: #ffffff;
   border-bottom-right-radius: 4px;
 }
 
-.chat-input-bar {
+.barra-entrada-conversa {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: var(--bg-surface-soft);
+  background: var(--fundo-superficie-suave);
   padding: 0.55rem 0.85rem;
   border-radius: 999px;
   margin-top: 1rem;
 }
 
-.chat-input-bar input {
+.barra-entrada-conversa input {
   flex: 1;
   border: none;
   background: transparent;
-  color: var(--text-primary);
+  color: var(--texto-primario);
   font-size: 0.95rem;
   outline: none;
   padding: 0.35rem 0.5rem;
 }
 
-.chat-send-circle {
+.circulo-enviar-conversa {
   width: 38px;
   height: 38px;
   border-radius: 50%;
   border: none;
-  background: var(--figma-blue);
+  background: var(--azul-figma);
   color: #ffffff;
   font-weight: 800;
   font-size: 1.1rem;
@@ -2064,27 +2064,27 @@ textarea {
 /* ==========================================================================
    VIEW 6: PERFIL DO ESTUDANTE (Figma 41:573)
    ========================================================================== */
-.profile-desktop-card {
+.cartao-perfil-computador {
   display: grid;
   grid-template-columns: 340px 1fr;
   gap: 2.25rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
+  background: var(--fundo-superficie);
+  border: 1px solid var(--cor-borda);
   border-radius: 24px;
   padding: 2.5rem;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--sombra-cartao);
 }
 
-.profile-desktop-card__left {
+.cartao-perfil-computador__esquerda {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid var(--cor-borda);
   padding-right: 2rem;
 }
 
-.profile-large-avatar {
+.avatar-grande-perfil {
   width: 160px;
   height: 160px;
   border-radius: 50%;
@@ -2092,7 +2092,7 @@ textarea {
   margin-bottom: 1rem;
 }
 
-.profile-mini-logo {
+.mini-logo-perfil {
   height: 72px;
   width: auto;
   background: transparent;
@@ -2100,7 +2100,7 @@ textarea {
   margin: 1.5rem 0;
 }
 
-.btn-figma-logout {
+.botao-sair-figma {
   width: 100%;
   height: 48px;
   background: #55b9ff;
@@ -2112,33 +2112,33 @@ textarea {
   cursor: pointer;
 }
 
-.profile-desktop-card__form h3 {
+.cartao-perfil-computador__formulario h3 {
   margin-bottom: 1.5rem;
 }
 
-.profile-field {
+.campo-perfil {
   margin-bottom: 1.35rem;
 }
 
-.profile-field label {
+.campo-perfil label {
   display: block;
   font-weight: 700;
   font-size: 0.95rem;
   margin-bottom: 0.35rem;
 }
 
-.profile-field__input-wrap {
+.campo-perfil__envoltorio-entrada {
   display: flex;
   align-items: center;
-  border-bottom: 2px solid var(--border-color);
+  border-bottom: 2px solid var(--cor-borda);
   padding-bottom: 0.45rem;
 }
 
-.profile-field__input-wrap input {
+.campo-perfil__envoltorio-entrada input {
   flex: 1;
   border: none;
   background: transparent;
-  color: var(--text-secondary);
+  color: var(--texto-secundario);
   font-size: 1.05rem;
   outline: none;
 }
@@ -2146,8 +2146,8 @@ textarea {
 /* ==========================================================================
    VIEW 7, 8, 9, 10: MÓDULO PROFESSOR (Figma 98:1454, 107:1587, 111:2201, 101:922)
    ========================================================================== */
-.teacher-hero-banner {
-  background: var(--figma-blue);
+.banner-principal-professora {
+  background: var(--azul-figma);
   color: #ffffff;
   border-radius: 22px;
   padding: 1.75rem 2.25rem;
@@ -2155,16 +2155,16 @@ textarea {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--sombra-cartao);
 }
 
-.teacher-hero-banner__left {
+.banner-principal-professora__esquerda {
   display: flex;
   align-items: center;
   gap: 1.35rem;
 }
 
-.teacher-hero-banner__avatar {
+.banner-principal-professora__avatar {
   width: 82px;
   height: 82px;
   border-radius: 50%;
@@ -2172,29 +2172,29 @@ textarea {
   border: 3px solid #ffffff;
 }
 
-.teacher-welcome {
+.boas-vindas-professora {
   font-size: 1rem;
   opacity: 0.85;
 }
 
-.teacher-hero-banner h2 {
+.banner-principal-professora h2 {
   font-size: 1.65rem;
   font-weight: 800;
   margin-bottom: 0.35rem;
 }
 
-.teacher-agenda-row {
+.linha-agenda-professora {
   display: flex;
   gap: 1.5rem;
   font-size: 0.92rem;
 }
 
-.teacher-hero-banner__actions {
+.banner-principal-professora__acoes {
   display: flex;
   gap: 0.75rem;
 }
 
-.teacher-Subnav-btn {
+.botao-subnavegacao-professora {
   background: rgba(255, 255, 255, 0.22);
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.5);
@@ -2204,61 +2204,61 @@ textarea {
   cursor: pointer;
 }
 
-.teacher-Subnav-btn:hover {
+.botao-subnavegacao-professora:hover {
   background: #ffffff;
-  color: var(--figma-navy);
+  color: var(--marinho-figma);
 }
 
-.teacher-reminders-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
+.cartao-lembretes-professora {
+  background: var(--fundo-superficie);
+  border: 1px solid var(--cor-borda);
   border-radius: 20px;
   padding: 1.5rem 1.75rem;
   margin-bottom: 1.75rem;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--sombra-cartao);
 }
 
-.teacher-reminders-card__title {
+.cartao-lembretes-professora__titulo {
   display: flex;
   align-items: center;
   gap: 0.6rem;
   margin-bottom: 1rem;
 }
 
-.teacher-reminders-grid {
+.grade-lembretes-professora {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
 }
 
-.reminder-alert {
+.alerta-lembrete {
   padding: 1rem 1.25rem;
   border-radius: 14px;
   font-size: 0.92rem;
 }
 
-.reminder-alert strong {
+.alerta-lembrete strong {
   display: block;
   margin-bottom: 0.3rem;
 }
 
-.reminder-alert--danger {
+.alerta-lembrete--perigo {
   background: rgba(239, 68, 68, 0.12);
   border-left: 4px solid #ef4444;
 }
 
-.reminder-alert--info {
+.alerta-lembrete--informacao {
   background: rgba(56, 182, 255, 0.14);
-  border-left: 4px solid var(--figma-blue);
+  border-left: 4px solid var(--azul-figma);
 }
 
-.teacher-classes-grid {
+.grade-turmas-professora {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.35rem;
 }
 
-.class-card {
+.cartao-turma {
   border-radius: 16px;
   padding: 1.35rem;
   color: #ffffff;
@@ -2268,20 +2268,20 @@ textarea {
   min-height: 165px;
 }
 
-.class-card--purple { background: #686bff; }
-.class-card--navy   { background: #12283d; }
-.class-card--coral  { background: #e3576e; }
-.class-card--indigo { background: #7078e4; }
-.class-card--wine   { background: #a94d56; }
-.class-card--grey   { background: #64748b; }
+.cartao-turma--roxo { background: #686bff; }
+.cartao-turma--marinho   { background: #12283d; }
+.cartao-turma--coral  { background: #e3576e; }
+.cartao-turma--indigo { background: #7078e4; }
+.cartao-turma--vinho   { background: #a94d56; }
+.cartao-turma--cinza   { background: #64748b; }
 
-.class-card__header {
+.cartao-turma__cabecalho {
   display: flex;
   align-items: flex-start;
   gap: 0.85rem;
 }
 
-.class-card__icon-box {
+.cartao-turma__caixa-icone {
   width: 36px;
   height: 36px;
   background: #ffffff;
@@ -2292,29 +2292,29 @@ textarea {
   flex-shrink: 0;
 }
 
-.class-card__icon-box img {
+.cartao-turma__caixa-icone img {
   width: 22px;
   height: 22px;
 }
 
-.class-card h4 {
+.cartao-turma h4 {
   font-size: 1.05rem;
   margin-bottom: 0.2rem;
 }
 
-.class-card p {
+.cartao-turma p {
   font-size: 0.84rem;
   opacity: 0.82;
 }
 
-.class-card__footer {
+.cartao-turma__rodape {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   margin-top: 1.25rem;
 }
 
-.class-action-btn {
+.botao-acao-turma {
   background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
   border: none;
@@ -2325,142 +2325,142 @@ textarea {
   cursor: pointer;
 }
 
-.class-action-btn:hover {
+.botao-acao-turma:hover {
   background: #ffffff;
   color: #181725;
 }
 
-.class-chat-btn {
+.botao-conversa-turma {
   margin-left: auto;
   background: transparent;
   border: none;
   cursor: pointer;
 }
 
-.class-chat-btn img {
+.botao-conversa-turma img {
   width: 38px;
   height: 38px;
 }
 
 /* Chamada & Notas Split Layout */
-.teacher-split-layout {
+.layout-dividido-professora {
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 1.75rem;
   align-items: start;
 }
 
-.turmas-blue-title {
+.titulo-azul-turmas {
   font-size: 1.75rem;
   color: #5c9dfe;
   margin-bottom: 1rem;
 }
 
-.turmas-check-list {
+.lista-selecao-turmas {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.turma-select-item {
+.item-selecao-turma {
   display: flex;
   align-items: center;
   gap: 0.85rem;
   padding: 0.85rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--cor-borda);
   border-radius: 12px;
-  background: var(--bg-surface);
-  color: var(--text-primary);
+  background: var(--fundo-superficie);
+  color: var(--texto-primario);
   font-size: 1rem;
   cursor: pointer;
 }
 
-.turma-select-item.active {
-  border-color: var(--figma-blue);
+.item-selecao-turma.ativo {
+  border-color: var(--azul-figma);
   background: rgba(56, 182, 255, 0.1);
   font-weight: 700;
 }
 
-.turma-checkbox {
+.caixa-selecao-turma {
   width: 24px;
   height: 24px;
   border-radius: 6px;
   background: #bed8ff;
-  color: var(--figma-navy);
+  color: var(--marinho-figma);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
 }
 
-.attendance-students-list,
-.grades-student-picker {
+.lista-estudantes-chamada,
+.seletor-estudante-notas {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
   margin-top: 1rem;
 }
 
-.student-row-card {
+.cartao-linha-estudante {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1.15rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--cor-borda);
   border-radius: 14px;
-  background: var(--bg-surface-soft);
+  background: var(--fundo-superficie-suave);
 }
 
-.student-row-card__left {
+.cartao-linha-estudante__esquerda {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.student-row-card__avatar {
+.cartao-linha-estudante__avatar {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  border: 2px solid var(--figma-blue);
+  border: 2px solid var(--azul-figma);
   object-fit: cover;
 }
 
-.student-row-card__num {
+.cartao-linha-estudante__numero {
   font-family: "Poppins", sans-serif;
   font-weight: 700;
-  color: var(--figma-blue);
+  color: var(--azul-figma);
 }
 
-.student-row-card__name {
+.cartao-linha-estudante__nome {
   font-family: "Poppins", sans-serif;
   font-weight: 700;
-  color: var(--figma-blue);
+  color: var(--azul-figma);
   font-size: 0.98rem;
 }
 
-.attendance-circle-check {
+.marcador-circular-presenca {
   width: 26px;
   height: 26px;
-  accent-color: var(--figma-blue);
+  accent-color: var(--azul-figma);
   cursor: pointer;
 }
 
 /* Chat Professor (Figma 101:922) */
-.teacher-chat-desktop-grid {
+.grade-computador-conversa-professora {
   display: grid;
   grid-template-columns: 390px 1fr;
   gap: 1.75rem;
   align-items: start;
 }
 
-.teacher-chat-filter-bar {
+.barra-filtro-conversa-professora {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
 }
 
-.exclude-replied-check {
+.opcao-excluir-respondidas {
   display: flex;
   align-items: center;
   gap: 0.45rem;
@@ -2468,65 +2468,65 @@ textarea {
   cursor: pointer;
 }
 
-.teacher-inbox-list {
+.lista-entrada-professora {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
 }
 
-.inbox-item {
+.item-entrada {
   display: flex;
   align-items: center;
   gap: 0.85rem;
   padding: 0.85rem 1rem;
   border-radius: 12px;
-  background: var(--bg-surface-soft);
+  background: var(--fundo-superficie-suave);
   border: 1px solid transparent;
   cursor: pointer;
 }
 
-.inbox-item.unread {
+.item-entrada.nao-lida {
   background: rgba(1, 51, 103, 0.09);
 }
 
-.inbox-item.active {
-  border-color: var(--figma-blue);
+.item-entrada.ativo {
+  border-color: var(--azul-figma);
 }
 
-.inbox-dot {
+.ponto-entrada {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--figma-blue-dark);
+  background: var(--azul-escuro-figma);
 }
 
-.inbox-avatar {
+.avatar-entrada {
   width: 44px;
   height: 44px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.inbox-info {
+.informacoes-entrada {
   flex: 1;
 }
 
-.inbox-info strong {
+.informacoes-entrada strong {
   display: block;
   font-size: 0.95rem;
 }
 
-.inbox-info span {
+.informacoes-entrada span {
   font-size: 0.78rem;
-  color: var(--text-muted);
+  color: var(--texto-suave);
 }
 
-.inbox-time {
+.horario-entrada {
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--texto-suave);
 }
 
-.form-feedback {
+.retorno-formulario {
   color: #16a34a;
   font-weight: 700;
   font-size: 0.88rem;
@@ -2537,143 +2537,143 @@ textarea {
    RESPONSIVIDADE PROPORCIONAL (Telas menores, Tablets e Celulares)
    ========================================================================== */
 @media (max-width: 1180px) {
-  .desktop-app {
+  .aplicacao-computador {
     grid-template-columns: 240px 1fr;
   }
 
-  .view-container {
+  .conteiner-tela {
     padding: 1.5rem;
   }
 
-  .ranking-desktop-grid {
+  .grade-computador-classificacao {
     gap: 1.25rem;
   }
 }
 
 @media (max-width: 960px) {
-  .desktop-app {
+  .aplicacao-computador {
     grid-template-columns: 1fr;
   }
 
-  .sidebar {
+  .barraLateral {
     position: relative;
     height: auto;
     border-right: none;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--cor-borda);
     padding: 1rem;
   }
 
-  .sidebar__nav {
+  .barra-lateral__navegacao {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 0.5rem;
   }
 
-  .sidebar__nav .nav-item {
+  .barra-lateral__navegacao .item-navegacao {
     width: auto;
     flex: 1 1 calc(50% - 0.5rem);
     justify-content: center;
   }
 
-  .topbar {
+  .barra-topo {
     flex-wrap: wrap;
     gap: 0.85rem;
     padding: 1rem 1.25rem;
   }
 
-  .login-fullscreen-container,
-  .home-desktop-grid,
-  .ranking-desktop-grid,
-  .profile-desktop-card,
-  .attendance-desktop-grid,
-  .grades-desktop-grid,
-  .teacher-chat-desktop-grid {
+  .conteiner-tela-cheia-login,
+  .grade-computador-inicio,
+  .grade-computador-classificacao,
+  .cartao-perfil-computador,
+  .grade-computador-chamada,
+  .grade-computador-notas,
+  .grade-computador-conversa-professora {
     grid-template-columns: 1fr;
   }
 
-  .podium-panel,
-  .leaderboard-panel {
+  .painel-podio,
+  .painel-classificacao {
     width: 100%;
     height: 480px;
   }
 
-  .subjects-grid,
-  .shop-products-grid,
-  .turmas-cards-grid {
+  .grade-materias,
+  .grade-produtos-loja,
+  .grade-cartoes-turmas {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   }
 }
 
 @media (max-width: 600px) {
-  .login-fullscreen-overlay {
+  .sobreposicao-tela-cheia-login {
     padding: 1rem;
   }
 
-  .login-profile-selector,
-  .login-auth-card {
+  .seletor-perfil-login,
+  .cartao-autenticacao-login {
     padding: 1.25rem;
   }
 
-  .figma-profile-btn {
+  .botao-perfil-figma {
     height: 64px;
     font-size: 1.1rem;
     padding: 0 1rem;
     gap: 0.85rem;
   }
 
-  .view-container {
+  .conteiner-tela {
     padding: 1rem;
   }
 
-  .ranking-header-bar {
+  .barra-cabecalho-classificacao {
     justify-content: center;
   }
 
-  .ranking-period-pills {
+  .pilulas-periodo-classificacao {
     width: 100%;
     justify-content: space-between;
   }
 
-  .period-pill {
+  .pilula-periodo {
     flex: 1;
     padding: 0.45rem 0.5rem;
     font-size: 0.8rem;
     text-align: center;
   }
 
-  .podium-panel,
-  .leaderboard-panel {
+  .painel-podio,
+  .painel-classificacao {
     height: 440px;
     padding: 1.15rem;
   }
 
-  .podium-avatar {
+  .avatar-podio {
     width: 58px;
     height: 58px;
   }
 
-  .pillar--1 {
+  .pilar--1 {
     height: 235px;
   }
 
-  .pillar--2 {
+  .pilar--2 {
     height: 190px;
   }
 
-  .pillar--3 {
+  .pilar--3 {
     height: 160px;
   }
 
-  .podium-rank-num {
+  .numero-posicao-podio {
     font-size: 1.85rem;
   }
 
-  .podium-name {
+  .nome-podio {
     font-size: 0.88rem;
   }
 
-  .levels-grid-9,
-  .angle-options-grid {
+  .grade-niveis-9,
+  .grade-opcoes-angulo {
     grid-template-columns: 1fr;
   }
 }

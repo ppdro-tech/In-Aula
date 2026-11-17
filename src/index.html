@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="light">
+<html lang="pt-BR" data-tema="claro">
 
 <head>
   <meta charset="UTF-8" />
@@ -21,251 +21,251 @@
        TELA DE LOGIN / AUTENTICAÇÃO FULLSCREEN DESKTOP
        (Fiel aos frames do Figma: 21:139, 16:56, 16:269, 41:646, 16:250, 96:758)
        ======================================================================= -->
-  <div class="login-fullscreen-overlay" id="loginFullscreenOverlay">
+  <div class="sobreposicao-tela-cheia-login" id="sobreposicaoTelaCheiaLogin">
     <!-- Barra de topo discreta na tela de Login (Tema Claro/Escuro + Acesso Rápido) -->
-    <div class="login-topbar">
-      <div class="login-topbar__brand">
-        <span class="status-dot"></span>
+    <div class="barra-topo-login">
+      <div class="barra-topo-login__marca">
+        <span class="ponto-status"></span>
         <span>Sistema Educacional <strong>IN AULA</strong> — Versão Desktop</span>
       </div>
-      <div class="login-topbar__actions">
-        <button type="button" class="theme-switch-btn" id="loginThemeToggle">
-          <span class="theme-icon-el">🌙</span>
-          <span class="theme-label-el">Modo Escuro</span>
+      <div class="barra-topo-login__acoes">
+        <button type="button" class="botao-alternar-tema" id="alternarTemaLogin">
+          <span class="elemento-icone-tema">🌙</span>
+          <span class="elemento-rotulo-tema">Modo Escuro</span>
         </button>
       </div>
     </div>
 
-    <div class="login-desktop-showcase">
+    <div class="vitrine-computador-login">
       <!-- Painel Esquerdo: Seleção de Perfil ("Qual seu tipo de perfil?" - Figma 21:139) -->
-      <section class="login-left-panel" aria-label="Seleção de tipo de perfil">
-        <div class="login-logo-box">
-          <img src="assets/logo-inaula.png" alt="Logo IN AULA" class="login-logo-img" />
+      <section class="painel-esquerdo-login" aria-label="Seleção de tipo de perfil">
+        <div class="caixa-logo-login">
+          <img src="assets/logo-inaula.png" alt="Logo IN AULA" class="imagem-logo-login" />
         </div>
 
-        <h1 class="login-profile-title">Qual seu tipo de perfil?</h1>
-        <p class="login-profile-subtitle">
+        <h1 class="titulo-perfil-login">Qual seu tipo de perfil?</h1>
+        <p class="subtitulo-perfil-login">
           Escolha seu perfil abaixo para carregar seu acesso personalizado no IN AULA:
         </p>
 
-        <div class="figma-profile-buttons">
-          <button type="button" class="figma-profile-btn" data-select-profile="responsaveis">
-            <div class="figma-profile-btn__icon-wrap">
+        <div class="botoes-perfil-figma">
+          <button type="button" class="botao-perfil-figma" data-selecionar-perfil="responsaveis">
+            <div class="botao-perfil-figma__envoltorio-icone">
               <img src="assets/icon-group.png" alt="Responsáveis" />
             </div>
             <span>RESPONSÁVEIS</span>
           </button>
 
-          <button type="button" class="figma-profile-btn active" data-select-profile="estudante">
-            <div class="figma-profile-btn__icon-wrap">
+          <button type="button" class="botao-perfil-figma ativo" data-selecionar-perfil="estudante">
+            <div class="botao-perfil-figma__envoltorio-icone">
               <img src="assets/icon-reading-book.png" alt="Estudante" />
             </div>
             <span>ESTUDANTE</span>
           </button>
 
-          <button type="button" class="figma-profile-btn" data-select-profile="instituicao">
-            <div class="figma-profile-btn__icon-wrap">
+          <button type="button" class="botao-perfil-figma" data-selecionar-perfil="instituicao">
+            <div class="botao-perfil-figma__envoltorio-icone">
               <img src="assets/icon-school.png" alt="Instituição / Professor" />
             </div>
             <span>INSTITUIÇÃO</span>
           </button>
         </div>
 
-        <div class="login-bottom-bar-decor"></div>
+        <div class="decoracao-barra-inferior-login"></div>
       </section>
 
       <!-- Painel Direito: Telas de Login, Criar Conta e Esqueceu sua Senha (Figma 16:56, 16:269, 16:250) -->
-      <section class="login-right-panel" aria-label="Formulário de autenticação">
+      <section class="painel-direito-login" aria-label="Formulário de autenticação">
         <!-- Cabeçalho do Card com botão Voltar e Logo igual ao Figma -->
-        <div class="login-card-top">
-          <button type="button" class="login-back-arrow" id="authBackArrowBtn" title="Voltar para Login">
+        <div class="topo-cartao-login">
+          <button type="button" class="seta-voltar-login" id="botaoSetaVoltarAutenticacao" title="Voltar para Login">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
               <path d="M19 12H5M5 12L11 18M5 12L11 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
                 stroke-linejoin="round" />
             </svg>
           </button>
 
-          <div class="login-card-logo">
+          <div class="logo-cartao-login">
             <img src="assets/logo-inaula.png" alt="IN AULA" />
           </div>
 
-          <span class="login-profile-pill" id="selectedProfileBadge">
+          <span class="pilula-perfil-login" id="seloPerfilSelecionado">
             Perfil: <strong>ESTUDANTE</strong>
           </span>
         </div>
 
         <!-- Abas rápidas para navegar entre Login / Criar Conta / Esqueceu a Senha -->
-        <div class="auth-tabs" role="tablist">
-          <button type="button" class="auth-tab active" data-auth-tab="login">Login</button>
-          <button type="button" class="auth-tab" data-auth-tab="signup">Criar Conta</button>
-          <button type="button" class="auth-tab" data-auth-tab="recover">Esqueceu a Senha</button>
+        <div class="abas-autenticacao" role="tablist">
+          <button type="button" class="aba-autenticacao ativo" data-aba-autenticacao="login">Login</button>
+          <button type="button" class="aba-autenticacao" data-aba-autenticacao="signup">Criar Conta</button>
+          <button type="button" class="aba-autenticacao" data-aba-autenticacao="recover">Esqueceu a Senha</button>
         </div>
 
         <!-- ===============================================================
              SUB-TELA 1: LOGIN ("Bem-Vindo!" - Figma 16:56 & 96:758)
              =============================================================== -->
-        <form class="figma-auth-form" id="loginForm">
-          <h2 class="figma-auth-heading">Bem-Vindo!</h2>
+        <form class="formulario-autenticacao-figma" id="formularioLogin">
+          <h2 class="titulo-autenticacao-figma">Bem-Vindo!</h2>
 
           <!-- Campo Nome de Usuário ou Email (Rectangle 26) -->
-          <div class="figma-field">
-            <span class="figma-field__icon" aria-hidden="true">
+          <div class="campo-figma">
+            <span class="campo-figma__icone" aria-hidden="true">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                 <path d="M20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21" stroke="#626262"
                   stroke-width="2" stroke-linecap="round" />
                 <circle cx="12" cy="7" r="4" stroke="#626262" stroke-width="2" />
               </svg>
             </span>
-            <input type="text" id="loginUser" placeholder="Nome de Usuario ou Email" value="brunodelorence@gmail.com"
+            <input type="text" id="usuarioLogin" placeholder="Nome de Usuario ou Email" value="brunodelorence@gmail.com"
               required />
           </div>
 
           <!-- Campo Senha (Rectangle 24) + Ícone Olho -->
-          <div class="figma-field">
-            <span class="figma-field__icon" aria-hidden="true">
+          <div class="campo-figma">
+            <span class="campo-figma__icone" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <rect x="4" y="11" width="16" height="10" rx="2" stroke="#626262" stroke-width="2" />
                 <path d="M8 11V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V11" stroke="#626262"
                   stroke-width="2" />
               </svg>
             </span>
-            <input type="password" id="loginPass" placeholder="Senha" value="123456" required />
-            <button type="button" class="figma-field__eye" data-toggle-pass="loginPass"
+            <input type="password" id="senhaLogin" placeholder="Senha" value="123456" required />
+            <button type="button" class="campo-figma__olho" data-alternar-senha="senhaLogin"
               aria-label="Mostrar ou ocultar senha">
               👁️
             </button>
           </div>
 
           <!-- Link "Esqueceu sua senha?" -->
-          <div class="figma-forgot-row">
-            <button type="button" class="figma-forgot-link" data-auth-switch="recover">
+          <div class="linha-esqueceu-figma">
+            <button type="button" class="link-esqueceu-figma" data-trocar-autenticacao="recover">
               Esqueceu sua senha?
             </button>
           </div>
 
           <!-- Botão "Login" (Frame 3 - 16:108) -->
-          <button type="submit" class="figma-submit-btn">Login</button>
-          <p class="form-feedback" id="loginFeedbackMsg"></p>
+          <button type="submit" class="botao-enviar-figma">Login</button>
+          <p class="retorno-formulario" id="mensagemRetornoLogin"></p>
 
           <!-- Rodapé "Crie uma Conta Inscreva-se" (Group 33679 - 16:86) -->
-          <div class="figma-bottom-switch">
+          <div class="troca-inferior-figma">
             <span>Crie uma Conta</span>
-            <button type="button" class="figma-switch-link" data-auth-switch="signup">Inscreva-se</button>
+            <button type="button" class="link-troca-figma" data-trocar-autenticacao="signup">Inscreva-se</button>
           </div>
 
-          <div class="login-bottom-bar-decor"></div>
+          <div class="decoracao-barra-inferior-login"></div>
         </form>
 
         <!-- ===============================================================
              SUB-TELA 2: CRIAR CONTA ("Crie uma conta!" - Figma 16:269 & 41:646)
              =============================================================== -->
-        <form class="figma-auth-form" id="signupForm" hidden>
-          <h2 class="figma-auth-heading">Crie uma conta!</h2>
+        <form class="formulario-autenticacao-figma" id="formularioCadastro" hidden>
+          <h2 class="titulo-autenticacao-figma">Crie uma conta!</h2>
 
           <!-- Nome de usuário -->
-          <div class="figma-field">
-            <span class="figma-field__icon" aria-hidden="true">
+          <div class="campo-figma">
+            <span class="campo-figma__icone" aria-hidden="true">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                 <path d="M20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21" stroke="#626262"
                   stroke-width="2" stroke-linecap="round" />
                 <circle cx="12" cy="7" r="4" stroke="#626262" stroke-width="2" />
               </svg>
             </span>
-            <input type="text" id="signupUsername" placeholder="Nome de usuário" value="brunodelorence" required />
+            <input type="text" id="nomeUsuarioCadastro" placeholder="Nome de usuário" value="brunodelorence" required />
           </div>
 
           <!-- E-mail -->
-          <div class="figma-field">
-            <span class="figma-field__icon" aria-hidden="true">
+          <div class="campo-figma">
+            <span class="campo-figma__icone" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <rect x="3" y="5" width="18" height="14" rx="2" stroke="#626262" stroke-width="2" />
                 <path d="M3 7L12 13L21 7" stroke="#626262" stroke-width="2" />
               </svg>
             </span>
-            <input type="email" id="signupEmail" placeholder="E-mail" value="brunodelorence@gmail.com" required />
+            <input type="email" id="emailCadastro" placeholder="E-mail" value="brunodelorence@gmail.com" required />
           </div>
 
           <!-- Senha -->
-          <div class="figma-field">
-            <span class="figma-field__icon" aria-hidden="true">
+          <div class="campo-figma">
+            <span class="campo-figma__icone" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <rect x="4" y="11" width="16" height="10" rx="2" stroke="#626262" stroke-width="2" />
                 <path d="M8 11V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V11" stroke="#626262"
                   stroke-width="2" />
               </svg>
             </span>
-            <input type="password" id="signupPass" placeholder="Senha" value="1234567" required />
-            <button type="button" class="figma-field__eye" data-toggle-pass="signupPass"
+            <input type="password" id="senhaCadastro" placeholder="Senha" value="1234567" required />
+            <button type="button" class="campo-figma__olho" data-alternar-senha="senhaCadastro"
               aria-label="Mostrar ou ocultar senha">
               👁️
             </button>
           </div>
 
           <!-- Confirme a senha -->
-          <div class="figma-field">
-            <span class="figma-field__icon" aria-hidden="true">
+          <div class="campo-figma">
+            <span class="campo-figma__icone" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <rect x="4" y="11" width="16" height="10" rx="2" stroke="#626262" stroke-width="2" />
                 <path d="M8 11V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V11" stroke="#626262"
                   stroke-width="2" />
               </svg>
             </span>
-            <input type="password" id="signupPassConfirm" placeholder="Confirme a senha" value="1234567" required />
-            <button type="button" class="figma-field__eye" data-toggle-pass="signupPassConfirm"
+            <input type="password" id="confirmacaoSenhaCadastro" placeholder="Confirme a senha" value="1234567" required />
+            <button type="button" class="campo-figma__olho" data-alternar-senha="confirmacaoSenhaCadastro"
               aria-label="Mostrar ou ocultar senha">
               👁️
             </button>
           </div>
 
           <!-- Texto legal exato do Figma 16:179 -->
-          <p class="figma-terms-note">
+          <p class="nota-termos-figma">
             Ao clicar no botão de <strong>Criar Conta</strong>, você automaticamente concorda com nossa politica e
             termos de uso.
           </p>
 
           <!-- Botão Criar Conta -->
-          <button type="submit" class="figma-submit-btn">Criar Conta</button>
-          <p class="form-feedback" id="signupFeedbackMsg"></p>
+          <button type="submit" class="botao-enviar-figma">Criar Conta</button>
+          <p class="retorno-formulario" id="mensagemRetornoCadastro"></p>
 
           <!-- Rodapé "Já tenho um conta Login" -->
-          <div class="figma-bottom-switch">
+          <div class="troca-inferior-figma">
             <span>Já tenho um conta</span>
-            <button type="button" class="figma-switch-link" data-auth-switch="login">Login</button>
+            <button type="button" class="link-troca-figma" data-trocar-autenticacao="login">Login</button>
           </div>
 
-          <div class="login-bottom-bar-decor"></div>
+          <div class="decoracao-barra-inferior-login"></div>
         </form>
 
         <!-- ===============================================================
              SUB-TELA 3: ESQUECEU SUA SENHA ("Esqueceu sua Senha?" - Figma 16:250)
              =============================================================== -->
-        <form class="figma-auth-form" id="recoverForm" hidden>
-          <h2 class="figma-auth-heading">Esqueceu sua<br />Senha?</h2>
+        <form class="formulario-autenticacao-figma" id="formularioRecuperacao" hidden>
+          <h2 class="titulo-autenticacao-figma">Esqueceu sua<br />Senha?</h2>
 
-          <div class="figma-field">
-            <span class="figma-field__icon" aria-hidden="true">
+          <div class="campo-figma">
+            <span class="campo-figma__icone" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <rect x="3" y="5" width="18" height="14" rx="2" stroke="#626262" stroke-width="2" />
                 <path d="M3 7L12 13L21 7" stroke="#626262" stroke-width="2" />
               </svg>
             </span>
-            <input type="email" id="recoverEmailInput" placeholder="Digite seu endereço de e-mail" required />
+            <input type="email" id="campoEmailRecuperacao" placeholder="Digite seu endereço de e-mail" required />
           </div>
 
           <!-- Aviso exato do Figma 16:226 -->
-          <p class="figma-terms-note">
-            <span class="text-danger">*</span> Enviaremos uma mensagem para você redefinir sua senha.
+          <p class="nota-termos-figma">
+            <span class="texto-perigo">*</span> Enviaremos uma mensagem para você redefinir sua senha.
           </p>
 
-          <button type="submit" class="figma-submit-btn">Enviar</button>
-          <p class="form-feedback" id="recoverFeedbackMsg"></p>
+          <button type="submit" class="botao-enviar-figma">Enviar</button>
+          <p class="retorno-formulario" id="mensagemRetornoRecuperacao"></p>
 
-          <div class="figma-bottom-switch">
+          <div class="troca-inferior-figma">
             <span>Lembrou a senha?</span>
-            <button type="button" class="figma-switch-link" data-auth-switch="login">Login</button>
+            <button type="button" class="link-troca-figma" data-trocar-autenticacao="login">Login</button>
           </div>
 
-          <div class="login-bottom-bar-decor"></div>
+          <div class="decoracao-barra-inferior-login"></div>
         </form>
       </section>
     </div>
@@ -274,22 +274,22 @@
   <!-- =======================================================================
        DASHBOARD DESKTOP DO SISTEMA (Exibido após clicar em Login / Criar Conta)
        ======================================================================= -->
-  <div class="desktop-app" id="mainDesktopApp" hidden>
+  <div class="aplicacao-computador" id="aplicacaoPrincipalComputador" hidden>
     <!-- SIDEBAR LATERAL ESQUERDA -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar__brand" id="openWelcomeBtn" title="Voltar para a Tela de Login">
-        <img src="assets/logo-inaula.png" alt="Logo IN AULA" class="sidebar__logo-img" />
+    <aside class="barraLateral" id="barraLateral">
+      <div class="barra-lateral__marca" id="botaoAbrirBoasVindas" title="Voltar para a Tela de Login">
+        <img src="assets/logo-inaula.png" alt="Logo IN AULA" class="barra-lateral__imagem-logo" />
       </div>
 
       <!-- Indicador fixo do Setor autenticado no Login (sem troca livre entre Aluno e Professor) -->
-      <div class="sidebar__role-switch">
-        <span class="sidebar__section-label">SETOR AUTENTICADO</span>
-        <div class="role-pills">
-          <div class="role-pill active" id="activeStudentSectorBadge" style="grid-column: 1 / -1; cursor: default;">
+      <div class="barra-lateral__seletor-setor">
+        <span class="barra-lateral__rotulo-secao">SETOR AUTENTICADO</span>
+        <div class="pilulas-setor">
+          <div class="pilula-setor ativo" id="seloSetorEstudanteAtivo" style="grid-column: 1 / -1; cursor: default;">
             <img src="assets/icon-reading-book.png" alt="" />
-            <span id="activeStudentSectorLabel">Setor: Estudante</span>
+            <span id="rotuloSetorEstudanteAtivo">Setor: Estudante</span>
           </div>
-          <div class="role-pill active" id="activeTeacherSectorBadge" hidden style="grid-column: 1 / -1; cursor: default;">
+          <div class="pilula-setor ativo" id="seloSetorProfessoraAtivo" hidden style="grid-column: 1 / -1; cursor: default;">
             <img src="assets/icon-school.png" alt="" />
             <span>Setor: Instituição (Docente)</span>
           </div>
@@ -297,109 +297,109 @@
       </div>
 
       <!-- Menu do Estudante -->
-      <nav class="sidebar__nav" id="studentNav" aria-label="Menu do Estudante">
-        <span class="sidebar__section-label">MENU DO ESTUDANTE</span>
-        <button type="button" class="nav-item active" data-view="student-home">
-          <span class="nav-item__icon">🏠</span>
+      <nav class="barra-lateral__navegacao" id="navegacaoEstudante" aria-label="Menu do Estudante">
+        <span class="barra-lateral__rotulo-secao">MENU DO ESTUDANTE</span>
+        <button type="button" class="item-navegacao ativo" data-tela="estudante-inicio">
+          <span class="item-navegacao__icone">🏠</span>
           <span>Início (Painel)</span>
         </button>
-        <button type="button" class="nav-item" data-view="student-activities">
-          <span class="nav-item__icon">⭐</span>
+        <button type="button" class="item-navegacao" data-tela="estudante-atividades">
+          <span class="item-navegacao__icone">⭐</span>
           <span>Atividades &amp; Níveis</span>
-          <span class="nav-item__badge">4</span>
+          <span class="item-navegacao__selo">4</span>
         </button>
-        <button type="button" class="nav-item" data-view="student-shop">
-          <span class="nav-item__icon">🏪</span>
+        <button type="button" class="item-navegacao" data-tela="estudante-loja">
+          <span class="item-navegacao__icone">🏪</span>
           <span>Loja de Pontos</span>
         </button>
-        <button type="button" class="nav-item" data-view="student-ranking">
-          <span class="nav-item__icon">📊</span>
+        <button type="button" class="item-navegacao" data-tela="estudante-classificacao">
+          <span class="item-navegacao__icone">📊</span>
           <span>Ranking da Turma</span>
         </button>
-        <button type="button" class="nav-item" data-view="student-chat">
-          <span class="nav-item__icon">💬</span>
+        <button type="button" class="item-navegacao" data-tela="estudante-conversa">
+          <span class="item-navegacao__icone">💬</span>
           <span>Chat com Professora</span>
         </button>
-        <button type="button" class="nav-item" data-view="student-profile">
-          <span class="nav-item__icon">👤</span>
+        <button type="button" class="item-navegacao" data-tela="estudante-perfil">
+          <span class="item-navegacao__icone">👤</span>
           <span>Meu Perfil</span>
         </button>
       </nav>
 
       <!-- Menu do Professor / Instituição -->
-      <nav class="sidebar__nav" id="teacherNav" aria-label="Menu do Professor" hidden>
-        <span class="sidebar__section-label">MENU DO PROFESSOR</span>
-        <button type="button" class="nav-item active" data-view="teacher-home">
-          <span class="nav-item__icon">🏫</span>
+      <nav class="barra-lateral__navegacao" id="navegacaoProfessora" aria-label="Menu do Professor" hidden>
+        <span class="barra-lateral__rotulo-secao">MENU DO PROFESSOR</span>
+        <button type="button" class="item-navegacao ativo" data-tela="professora-inicio">
+          <span class="item-navegacao__icone">🏫</span>
           <span>Início &amp; Turmas</span>
         </button>
-        <button type="button" class="nav-item" data-view="teacher-attendance">
-          <span class="nav-item__icon">📋</span>
+        <button type="button" class="item-navegacao" data-tela="professora-chamada">
+          <span class="item-navegacao__icone">📋</span>
           <span>Chamada Digital</span>
         </button>
-        <button type="button" class="nav-item" data-view="teacher-grades">
-          <span class="nav-item__icon">📝</span>
+        <button type="button" class="item-navegacao" data-tela="professora-notas">
+          <span class="item-navegacao__icone">📝</span>
           <span>Notas &amp; Frequência</span>
         </button>
-        <button type="button" class="nav-item" data-view="teacher-chat">
-          <span class="nav-item__icon">💬</span>
+        <button type="button" class="item-navegacao" data-tela="professora-conversa">
+          <span class="item-navegacao__icone">💬</span>
           <span>Chat de Dúvidas</span>
-          <span class="nav-item__badge" id="teacherUnreadBadge">4</span>
+          <span class="item-navegacao__selo" id="seloNaoLidasProfessora">4</span>
         </button>
       </nav>
 
-      <div class="sidebar__footer">
-        <button type="button" class="btn-portal-entry" id="sidebarLogoutBtn">
+      <div class="barra-lateral__rodape">
+        <button type="button" class="botao-entrada-portal" id="botaoSairBarraLateral">
           🔐 Trocar Conta / Tela de Login
         </button>
       </div>
     </aside>
 
     <!-- ÁREA PRINCIPAL DESKTOP -->
-    <div class="main-workspace">
-      <header class="topbar">
-        <div class="topbar__left">
-          <h1 class="topbar__title" id="currentViewTitle">Painel do Estudante</h1>
-          <span class="topbar__subtitle" id="currentViewSubtitle">Ano Letivo • Turma 3°E • Ensino Médio</span>
+    <div class="area-trabalho-principal">
+      <header class="barra-topo">
+        <div class="barra-topo__esquerda">
+          <h1 class="barra-topo__titulo" id="tituloTelaAtual">Painel do Estudante</h1>
+          <span class="barra-topo__subtitulo" id="subtituloTelaAtual">Ano Letivo • Turma 3°E • Ensino Médio</span>
         </div>
 
-        <div class="topbar__right">
-          <div class="points-pill" id="topbarPointsBox" title="Seus pontos acumulados nas atividades">
-            <img src="assets/icon-medal-pts.svg" alt="" class="points-pill__icon" />
-            <strong id="globalStudentPoints">2564</strong>
+        <div class="barra-topo__direita">
+          <div class="pilula-pontos" id="caixaPontosTopo" title="Seus pontos acumulados nas atividades">
+            <img src="assets/icon-medal-pts.svg" alt="" class="pilula-pontos__icone" />
+            <strong id="pontosGlobaisEstudante">2564</strong>
             <span>pts</span>
           </div>
 
-          <button type="button" class="theme-switch-btn" id="themeToggle" title="Alternar tema Claro e Escuro">
-            <span class="theme-icon-el" id="themeIcon">🌙</span>
-            <span class="theme-label-el" id="themeLabel">Modo Escuro</span>
+          <button type="button" class="botao-alternar-tema" id="botaoAlternarTema" title="Alternar tema Claro e Escuro">
+            <span class="elemento-icone-tema" id="iconeTema">🌙</span>
+            <span class="elemento-rotulo-tema" id="rotuloTema">Modo Escuro</span>
           </button>
 
-          <div class="user-chip" id="topbarUserChip">
-            <img src="assets/avatar-bruno.png" alt="Bruno Delorence" id="topbarAvatar" class="user-chip__avatar" />
-            <div class="user-chip__info">
-              <strong id="topbarName">Bruno Delorence</strong>
-              <span id="topbarRole">Estudante • Top 1 (3°E)</span>
+          <div class="bloco-usuario" id="blocoUsuarioTopo">
+            <img src="assets/avatar-bruno.png" alt="Bruno Delorence" id="avatarBarraTopo" class="bloco-usuario__avatar" />
+            <div class="bloco-usuario__informacoes">
+              <strong id="nomeBarraTopo">Bruno Delorence</strong>
+              <span id="cargoBarraTopo">Estudante • 1º Lugar (3°E)</span>
             </div>
           </div>
         </div>
       </header>
 
-      <main class="views-container">
+      <main class="conteiner-telas">
         <!-- VIEW 1: HOME DO ESTUDANTE (Figma: 40:506) -->
-        <section class="view-screen active" id="view-student-home">
-          <div class="student-hero-banner" style="background-image: url('assets/banner-student.png');">
-            <div class="student-hero-banner__overlay">
-              <div class="student-hero-banner__profile">
-                <img src="assets/avatar-bruno.png" alt="Bruno Delorence" class="student-hero-banner__avatar" />
-                <div class="student-hero-banner__details">
-                  <h2 id="studentBannerName">Bruno Delorence</h2>
-                  <div class="student-hero-banner__meta">
-                    <span class="meta-item">
+        <section class="tela-visualizacao ativo" id="tela-estudante-inicio">
+          <div class="banner-principal-estudante" style="background-image: url('assets/banner-student.png');">
+            <div class="banner-principal-estudante__sobreposicao">
+              <div class="banner-principal-estudante__perfil">
+                <img src="assets/avatar-bruno.png" alt="Bruno Delorence" class="banner-principal-estudante__avatar" />
+                <div class="banner-principal-estudante__detalhes">
+                  <h2 id="nomeBannerEstudante">Bruno Delorence</h2>
+                  <div class="banner-principal-estudante__metadados">
+                    <span class="item-metadado">
                       <img src="assets/icon-top1.svg" alt="" />
-                      Top 1
+                      1º Lugar
                     </span>
-                    <span class="meta-item">
+                    <span class="item-metadado">
                       <img src="assets/icon-class-book.svg" alt="" />
                       3°E
                     </span>
@@ -407,12 +407,12 @@
                 </div>
               </div>
 
-              <div class="student-hero-banner__right">
-                <div class="banner-score-pill">
+              <div class="banner-principal-estudante__direita">
+                <div class="pilula-pontuacao-banner">
                   <span>1.250 XP</span>
                   <img src="assets/icon-medal-pts.svg" alt="Medalha" />
                 </div>
-                <button type="button" class="btn-banner-action" data-go-view="student-activities">
+                <button type="button" class="botao-acao-banner" data-ir-tela="estudante-atividades">
                   Continuar Estudos →
                 </button>
               </div>
@@ -420,106 +420,106 @@
           </div>
 
           <!-- Os 4 Cards de Status de Atividades do Figma -->
-          <div class="status-kpi-grid">
-            <div class="status-kpi-card" data-go-view="student-activities">
-              <div class="status-kpi-card__top">
-                <img src="assets/icon-pending.svg" alt="Atividades Pendentes" class="status-kpi-card__icon" />
-                <span class="status-kpi-card__number num--blue" id="kpiPendingCount">4</span>
+          <div class="grade-indicadores-status">
+            <div class="cartao-indicador-status" data-ir-tela="estudante-atividades">
+              <div class="cartao-indicador-status__topo">
+                <img src="assets/icon-pending.svg" alt="Atividades Pendentes" class="cartao-indicador-status__icone" />
+                <span class="cartao-indicador-status__numero numero--azul" id="contadorIndicadorPendentes">4</span>
               </div>
-              <div class="status-kpi-card__label">
+              <div class="cartao-indicador-status__rotulo">
                 <p>Atividades</p>
                 <p>Pendentes!</p>
               </div>
             </div>
 
-            <div class="status-kpi-card" data-go-view="student-activities">
-              <div class="status-kpi-card__top">
-                <img src="assets/icon-deadline.svg" alt="Prazo Acabando" class="status-kpi-card__icon" />
-                <span class="status-kpi-card__number num--red">2</span>
+            <div class="cartao-indicador-status" data-ir-tela="estudante-atividades">
+              <div class="cartao-indicador-status__topo">
+                <img src="assets/icon-deadline.svg" alt="Prazo Acabando" class="cartao-indicador-status__icone" />
+                <span class="cartao-indicador-status__numero numero--vermelho">2</span>
               </div>
-              <div class="status-kpi-card__label">
+              <div class="cartao-indicador-status__rotulo">
                 <p>Prazo</p>
                 <p>Acabando!</p>
               </div>
             </div>
 
-            <div class="status-kpi-card" data-go-view="student-activities">
-              <div class="status-kpi-card__top">
-                <img src="assets/icon-waiting.svg" alt="Aguardando Correção" class="status-kpi-card__icon" />
-                <span class="status-kpi-card__number num--yellow" id="kpiWaitingCount">7</span>
+            <div class="cartao-indicador-status" data-ir-tela="estudante-atividades">
+              <div class="cartao-indicador-status__topo">
+                <img src="assets/icon-waiting.svg" alt="Aguardando Correção" class="cartao-indicador-status__icone" />
+                <span class="cartao-indicador-status__numero numero--amarelo" id="contadorIndicadorAguardando">7</span>
               </div>
-              <div class="status-kpi-card__label">
+              <div class="cartao-indicador-status__rotulo">
                 <p>Aguardando</p>
                 <p>Correção!</p>
               </div>
             </div>
 
-            <div class="status-kpi-card" data-go-view="student-activities">
-              <div class="status-kpi-card__top">
-                <img src="assets/icon-corrected.svg" alt="Atividades Corrigidas" class="status-kpi-card__icon" />
-                <span class="status-kpi-card__number num--green" id="kpiCorrectedCount">12</span>
+            <div class="cartao-indicador-status" data-ir-tela="estudante-atividades">
+              <div class="cartao-indicador-status__topo">
+                <img src="assets/icon-corrected.svg" alt="Atividades Corrigidas" class="cartao-indicador-status__icone" />
+                <span class="cartao-indicador-status__numero numero--verde" id="contadorIndicadorCorrigidas">12</span>
               </div>
-              <div class="status-kpi-card__label">
+              <div class="cartao-indicador-status__rotulo">
                 <p>Atividades</p>
                 <p>Corrigidas!</p>
               </div>
             </div>
           </div>
 
-          <div class="home-desktop-columns">
-            <div class="desktop-panel">
-              <div class="desktop-panel__header">
+          <div class="colunas-computador-inicio">
+            <div class="painel-computador">
+              <div class="painel-computador__cabecalho">
                 <div>
                   <h3>Seus Estudos em Andamento</h3>
-                  <p class="text-muted">20% de seu progresso concluído na semana!</p>
+                  <p class="texto-suave">20% de seu progresso concluído na semana!</p>
                 </div>
-                <button type="button" class="link-btn link-btn--bold" data-go-view="student-activities">
+                <button type="button" class="botao-link botao-link--negrito" data-ir-tela="estudante-atividades">
                   Ver todas as matérias →
                 </button>
               </div>
 
-              <div class="mini-progress-track">
-                <div class="mini-progress-fill" style="width: 20%"></div>
+              <div class="trilha-mini-progresso">
+                <div class="preenchimento-mini-progresso" style="width: 20%"></div>
               </div>
 
-              <div class="subject-cards-grid subject-cards-grid--compact">
-                <article class="subject-card bg-math" data-open-subject="Matemática">
-                  <span class="subject-card__counter">03/30</span>
-                  <h4 class="subject-card__title">Matemática</h4>
-                  <button type="button" class="subject-card__btn">Continuar</button>
-                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                  <div class="subject-card__tiles">
-                    <div class="tile tile--front"><img src="assets/icon-math-plus.svg" alt="" /></div>
-                    <div class="tile tile--back"><img src="assets/icon-math-percent.svg" alt="" /></div>
+              <div class="grade-cartoes-materias grade-cartoes-materias--compacta">
+                <article class="cartao-materia fundo-matematica" data-abrir-materia="Matemática">
+                  <span class="cartao-materia__contador">03/30</span>
+                  <h4 class="cartao-materia__titulo">Matemática</h4>
+                  <button type="button" class="cartao-materia__botao">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="cartao-materia__onda" />
+                  <div class="cartao-materia__blocos">
+                    <div class="bloco bloco--frente"><img src="assets/icon-math-plus.svg" alt="" /></div>
+                    <div class="bloco bloco--fundo"><img src="assets/icon-math-percent.svg" alt="" /></div>
                   </div>
                 </article>
 
-                <article class="subject-card bg-port" data-open-subject="Português">
-                  <span class="subject-card__counter">0/30</span>
-                  <h4 class="subject-card__title">Português</h4>
-                  <button type="button" class="subject-card__btn subject-card__btn--blue">Começar</button>
-                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                  <div class="subject-card__tiles">
-                    <div class="tile tile--front"><img src="assets/icon-port-a.svg" alt="" /></div>
-                    <div class="tile tile--back"><img src="assets/icon-port-j.svg" alt="" /></div>
+                <article class="cartao-materia fundo-portugues" data-abrir-materia="Português">
+                  <span class="cartao-materia__contador">0/30</span>
+                  <h4 class="cartao-materia__titulo">Português</h4>
+                  <button type="button" class="cartao-materia__botao cartao-materia__botao--azul">Começar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="cartao-materia__onda" />
+                  <div class="cartao-materia__blocos">
+                    <div class="bloco bloco--frente"><img src="assets/icon-port-a.svg" alt="" /></div>
+                    <div class="bloco bloco--fundo"><img src="assets/icon-port-j.svg" alt="" /></div>
                   </div>
                 </article>
               </div>
             </div>
 
-            <div class="desktop-panel">
-              <div class="desktop-panel__header">
+            <div class="painel-computador">
+              <div class="painel-computador__cabecalho">
                 <div>
                   <h3>Minhas Notas &amp; Frequência</h3>
-                  <p class="text-muted">Acompanhamento oficial da Turma 3°E</p>
+                  <p class="texto-suave">Acompanhamento oficial da Turma 3°E</p>
                 </div>
-                <button type="button" class="link-btn link-btn--bold" data-go-view="student-chat">
+                <button type="button" class="botao-link botao-link--negrito" data-ir-tela="estudante-conversa">
                   Tirar Dúvida 💬
                 </button>
               </div>
 
-              <div class="grades-table-wrap">
-                <table class="figma-table">
+              <div class="envoltorio-tabela-notas">
+                <table class="tabela-figma">
                   <thead>
                     <tr>
                       <th>Matéria</th>
@@ -529,32 +529,32 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="row-bar"></span>Mat</td>
+                      <td><span class="barra-linha"></span>Mat</td>
                       <td>90%</td>
                       <td><strong>8,1</strong></td>
                     </tr>
                     <tr>
-                      <td><span class="row-bar"></span>Port</td>
+                      <td><span class="barra-linha"></span>Port</td>
                       <td>85%</td>
                       <td><strong>8,4</strong></td>
                     </tr>
                     <tr>
-                      <td><span class="row-bar"></span>Geo</td>
+                      <td><span class="barra-linha"></span>Geo</td>
                       <td>93%</td>
                       <td><strong>7,2</strong></td>
                     </tr>
                     <tr>
-                      <td><span class="row-bar"></span>Bio</td>
+                      <td><span class="barra-linha"></span>Bio</td>
                       <td>89%</td>
                       <td><strong>6,1</strong></td>
                     </tr>
                     <tr>
-                      <td><span class="row-bar"></span>Fis</td>
+                      <td><span class="barra-linha"></span>Fis</td>
                       <td>98%</td>
                       <td><strong>9,0</strong></td>
                     </tr>
                     <tr>
-                      <td><span class="row-bar"></span>Quím</td>
+                      <td><span class="barra-linha"></span>Quím</td>
                       <td>99,9%</td>
                       <td><strong>9,6</strong></td>
                     </tr>
@@ -566,114 +566,114 @@
         </section>
 
         <!-- VIEW 2: ATIVIDADES, TRILHAS & DESAFIOS GAMIFICADOS (Fluxo em Etapas Fiel ao Figma) -->
-        <section class="view-screen" id="view-student-activities" hidden>
+        <section class="tela-visualizacao" id="tela-estudante-atividades" hidden>
           <!-- ===============================================================
                PASSO 1: CATÁLOGO DE MATÉRIAS (Figma: Home Atividades 16:582)
                =============================================================== -->
-          <div id="stepSubjectsCatalog">
-            <div class="activities-header-bar">
-              <div class="search-box-figma">
-                <span class="search-box-figma__icon">🔍</span>
-                <input type="search" id="activitySearchInput" placeholder="Buscar atividade ou matéria..." />
+          <div id="etapaCatalogoMaterias">
+            <div class="barra-cabecalho-atividades">
+              <div class="caixa-busca-figma">
+                <span class="caixa-busca-figma__icone">🔍</span>
+                <input type="search" id="campoBuscaAtividade" placeholder="Buscar atividade ou matéria..." />
               </div>
 
-              <div class="studies-progress-summary">
+              <div class="resumo-progresso-estudos">
                 <div>
                   <strong>Seus estudos:</strong>
-                  <span id="studyProgressLabel">20% de seu progresso!</span>
-                  <div class="mini-progress-track">
-                    <div class="mini-progress-fill" id="studyProgressBar" style="width: 20%"></div>
+                  <span id="rotuloProgressoEstudos">20% de seu progresso!</span>
+                  <div class="trilha-mini-progresso">
+                    <div class="preenchimento-mini-progresso" id="barraProgressoEstudos" style="width: 20%"></div>
                   </div>
                 </div>
-                <div class="cup-circle">
+                <div class="circulo-trofeu">
                   <img src="assets/icon-cup.svg" alt="Troféu" />
                 </div>
               </div>
             </div>
 
-            <div class="desktop-panel">
-              <div class="desktop-panel__header">
+            <div class="painel-computador">
+              <div class="painel-computador__cabecalho">
                 <div>
-                  <h3 class="panel-section-title" style="margin-bottom:0.2rem">Disciplinas Disponíveis</h3>
-                  <p class="text-muted">Selecione uma matéria abaixo para abrir suas atividades exclusivas</p>
+                  <h3 class="titulo-secao-painel" style="margin-bottom:0.2rem">Disciplinas Disponíveis</h3>
+                  <p class="texto-suave">Selecione uma matéria abaixo para abrir suas atividades exclusivas</p>
                 </div>
               </div>
 
-              <div class="subject-cards-grid subject-cards-grid--full" id="subjectsGrid">
-                <article class="subject-card bg-math" data-subject="Matemática">
-                  <span class="subject-card__counter">03/30</span>
-                  <h4 class="subject-card__title">Matemática</h4>
-                  <button type="button" class="subject-card__btn">Continuar</button>
-                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                  <div class="subject-card__tiles">
-                    <div class="tile tile--front"><img src="assets/icon-math-plus.svg" alt="" /></div>
-                    <div class="tile tile--back"><img src="assets/icon-math-percent.svg" alt="" /></div>
+              <div class="grade-cartoes-materias grade-cartoes-materias--completa" id="gradeMaterias">
+                <article class="cartao-materia fundo-matematica" data-materia="Matemática">
+                  <span class="cartao-materia__contador">03/30</span>
+                  <h4 class="cartao-materia__titulo">Matemática</h4>
+                  <button type="button" class="cartao-materia__botao">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="cartao-materia__onda" />
+                  <div class="cartao-materia__blocos">
+                    <div class="bloco bloco--frente"><img src="assets/icon-math-plus.svg" alt="" /></div>
+                    <div class="bloco bloco--fundo"><img src="assets/icon-math-percent.svg" alt="" /></div>
                   </div>
                 </article>
 
-                <article class="subject-card bg-port" data-subject="Português">
-                  <span class="subject-card__counter">0/30</span>
-                  <h4 class="subject-card__title">Português</h4>
-                  <button type="button" class="subject-card__btn subject-card__btn--blue">Começar</button>
-                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                  <div class="subject-card__tiles">
-                    <div class="tile tile--front"><img src="assets/icon-port-a.svg" alt="" /></div>
-                    <div class="tile tile--back"><img src="assets/icon-port-j.svg" alt="" /></div>
+                <article class="cartao-materia fundo-portugues" data-materia="Português">
+                  <span class="cartao-materia__contador">0/30</span>
+                  <h4 class="cartao-materia__titulo">Português</h4>
+                  <button type="button" class="cartao-materia__botao cartao-materia__botao--azul">Começar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="cartao-materia__onda" />
+                  <div class="cartao-materia__blocos">
+                    <div class="bloco bloco--frente"><img src="assets/icon-port-a.svg" alt="" /></div>
+                    <div class="bloco bloco--fundo"><img src="assets/icon-port-j.svg" alt="" /></div>
                   </div>
                 </article>
 
-                <article class="subject-card bg-bio" data-subject="Biologia">
-                  <span class="subject-card__counter">07/30</span>
-                  <h4 class="subject-card__title">Biologia</h4>
-                  <button type="button" class="subject-card__btn">Continuar</button>
-                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                  <div class="subject-card__tiles">
-                    <div class="tile tile--front"><img src="assets/icon-bio-lungs.svg" alt="" /></div>
-                    <div class="tile tile--back"><img src="assets/icon-bio-heart.svg" alt="" /></div>
+                <article class="cartao-materia fundo-biologia" data-materia="Biologia">
+                  <span class="cartao-materia__contador">07/30</span>
+                  <h4 class="cartao-materia__titulo">Biologia</h4>
+                  <button type="button" class="cartao-materia__botao">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="cartao-materia__onda" />
+                  <div class="cartao-materia__blocos">
+                    <div class="bloco bloco--frente"><img src="assets/icon-bio-lungs.svg" alt="" /></div>
+                    <div class="bloco bloco--fundo"><img src="assets/icon-bio-heart.svg" alt="" /></div>
                   </div>
                 </article>
 
-                <article class="subject-card bg-chem" data-subject="Química">
-                  <span class="subject-card__counter">16/30</span>
-                  <h4 class="subject-card__title">Química</h4>
-                  <button type="button" class="subject-card__btn">Continuar</button>
-                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                  <div class="subject-card__tiles">
-                    <div class="tile tile--front"><img src="assets/icon-chem-drop.svg" alt="" /></div>
-                    <div class="tile tile--back"><img src="assets/icon-chem-hazard.svg" alt="" /></div>
+                <article class="cartao-materia fundo-quimica" data-materia="Química">
+                  <span class="cartao-materia__contador">16/30</span>
+                  <h4 class="cartao-materia__titulo">Química</h4>
+                  <button type="button" class="cartao-materia__botao">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="cartao-materia__onda" />
+                  <div class="cartao-materia__blocos">
+                    <div class="bloco bloco--frente"><img src="assets/icon-chem-drop.svg" alt="" /></div>
+                    <div class="bloco bloco--fundo"><img src="assets/icon-chem-hazard.svg" alt="" /></div>
                   </div>
                 </article>
 
-                <article class="subject-card bg-phys" data-subject="Física">
-                  <span class="subject-card__counter">18/30</span>
-                  <h4 class="subject-card__title">Física</h4>
-                  <button type="button" class="subject-card__btn">Continuar</button>
-                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                  <div class="subject-card__tiles">
-                    <div class="tile tile--front"><img src="assets/icon-phys-atom.svg" alt="" /></div>
-                    <div class="tile tile--back"><img src="assets/icon-phys-energy.svg" alt="" /></div>
+                <article class="cartao-materia fundo-fisica" data-materia="Física">
+                  <span class="cartao-materia__contador">18/30</span>
+                  <h4 class="cartao-materia__titulo">Física</h4>
+                  <button type="button" class="cartao-materia__botao">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="cartao-materia__onda" />
+                  <div class="cartao-materia__blocos">
+                    <div class="bloco bloco--frente"><img src="assets/icon-phys-atom.svg" alt="" /></div>
+                    <div class="bloco bloco--fundo"><img src="assets/icon-phys-energy.svg" alt="" /></div>
                   </div>
                 </article>
 
-                <article class="subject-card bg-math" data-subject="Inglês">
-                  <span class="subject-card__counter">22/30</span>
-                  <h4 class="subject-card__title">Inglês</h4>
-                  <button type="button" class="subject-card__btn">Continuar</button>
-                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                  <div class="subject-card__tiles">
-                    <div class="tile tile--front"><span class="tile-letter">EN</span></div>
-                    <div class="tile tile--back"><img src="assets/icon-eng-lang.svg" alt="" /></div>
+                <article class="cartao-materia fundo-matematica" data-materia="Inglês">
+                  <span class="cartao-materia__contador">22/30</span>
+                  <h4 class="cartao-materia__titulo">Inglês</h4>
+                  <button type="button" class="cartao-materia__botao">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="cartao-materia__onda" />
+                  <div class="cartao-materia__blocos">
+                    <div class="bloco bloco--frente"><span class="letra-bloco">EN</span></div>
+                    <div class="bloco bloco--fundo"><img src="assets/icon-eng-lang.svg" alt="" /></div>
                   </div>
                 </article>
 
-                <article class="subject-card bg-port" data-subject="História">
-                  <span class="subject-card__counter">09/30</span>
-                  <h4 class="subject-card__title">História</h4>
-                  <button type="button" class="subject-card__btn">Continuar</button>
-                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                  <div class="subject-card__tiles">
-                    <div class="tile tile--front"><img src="assets/icon-hist-temple.svg" alt="" /></div>
-                    <div class="tile tile--back"><span class="tile-letter">🏛️</span></div>
+                <article class="cartao-materia fundo-portugues" data-materia="História">
+                  <span class="cartao-materia__contador">09/30</span>
+                  <h4 class="cartao-materia__titulo">História</h4>
+                  <button type="button" class="cartao-materia__botao">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="cartao-materia__onda" />
+                  <div class="cartao-materia__blocos">
+                    <div class="bloco bloco--frente"><img src="assets/icon-hist-temple.svg" alt="" /></div>
+                    <div class="bloco bloco--fundo"><span class="letra-bloco">🏛️</span></div>
                   </div>
                 </article>
               </div>
@@ -684,35 +684,35 @@
                PASSO 2: TRILHA DA MATÉRIA SELECIONADA (Figma: Android - 55 / Atividade 1)
                Aparece SOMENTE ao selecionar uma matéria
                =============================================================== -->
-          <div id="stepSubjectTrail" hidden>
-            <div class="subject-detail-topbar">
-              <button type="button" class="btn-back-subjects" id="backToSubjectsBtn">
+          <div id="etapaTrilhaMateria" hidden>
+            <div class="barra-topo-detalhe-materia">
+              <button type="button" class="botao-voltar-materias" id="botaoVoltarMaterias">
                 ← Voltar para Disciplinas
               </button>
-              <span class="subject-detail-badge" id="subjectDetailCounterBadge">Matéria: Matemática • 03/30</span>
+              <span class="selo-detalhe-materia" id="seloContadorDetalheMateria">Matéria: Matemática • 03/30</span>
             </div>
 
-            <div class="desktop-panel trail-stage-panel">
-              <div class="subject-banner-header bg-math" id="activeSubjectBannerCard">
+            <div class="painel-computador painel-etapa-trilha">
+              <div class="cabecalho-banner-materia fundo-matematica" id="cartaoBannerMateriaAtiva">
                 <div>
-                  <span class="subject-banner-header__tag" id="activeSubjectProgressPill">03/30</span>
-                  <h3 id="selectedSubjectHeading">Matemática</h3>
-                  <p id="selectedSubjectSubtitle">Clique em um módulo da trilha abaixo para abrir os níveis desta matéria</p>
+                  <span class="cabecalho-banner-materia__etiqueta" id="pilulaProgressoMateriaAtiva">03/30</span>
+                  <h3 id="tituloMateriaSelecionada">Matemática</h3>
+                  <p id="subtituloMateriaSelecionada">Clique em um módulo da trilha abaixo para abrir os níveis desta matéria</p>
                 </div>
-                <div class="subject-card__tiles" id="activeSubjectTiles">
-                  <div class="tile tile--front"><img src="assets/icon-math-plus.svg" alt="" /></div>
-                  <div class="tile tile--back"><img src="assets/icon-math-percent.svg" alt="" /></div>
+                <div class="cartao-materia__blocos" id="blocosIconesMateriaAtiva">
+                  <div class="bloco bloco--frente"><img src="assets/icon-math-plus.svg" alt="" /></div>
+                  <div class="bloco bloco--fundo"><img src="assets/icon-math-percent.svg" alt="" /></div>
                 </div>
               </div>
 
-              <div class="learning-path-list learning-path-list--clickable" id="learningPathList"></div>
+              <div class="lista-trilha-aprendizagem lista-trilha-aprendizagem--clicavel" id="listaTrilhaAprendizagem"></div>
 
-              <div class="trail-doubt-bar">
+              <div class="barra-duvida-trilha">
                 <div>
                   <strong>Tire suas dúvidas:</strong>
                   <span>Fale com o professor</span>
                 </div>
-                <button type="button" class="btn-chat-send" data-go-view="student-chat">
+                <button type="button" class="botao-enviar-conversa" data-ir-tela="estudante-conversa">
                   <img src="assets/icon-chat-badge.svg" alt="Chat" />
                   <span>Abrir Chat com Professor</span>
                 </button>
@@ -721,23 +721,23 @@
           </div>
 
           <!-- ===============================================================
-               PASSO 3: LISTA DE NÍVEIS DO MÓDULO (Figma: Atividade 2 - LEVEL 1)
+               PASSO 3: LISTA DE NÍVEIS DO MÓDULO (Figma: Atividade 2 - NÍVEL 1)
                Aparece SOMENTE ao clicar em um módulo da Trilha
                =============================================================== -->
-          <div id="stepModuleLevels" hidden>
-            <div class="subject-detail-topbar">
-              <button type="button" class="btn-back-subjects" id="backToTrailBtn">
+          <div id="etapaNiveisModulo" hidden>
+            <div class="barra-topo-detalhe-materia">
+              <button type="button" class="botao-voltar-materias" id="botaoVoltarTrilha">
                 ← Voltar para a Trilha da Matéria
               </button>
-              <span class="subject-detail-badge" id="activeModuleBadge">Matemática • Módulo: Operações</span>
+              <span class="selo-detalhe-materia" id="seloModuloAtivo">Matemática • Módulo: Operações</span>
             </div>
 
-            <div class="desktop-panel levels-stage-panel">
-              <div class="level-header-badge" id="levelStageHeader">LEVEL 1</div>
-              <p class="text-muted" style="text-align:center; margin-bottom:1.25rem">
+            <div class="painel-computador painel-etapa-niveis">
+              <div class="selo-cabecalho-nivel" id="cabecalhoEtapaNivel">NÍVEL 1</div>
+              <p class="texto-suave" style="text-align:center; margin-bottom:1.25rem">
                 Selecione um nível abaixo para abrir o exercício correspondente:
               </p>
-              <div class="levels-grid levels-grid--large" id="subjectLevelsGrid"></div>
+              <div class="grade-niveis grade-niveis--grande" id="gradeNiveisMateria"></div>
             </div>
           </div>
 
@@ -745,37 +745,37 @@
                PASSO 4: EXERCÍCIO / DESAFIO DO NÍVEL (Figma: Atividade 3, 14 e 5)
                Aparece SOMENTE ao clicar em um Nível (ex: Nível 1: Soma)
                =============================================================== -->
-          <div id="stepLevelQuiz" hidden>
-            <div class="subject-detail-topbar">
-              <button type="button" class="btn-back-subjects" id="backToLevelsBtn">
-                ← Voltar para os Níveis (LEVEL 1)
+          <div id="etapaDesafioNivel" hidden>
+            <div class="barra-topo-detalhe-materia">
+              <button type="button" class="botao-voltar-materias" id="botaoVoltarNiveis">
+                ← Voltar para os Níveis (NÍVEL 1)
               </button>
-              <span class="subject-detail-badge" id="activeQuizProgressBadge">Matemática • Questão 1 de 2</span>
+              <span class="selo-detalhe-materia" id="seloProgressoDesafioAtivo">Matemática • Questão 1 de 2</span>
             </div>
 
-            <div class="desktop-panel quiz-box-figma quiz-box-figma--centered" id="quizActiveCard">
-              <div class="quiz-box-figma__banner" id="quizBannerTitle">Soma</div>
+            <div class="painel-computador caixa-desafio-figma caixa-desafio-figma--centralizada" id="cartaoDesafioAtivo">
+              <div class="caixa-desafio-figma__banner" id="tituloBannerDesafio">Soma</div>
 
-              <div class="angle-diagram" id="angleDiagramBox" aria-label="Ilustração de ângulo"></div>
+              <div class="diagrama-angulo" id="caixaDiagramaAngulo" aria-label="Ilustração de ângulo"></div>
 
-              <h4 class="quiz-box-figma__question" id="quizQuestionText">
+              <h4 class="caixa-desafio-figma__pergunta" id="textoPerguntaDesafio">
                 Some o ângulo por eles mesmo:
               </h4>
 
-              <div class="quiz-options-grid" id="quizOptionsGrid"></div>
+              <div class="grade-opcoes-desafio" id="gradeOpcoesDesafio"></div>
 
-              <p class="quiz-feedback" id="quizFeedbackMsg" role="status"></p>
+              <p class="retorno-desafio" id="mensagemRetornoDesafio" role="status"></p>
 
-              <div class="doubt-comment-section">
+              <div class="secao-comentario-duvida">
                 <h5>Dúvida ou comentários</h5>
-                <form id="activityDoubtForm" class="doubt-comment-form">
-                  <textarea id="activityDoubtInput" rows="2" placeholder="Mensagem para a Professora Tati sobre esta atividade..."></textarea>
-                  <div class="doubt-comment-footer">
+                <form id="formularioDuvidaAtividade" class="formulario-comentario-duvida">
+                  <textarea id="campoDuvidaAtividade" rows="2" placeholder="Mensagem para a Professora Tati sobre esta atividade..."></textarea>
+                  <div class="rodape-comentario-duvida">
                     <div>
                       <strong>Tire suas dúvidas:</strong>
                       <span>Fale com o professor</span>
                     </div>
-                    <button type="submit" class="btn-chat-send" title="Enviar dúvida ao professor">
+                    <button type="submit" class="botao-enviar-conversa" title="Enviar dúvida ao professor">
                       <img src="assets/icon-chat-badge.svg" alt="Chat" />
                       <span>Enviar ao Professor</span>
                     </button>
@@ -784,217 +784,217 @@
               </div>
             </div>
 
-            <div class="desktop-panel quiz-completed-card" id="quizCompletedCard" hidden>
-              <div class="completed-check-circle">✓</div>
-              <span class="completed-pts-pill">+10 Pts conquistados!</span>
+            <div class="painel-computador cartao-desafio-concluido" id="cartaoDesafioConcluido" hidden>
+              <div class="circulo-verificacao-concluido">✓</div>
+              <span class="pilula-pontos-concluido">+10 Pts conquistados!</span>
               <h3>Atividade Concluída</h3>
-              <p class="text-muted">Parabéns! Você finalizou todas as questões deste nível com sucesso.</p>
-              <div class="completed-actions">
-                <button type="button" class="btn-figma-primary btn-figma-primary--sm" id="reviewQuizBtn">
+              <p class="texto-suave">Parabéns! Você finalizou todas as questões deste nível com sucesso.</p>
+              <div class="acoes-concluido">
+                <button type="button" class="botao-primario-figma botao-primario-figma--pequeno" id="botaoRevisarDesafio">
                   Revisar
                 </button>
-                <button type="button" class="btn-back-subjects" id="finishBackToLevelsBtn">
+                <button type="button" class="botao-voltar-materias" id="botaoConcluirVoltarNiveis">
                   Voltar para Níveis
                 </button>
               </div>
-              <img src="assets/logo-inaula.png" alt="IN AULA" class="completed-logo" />
+              <img src="assets/logo-inaula.png" alt="IN AULA" class="logo-concluido" />
             </div>
           </div>
         </section>
 
         <!-- VIEW 3: LOJA DE RECOMPENSAS IN AULA -->
-        <section class="view-screen" id="view-student-shop" hidden>
-          <div class="shop-top-header">
-            <div class="shop-top-header__left">
-              <img src="assets/logo-inaula.png" alt="IN AULA" class="shop-logo" />
+        <section class="tela-visualizacao" id="tela-estudante-loja" hidden>
+          <div class="cabecalho-topo-loja">
+            <div class="cabecalho-topo-loja__esquerda">
+              <img src="assets/logo-inaula.png" alt="IN AULA" class="logo-loja" />
               <div>
                 <h3>Loja de Recompensas IN AULA</h3>
-                <p class="text-muted">Troque os pontos conquistados nas aulas e atividades por prêmios!</p>
+                <p class="texto-suave">Troque os pontos conquistados nas aulas e atividades por prêmios!</p>
               </div>
             </div>
 
-            <div class="shop-filters-bar">
-              <div class="search-box-figma">
-                <span class="search-box-figma__icon">🔍</span>
-                <input type="search" id="shopSearchInput" placeholder="Buscar produto..." />
+            <div class="barra-filtros-loja">
+              <div class="caixa-busca-figma">
+                <span class="caixa-busca-figma__icone">🔍</span>
+                <input type="search" id="campoBuscaLoja" placeholder="Buscar produto..." />
               </div>
 
-              <div class="shop-category-pills">
-                <button type="button" class="shop-cat-pill active" data-shop-cat="all">Tudo</button>
-                <button type="button" class="shop-cat-pill" data-shop-cat="objeto">Objeto</button>
-                <button type="button" class="shop-cat-pill" data-shop-cat="eletronicos">Eletrônicos</button>
+              <div class="pilulas-categoria-loja">
+                <button type="button" class="pilula-categoria-loja ativo" data-categoria-loja="todos">Tudo</button>
+                <button type="button" class="pilula-categoria-loja" data-categoria-loja="objeto">Objeto</button>
+                <button type="button" class="pilula-categoria-loja" data-categoria-loja="eletronicos">Eletrônicos</button>
               </div>
             </div>
           </div>
 
-          <p class="shop-feedback" id="shopFeedbackMsg" role="status"></p>
-          <div class="shop-products-grid" id="shopProductsGrid"></div>
+          <p class="retorno-loja" id="mensagemRetornoLoja" role="status"></p>
+          <div class="grade-produtos-loja" id="gradeProdutosLoja"></div>
         </section>
 
         <!-- VIEW 4: RANKING DA TURMA -->
-        <section class="view-screen" id="view-student-ranking" hidden>
-          <div class="ranking-header-bar">
-            <div class="ranking-period-pills">
-              <button type="button" class="period-pill active" data-period="hoje">Hoje</button>
-              <button type="button" class="period-pill" data-period="semana">Esta semana</button>
-              <button type="button" class="period-pill" data-period="mes">Este mês</button>
+        <section class="tela-visualizacao" id="tela-estudante-classificacao" hidden>
+          <div class="barra-cabecalho-classificacao">
+            <div class="pilulas-periodo-classificacao">
+              <button type="button" class="pilula-periodo ativo" data-periodo="hoje">Hoje</button>
+              <button type="button" class="pilula-periodo" data-periodo="semana">Esta semana</button>
+              <button type="button" class="pilula-periodo" data-periodo="mes">Este mês</button>
             </div>
-            <img src="assets/logo-inaula.png" alt="IN AULA" class="ranking-mini-logo" />
+            <img src="assets/logo-inaula.png" alt="IN AULA" class="mini-logo-classificacao" />
           </div>
 
-          <div class="ranking-desktop-grid">
-            <div class="desktop-panel podium-panel">
+          <div class="grade-computador-classificacao">
+            <div class="painel-computador painel-podio">
               <h3>🏆 Pódio de Engajamento</h3>
-              <div class="podium-stage">
-                <div class="podium-column podium-column--2">
-                  <span class="podium-pts">🟠 6,500</span>
-                  <img src="assets/avatar-camelia.png" alt="Camelia" class="podium-avatar" />
-                  <div class="podium-pillar pillar--2">
-                    <span class="podium-rank-num">2</span>
-                    <strong class="podium-name">Camelia</strong>
+              <div class="palco-podio">
+                <div class="coluna-podio coluna-podio--2">
+                  <span class="pontos-podio">🟠 6,500</span>
+                  <img src="assets/avatar-camelia.png" alt="Camila" class="avatar-podio" />
+                  <div class="pilar-podio pilar--2">
+                    <span class="numero-posicao-podio">2</span>
+                    <strong class="nome-podio">Camila</strong>
                   </div>
                 </div>
 
-                <div class="podium-column podium-column--1">
-                  <span class="podium-pts">🔵 7,120</span>
-                  <div class="podium-avatar-wrap">
-                    <img src="assets/icon-crown.svg" alt="Coroa" class="podium-crown" />
-                    <img src="assets/avatar-bruno.png" alt="Bruno" class="podium-avatar podium-avatar--1" />
+                <div class="coluna-podio coluna-podio--1">
+                  <span class="pontos-podio">🔵 7,120</span>
+                  <div class="envoltorio-avatar-podio">
+                    <img src="assets/icon-crown.svg" alt="Coroa" class="coroa-podio" />
+                    <img src="assets/avatar-bruno.png" alt="Bruno" class="avatar-podio avatar-podio--1" />
                   </div>
-                  <div class="podium-pillar pillar--1">
-                    <div class="pillar-top-box">
-                      <span class="podium-rank-num">1</span>
+                  <div class="pilar-podio pilar--1">
+                    <div class="caixa-superior-pilar">
+                      <span class="numero-posicao-podio">1</span>
                     </div>
-                    <div class="pillar-bottom-box">
-                      <strong class="podium-name">Bruno</strong>
+                    <div class="caixa-inferior-pilar">
+                      <strong class="nome-podio">Bruno</strong>
                     </div>
                   </div>
                 </div>
 
-                <div class="podium-column podium-column--3">
-                  <span class="podium-pts">🟠 4,800</span>
-                  <img src="assets/avatar-wilson.png" alt="Wilson" class="podium-avatar" />
-                  <div class="podium-pillar pillar--3">
-                    <span class="podium-rank-num">3</span>
-                    <strong class="podium-name">Wilson</strong>
+                <div class="coluna-podio coluna-podio--3">
+                  <span class="pontos-podio">🟠 4,800</span>
+                  <img src="assets/avatar-wilson.png" alt="Wilson" class="avatar-podio" />
+                  <div class="pilar-podio pilar--3">
+                    <span class="numero-posicao-podio">3</span>
+                    <strong class="nome-podio">Wilson</strong>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="desktop-panel leaderboard-panel">
+            <div class="painel-computador painel-classificacao">
               <h3>Classificação Geral dos Estudantes</h3>
-              <div class="leaderboard-list" id="leaderboardList"></div>
+              <div class="lista-classificacao" id="listaClassificacaoGeral"></div>
             </div>
           </div>
         </section>
 
         <!-- VIEW 5: CHAT DO ALUNO COM A PROFESSORA TATI -->
-        <section class="view-screen" id="view-student-chat" hidden>
-          <div class="desktop-panel chat-window-panel">
-            <div class="chat-window__header">
-              <div class="chat-window__contact">
-                <img src="assets/avatar-tati-chat.png" alt="Professora Tati" class="chat-window__avatar" />
+        <section class="tela-visualizacao" id="tela-estudante-conversa" hidden>
+          <div class="painel-computador painel-janela-conversa">
+            <div class="janela-conversa__cabecalho">
+              <div class="janela-conversa__contato">
+                <img src="assets/avatar-tati-chat.png" alt="Professora Tati" class="janela-conversa__avatar" />
                 <div>
                   <strong>Professora Tati</strong>
-                  <span>Matemática &amp; Operações • Online agora</span>
+                  <span>Matemática &amp; Operações • Disponível agora</span>
                 </div>
               </div>
-              <span class="status-online-badge">● Plantão de Dúvidas Ativo</span>
+              <span class="selo-status-disponivel">● Plantão de Dúvidas Ativo</span>
             </div>
 
-            <div class="chat-messages-area" id="studentChatMessages"></div>
+            <div class="area-mensagens-conversa" id="mensagensConversaEstudante"></div>
 
-            <form class="chat-input-bar" id="studentChatForm">
-              <input type="text" id="studentChatInput" placeholder="Mensagem..." required />
-              <button type="submit" class="chat-send-circle" title="Enviar mensagem">↑</button>
+            <form class="barra-entrada-conversa" id="formularioConversaEstudante">
+              <input type="text" id="campoConversaEstudante" placeholder="Mensagem..." required />
+              <button type="submit" class="circulo-enviar-conversa" title="Enviar mensagem">↑</button>
             </form>
           </div>
         </section>
 
         <!-- VIEW 6: PERFIL DO ESTUDANTE -->
-        <section class="view-screen" id="view-student-profile" hidden>
-          <div class="profile-desktop-card">
-            <div class="profile-desktop-card__left">
-              <img src="assets/avatar-bruno.png" alt="Bruno Delorence" class="profile-large-avatar" />
+        <section class="tela-visualizacao" id="tela-estudante-perfil" hidden>
+          <div class="cartao-perfil-computador">
+            <div class="cartao-perfil-computador__esquerda">
+              <img src="assets/avatar-bruno.png" alt="Bruno Delorence" class="avatar-grande-perfil" />
               <h3>Bruno Delorence</h3>
-              <p class="text-muted">Turma 3°E • Top 1 no Ranking</p>
-              <img src="assets/logo-inaula.png" alt="IN AULA" class="profile-mini-logo" />
-              <button type="button" class="btn-figma-logout" id="profileLogoutBtn">Sair</button>
+              <p class="texto-suave">Turma 3°E • 1º Lugar no Ranking</p>
+              <img src="assets/logo-inaula.png" alt="IN AULA" class="mini-logo-perfil" />
+              <button type="button" class="botao-sair-figma" id="botaoSairPerfil">Sair</button>
             </div>
 
-            <form class="profile-desktop-card__form" id="studentProfileForm">
+            <form class="cartao-perfil-computador__formulario" id="formularioPerfilEstudante">
               <h3>Meus Dados Cadastrais</h3>
 
-              <div class="profile-field">
+              <div class="campo-perfil">
                 <label>Nome</label>
-                <div class="profile-field__input-wrap">
+                <div class="campo-perfil__envoltorio-entrada">
                   <input type="text" value="Bruno Delorence" readonly />
                   <span>🔒</span>
                 </div>
               </div>
 
-              <div class="profile-field">
+              <div class="campo-perfil">
                 <label>Nome de Usuário</label>
-                <div class="profile-field__input-wrap">
+                <div class="campo-perfil__envoltorio-entrada">
                   <input type="text" value="brunodelorence" />
                 </div>
               </div>
 
-              <div class="profile-field">
+              <div class="campo-perfil">
                 <label>Senha</label>
-                <div class="profile-field__input-wrap">
+                <div class="campo-perfil__envoltorio-entrada">
                   <input type="password" value="******" />
                 </div>
               </div>
 
-              <div class="profile-field">
+              <div class="campo-perfil">
                 <label>E-mail</label>
-                <div class="profile-field__input-wrap">
+                <div class="campo-perfil__envoltorio-entrada">
                   <input type="email" value="brunodelorence@gmail.com" />
                   <span>❕</span>
                 </div>
               </div>
 
-              <button type="submit" class="btn-figma-primary">Salvar Alterações</button>
-              <p class="form-feedback" id="profileSavedFeedback"></p>
+              <button type="submit" class="botao-primario-figma">Salvar Alterações</button>
+              <p class="retorno-formulario" id="retornoPerfilSalvo"></p>
             </form>
           </div>
         </section>
 
         <!-- VIEW 7: HOME DO PROFESSOR -->
-        <section class="view-screen" id="view-teacher-home" hidden>
-          <div class="teacher-hero-banner">
-            <div class="teacher-hero-banner__left">
-              <img src="assets/avatar-tatiane.png" alt="Tatiane Soma" class="teacher-hero-banner__avatar" />
+        <section class="tela-visualizacao" id="tela-professora-inicio" hidden>
+          <div class="banner-principal-professora">
+            <div class="banner-principal-professora__esquerda">
+              <img src="assets/avatar-tatiane.png" alt="Tatiane Soma" class="banner-principal-professora__avatar" />
               <div>
-                <span class="teacher-welcome">Bem vindo,</span>
+                <span class="boas-vindas-professora">Bem vindo,</span>
                 <h2>Tatiane Soma</h2>
-                <div class="teacher-agenda-row">
+                <div class="linha-agenda-professora">
                   <span><strong>Agenda:</strong> Vazia</span>
-                  <span class="teacher-date">📅 16, maio de 2025</span>
+                  <span class="data-professora">📅 16, maio de 2025</span>
                 </div>
               </div>
             </div>
 
-            <div class="teacher-hero-banner__actions">
-              <button type="button" class="teacher-Subnav-btn" data-go-view="teacher-attendance">📋 Chamada</button>
-              <button type="button" class="teacher-Subnav-btn" data-go-view="teacher-grades">📝 Notas</button>
-              <button type="button" class="teacher-Subnav-btn" data-go-view="teacher-chat">💬 Chat Dúvidas</button>
+            <div class="banner-principal-professora__acoes">
+              <button type="button" class="botao-subnavegacao-professora" data-ir-tela="professora-chamada">📋 Chamada</button>
+              <button type="button" class="botao-subnavegacao-professora" data-ir-tela="professora-notas">📝 Notas</button>
+              <button type="button" class="botao-subnavegacao-professora" data-ir-tela="professora-conversa">💬 Chat Dúvidas</button>
             </div>
           </div>
 
-          <div class="teacher-reminders-card">
-            <div class="teacher-reminders-card__title">
+          <div class="cartao-lembretes-professora">
+            <div class="cartao-lembretes-professora__titulo">
               <span>🏫</span>
               <h3>Lembretes &amp; Alertas Preventivos de Evasão!</h3>
             </div>
-            <div class="teacher-reminders-grid">
-              <div class="reminder-alert reminder-alert--danger">
+            <div class="grade-lembretes-professora">
+              <div class="alerta-lembrete alerta-lembrete--perigo">
                 <strong>🚨 Alerta de Faltas / Risco de Evasão (Turma 3C):</strong>
                 <p>Caso o Bruno (3c) falte novamente, comunicar a coordenação imediatamente!</p>
               </div>
-              <div class="reminder-alert reminder-alert--info">
+              <div class="alerta-lembrete alerta-lembrete--informacao">
                 <strong>💡 Acompanhamento Pedagógico &amp; Reforço (Turma 1C):</strong>
                 <p>Maria (1c) precisa de reforço durante as aulas e explicações extras. Os pais já foram notificados
                   sobre sua situação!</p>
@@ -1002,119 +1002,119 @@
             </div>
           </div>
 
-          <div class="desktop-panel">
-            <div class="desktop-panel__header">
+          <div class="painel-computador">
+            <div class="painel-computador__cabecalho">
               <div>
                 <h3>Minhas Turmas Ativas</h3>
-                <p class="text-muted">Clique em uma turma para realizar a chamada, lançar notas ou abrir o chat da turma
+                <p class="texto-suave">Clique em uma turma para realizar a chamada, lançar notas ou abrir o chat da turma
                 </p>
               </div>
             </div>
 
-            <div class="teacher-classes-grid">
-              <article class="class-card class-card--purple">
-                <div class="class-card__header">
-                  <div class="class-card__icon-box"><img src="assets/icon-class-room.svg" alt="" /></div>
+            <div class="grade-turmas-professora">
+              <article class="cartao-turma cartao-turma--roxo">
+                <div class="cartao-turma__cabecalho">
+                  <div class="cartao-turma__caixa-icone"><img src="assets/icon-class-room.svg" alt="" /></div>
                   <div>
                     <h4>Turma: 3C segunda-feira</h4>
                     <p>Matéria: Operações</p>
                   </div>
                 </div>
-                <div class="class-card__footer">
-                  <button type="button" class="class-action-btn" data-go-view="teacher-attendance">Fazer
+                <div class="cartao-turma__rodape">
+                  <button type="button" class="botao-acao-turma" data-ir-tela="professora-chamada">Fazer
                     Chamada</button>
-                  <button type="button" class="class-action-btn" data-go-view="teacher-grades">Ver Notas</button>
-                  <button type="button" class="class-chat-btn" data-go-view="teacher-chat" title="Abrir Chat da Turma">
+                  <button type="button" class="botao-acao-turma" data-ir-tela="professora-notas">Ver Notas</button>
+                  <button type="button" class="botao-conversa-turma" data-ir-tela="professora-conversa" title="Abrir Chat da Turma">
                     <img src="assets/icon-chat-badge.svg" alt="Chat" />
                   </button>
                 </div>
               </article>
 
-              <article class="class-card class-card--navy">
-                <div class="class-card__header">
-                  <div class="class-card__icon-box"><img src="assets/icon-class-room.svg" alt="" /></div>
+              <article class="cartao-turma cartao-turma--marinho">
+                <div class="cartao-turma__cabecalho">
+                  <div class="cartao-turma__caixa-icone"><img src="assets/icon-class-room.svg" alt="" /></div>
                   <div>
                     <h4>Turma: 1C Terça-feira</h4>
                     <p>Matéria: Algorítimo</p>
                   </div>
                 </div>
-                <div class="class-card__footer">
-                  <button type="button" class="class-action-btn" data-go-view="teacher-attendance">Fazer
+                <div class="cartao-turma__rodape">
+                  <button type="button" class="botao-acao-turma" data-ir-tela="professora-chamada">Fazer
                     Chamada</button>
-                  <button type="button" class="class-action-btn" data-go-view="teacher-grades">Ver Notas</button>
-                  <button type="button" class="class-chat-btn" data-go-view="teacher-chat" title="Abrir Chat da Turma">
+                  <button type="button" class="botao-acao-turma" data-ir-tela="professora-notas">Ver Notas</button>
+                  <button type="button" class="botao-conversa-turma" data-ir-tela="professora-conversa" title="Abrir Chat da Turma">
                     <img src="assets/icon-chat-badge.svg" alt="Chat" />
                   </button>
                 </div>
               </article>
 
-              <article class="class-card class-card--coral">
-                <div class="class-card__header">
-                  <div class="class-card__icon-box"><img src="assets/icon-class-room.svg" alt="" /></div>
+              <article class="cartao-turma cartao-turma--coral">
+                <div class="cartao-turma__cabecalho">
+                  <div class="cartao-turma__caixa-icone"><img src="assets/icon-class-room.svg" alt="" /></div>
                   <div>
                     <h4>Turma: 5C Quarta-feira</h4>
                     <p>Matéria: Números complexos</p>
                   </div>
                 </div>
-                <div class="class-card__footer">
-                  <button type="button" class="class-action-btn" data-go-view="teacher-attendance">Fazer
+                <div class="cartao-turma__rodape">
+                  <button type="button" class="botao-acao-turma" data-ir-tela="professora-chamada">Fazer
                     Chamada</button>
-                  <button type="button" class="class-action-btn" data-go-view="teacher-grades">Ver Notas</button>
-                  <button type="button" class="class-chat-btn" data-go-view="teacher-chat" title="Abrir Chat da Turma">
+                  <button type="button" class="botao-acao-turma" data-ir-tela="professora-notas">Ver Notas</button>
+                  <button type="button" class="botao-conversa-turma" data-ir-tela="professora-conversa" title="Abrir Chat da Turma">
                     <img src="assets/icon-chat-badge.svg" alt="Chat" />
                   </button>
                 </div>
               </article>
 
-              <article class="class-card class-card--indigo">
-                <div class="class-card__header">
-                  <div class="class-card__icon-box"><img src="assets/icon-class-room.svg" alt="" /></div>
+              <article class="cartao-turma cartao-turma--indigo">
+                <div class="cartao-turma__cabecalho">
+                  <div class="cartao-turma__caixa-icone"><img src="assets/icon-class-room.svg" alt="" /></div>
                   <div>
                     <h4>Turma: 2C Quinta-feira</h4>
                     <p>Matéria: Equações e inequações</p>
                   </div>
                 </div>
-                <div class="class-card__footer">
-                  <button type="button" class="class-action-btn" data-go-view="teacher-attendance">Fazer
+                <div class="cartao-turma__rodape">
+                  <button type="button" class="botao-acao-turma" data-ir-tela="professora-chamada">Fazer
                     Chamada</button>
-                  <button type="button" class="class-action-btn" data-go-view="teacher-grades">Ver Notas</button>
-                  <button type="button" class="class-chat-btn" data-go-view="teacher-chat" title="Abrir Chat da Turma">
+                  <button type="button" class="botao-acao-turma" data-ir-tela="professora-notas">Ver Notas</button>
+                  <button type="button" class="botao-conversa-turma" data-ir-tela="professora-conversa" title="Abrir Chat da Turma">
                     <img src="assets/icon-chat-badge.svg" alt="Chat" />
                   </button>
                 </div>
               </article>
 
-              <article class="class-card class-card--wine">
-                <div class="class-card__header">
-                  <div class="class-card__icon-box"><img src="assets/icon-class-room.svg" alt="" /></div>
+              <article class="cartao-turma cartao-turma--vinho">
+                <div class="cartao-turma__cabecalho">
+                  <div class="cartao-turma__caixa-icone"><img src="assets/icon-class-room.svg" alt="" /></div>
                   <div>
                     <h4>Turma: 4C Sexta-feira</h4>
                     <p>Matéria: Gráficos</p>
                   </div>
                 </div>
-                <div class="class-card__footer">
-                  <button type="button" class="class-action-btn" data-go-view="teacher-attendance">Fazer
+                <div class="cartao-turma__rodape">
+                  <button type="button" class="botao-acao-turma" data-ir-tela="professora-chamada">Fazer
                     Chamada</button>
-                  <button type="button" class="class-action-btn" data-go-view="teacher-grades">Ver Notas</button>
-                  <button type="button" class="class-chat-btn" data-go-view="teacher-chat" title="Abrir Chat da Turma">
+                  <button type="button" class="botao-acao-turma" data-ir-tela="professora-notas">Ver Notas</button>
+                  <button type="button" class="botao-conversa-turma" data-ir-tela="professora-conversa" title="Abrir Chat da Turma">
                     <img src="assets/icon-chat-badge.svg" alt="Chat" />
                   </button>
                 </div>
               </article>
 
-              <article class="class-card class-card--grey">
-                <div class="class-card__header">
-                  <div class="class-card__icon-box"><img src="assets/icon-class-room.svg" alt="" /></div>
+              <article class="cartao-turma cartao-turma--cinza">
+                <div class="cartao-turma__cabecalho">
+                  <div class="cartao-turma__caixa-icone"><img src="assets/icon-class-room.svg" alt="" /></div>
                   <div>
                     <h4>Turma: 6C Sábado</h4>
                     <p>Matéria: Estatística</p>
                   </div>
                 </div>
-                <div class="class-card__footer">
-                  <button type="button" class="class-action-btn" data-go-view="teacher-attendance">Fazer
+                <div class="cartao-turma__rodape">
+                  <button type="button" class="botao-acao-turma" data-ir-tela="professora-chamada">Fazer
                     Chamada</button>
-                  <button type="button" class="class-action-btn" data-go-view="teacher-grades">Ver Notas</button>
-                  <button type="button" class="class-chat-btn" data-go-view="teacher-chat" title="Abrir Chat da Turma">
+                  <button type="button" class="botao-acao-turma" data-ir-tela="professora-notas">Ver Notas</button>
+                  <button type="button" class="botao-conversa-turma" data-ir-tela="professora-conversa" title="Abrir Chat da Turma">
                     <img src="assets/icon-chat-badge.svg" alt="Chat" />
                   </button>
                 </div>
@@ -1124,71 +1124,71 @@
         </section>
 
         <!-- VIEW 8: CHAMADA DIGITAL DO PROFESSOR -->
-        <section class="view-screen" id="view-teacher-attendance" hidden>
-          <div class="teacher-split-layout">
-            <div class="desktop-panel class-selector-panel">
-              <h3 class="turmas-blue-title">Turmas</h3>
-              <div class="turmas-check-list" id="attendanceClassSelector">
-                <button type="button" class="turma-select-item" data-turma="Turma 1C">
-                  <span class="turma-checkbox"></span><span>Turma: 1c</span>
+        <section class="tela-visualizacao" id="tela-professora-chamada" hidden>
+          <div class="layout-dividido-professora">
+            <div class="painel-computador painel-seletor-turma">
+              <h3 class="titulo-azul-turmas">Turmas</h3>
+              <div class="lista-selecao-turmas" id="seletorTurmaChamada">
+                <button type="button" class="item-selecao-turma" data-turma="Turma 1C">
+                  <span class="caixa-selecao-turma"></span><span>Turma: 1c</span>
                 </button>
-                <button type="button" class="turma-select-item" data-turma="Turma 2C">
-                  <span class="turma-checkbox"></span><span>Turma: 2c</span>
+                <button type="button" class="item-selecao-turma" data-turma="Turma 2C">
+                  <span class="caixa-selecao-turma"></span><span>Turma: 2c</span>
                 </button>
-                <button type="button" class="turma-select-item active" data-turma="Turma 3C">
-                  <span class="turma-checkbox checked">✓</span><span>Turma: 3c</span>
+                <button type="button" class="item-selecao-turma ativo" data-turma="Turma 3C">
+                  <span class="caixa-selecao-turma checked">✓</span><span>Turma: 3c</span>
                 </button>
-                <button type="button" class="turma-select-item" data-turma="Turma 4C">
-                  <span class="turma-checkbox"></span><span>Turma: 4c</span>
+                <button type="button" class="item-selecao-turma" data-turma="Turma 4C">
+                  <span class="caixa-selecao-turma"></span><span>Turma: 4c</span>
                 </button>
-                <button type="button" class="turma-select-item" data-turma="Turma 5C">
-                  <span class="turma-checkbox"></span><span>Turma: 5c</span>
+                <button type="button" class="item-selecao-turma" data-turma="Turma 5C">
+                  <span class="caixa-selecao-turma"></span><span>Turma: 5c</span>
                 </button>
-                <button type="button" class="turma-select-item" data-turma="Turma 6C">
-                  <span class="turma-checkbox"></span><span>Turma: 6c</span>
+                <button type="button" class="item-selecao-turma" data-turma="Turma 6C">
+                  <span class="caixa-selecao-turma"></span><span>Turma: 6c</span>
                 </button>
               </div>
             </div>
 
-            <div class="desktop-panel">
-              <div class="desktop-panel__header">
+            <div class="painel-computador">
+              <div class="painel-computador__cabecalho">
                 <div>
-                  <h3 id="attendanceHeaderTitle">Chamada: Turma 3C</h3>
-                  <p class="text-muted">Marque os estudantes presentes na aula de hoje</p>
+                  <h3 id="tituloCabecalhoChamada">Chamada: Turma 3C</h3>
+                  <p class="texto-suave">Marque os estudantes presentes na aula de hoje</p>
                 </div>
-                <button type="button" class="btn-figma-primary btn-figma-primary--sm" id="saveAttendanceBtn">
+                <button type="button" class="botao-primario-figma botao-primario-figma--pequeno" id="botaoSalvarChamada">
                   Salvar Chamada
                 </button>
               </div>
 
-              <p class="form-feedback" id="attendanceFeedbackMsg"></p>
-              <div class="attendance-students-list" id="attendanceList"></div>
+              <p class="retorno-formulario" id="mensagemRetornoChamada"></p>
+              <div class="lista-estudantes-chamada" id="listaPresencaChamada"></div>
             </div>
           </div>
         </section>
 
         <!-- VIEW 9: NOTAS & FREQUÊNCIA DO PROFESSOR -->
-        <section class="view-screen" id="view-teacher-grades" hidden>
-          <div class="teacher-split-layout">
-            <div class="desktop-panel">
+        <section class="tela-visualizacao" id="tela-professora-notas" hidden>
+          <div class="layout-dividido-professora">
+            <div class="painel-computador">
               <h3>Notas: Turma 3C</h3>
-              <p class="text-muted">Selecione um estudante para visualizar e editar o boletim</p>
-              <div class="grades-student-picker" id="gradesStudentPicker"></div>
+              <p class="texto-suave">Selecione um estudante para visualizar e editar o boletim</p>
+              <div class="seletor-estudante-notas" id="seletorEstudanteNotas"></div>
             </div>
 
-            <div class="desktop-panel">
-              <div class="desktop-panel__header">
+            <div class="painel-computador">
+              <div class="painel-computador__cabecalho">
                 <div>
-                  <h3 id="gradesSelectedStudentTitle">Notas: Bruno Dolarence</h3>
-                  <p class="text-muted">Clique nas notas para atualizar o desempenho bimestral</p>
+                  <h3 id="tituloEstudanteSelecionadoNotas">Notas: Bruno Dolarence</h3>
+                  <p class="texto-suave">Clique nas notas para atualizar o desempenho bimestral</p>
                 </div>
-                <button type="button" class="btn-figma-primary btn-figma-primary--sm" id="saveGradesBtn">
+                <button type="button" class="botao-primario-figma botao-primario-figma--pequeno" id="botaoSalvarNotas">
                   Salvar Boletim
                 </button>
               </div>
-              <p class="form-feedback" id="gradesFeedbackMsg"></p>
+              <p class="retorno-formulario" id="mensagemRetornoNotas"></p>
 
-              <table class="figma-table figma-table--editable">
+              <table class="tabela-figma tabela-figma--editavel">
                 <thead>
                   <tr>
                     <th>Matéria</th>
@@ -1196,46 +1196,46 @@
                     <th>Notas</th>
                   </tr>
                 </thead>
-                <tbody id="teacherGradesTableBody"></tbody>
+                <tbody id="corpoTabelaNotasProfessora"></tbody>
               </table>
             </div>
           </div>
         </section>
 
         <!-- VIEW 10: CHAT DO PROFESSOR -->
-        <section class="view-screen" id="view-teacher-chat" hidden>
-          <div class="teacher-chat-desktop-grid">
-            <div class="desktop-panel">
-              <div class="teacher-chat-filter-bar">
+        <section class="tela-visualizacao" id="tela-professora-conversa" hidden>
+          <div class="grade-computador-conversa-professora">
+            <div class="painel-computador">
+              <div class="barra-filtro-conversa-professora">
                 <strong>Tudo</strong>
-                <label class="exclude-replied-check">
-                  <input type="checkbox" id="filterUnrepliedCheck" />
+                <label class="opcao-excluir-respondidas">
+                  <input type="checkbox" id="caixaFiltrarNaoRespondidas" />
                   <span>Excluir as respondidas</span>
                 </label>
               </div>
 
-              <div class="teacher-inbox-list" id="teacherInboxList"></div>
+              <div class="lista-entrada-professora" id="listaEntradaProfessora"></div>
             </div>
 
-            <div class="desktop-panel chat-window-panel">
-              <div class="chat-window__header">
-                <div class="chat-window__contact">
-                  <img src="assets/avatar-bruno.png" alt="Aluno" id="activeChatStudentAvatar"
-                    class="chat-window__avatar" />
+            <div class="painel-computador painel-janela-conversa">
+              <div class="janela-conversa__cabecalho">
+                <div class="janela-conversa__contato">
+                  <img src="assets/avatar-bruno.png" alt="Aluno" id="avatarEstudanteConversaAtiva"
+                    class="janela-conversa__avatar" />
                   <div>
-                    <strong id="activeChatStudentName">Bruno Dolarence</strong>
-                    <span id="activeChatStudentTopic">Atividade de Operações • Turma 3C</span>
+                    <strong id="nomeEstudanteConversaAtiva">Bruno Dolarence</strong>
+                    <span id="topicoEstudanteConversaAtiva">Atividade de Operações • Turma 3C</span>
                   </div>
                 </div>
-                <span class="status-online-badge">Respondendo como Profª. Tatiane Soma</span>
+                <span class="selo-status-disponivel">Respondendo como Profª. Tatiane Soma</span>
               </div>
 
-              <div class="chat-messages-area" id="teacherChatMessages"></div>
+              <div class="area-mensagens-conversa" id="mensagensConversaProfessora"></div>
 
-              <form class="chat-input-bar" id="teacherChatForm">
-                <input type="text" id="teacherChatInput" placeholder="Escreva a orientação para o estudante..."
+              <form class="barra-entrada-conversa" id="formularioConversaProfessora">
+                <input type="text" id="campoConversaProfessora" placeholder="Escreva a orientação para o estudante..."
                   required />
-                <button type="submit" class="chat-send-circle" title="Responder aluno">↑</button>
+                <button type="submit" class="circulo-enviar-conversa" title="Responder aluno">↑</button>
               </form>
             </div>
           </div>
