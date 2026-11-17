@@ -131,30 +131,27 @@ document.addEventListener("DOMContentLoaded", () => {
   switchStudentMode?.addEventListener("click", () => setRoleMode("student"));
   switchTeacherMode?.addEventListener("click", () => setRoleMode("teacher"));
 
-  const subjectsListView = document.getElementById("subjectsListView");
-  const subjectDetailView = document.getElementById("subjectDetailView");
+  const stepSubjectsCatalog = document.getElementById("stepSubjectsCatalog");
+  const stepSubjectTrail = document.getElementById("stepSubjectTrail");
+  const stepModuleLevels = document.getElementById("stepModuleLevels");
+  const stepLevelQuiz = document.getElementById("stepLevelQuiz");
 
-  const showSubjectsCatalog = () => {
-    if (subjectsListView) {
-      subjectsListView.hidden = false;
-      subjectsListView.style.display = "block";
-    }
-    if (subjectDetailView) {
-      subjectDetailView.hidden = true;
-      subjectDetailView.style.display = "none";
-    }
+  const setActivityStage = (stage) => {
+    const map = {
+      catalog: stepSubjectsCatalog,
+      trail: stepSubjectTrail,
+      levels: stepModuleLevels,
+      quiz: stepLevelQuiz,
+    };
+    Object.entries(map).forEach(([key, el]) => {
+      if (!el) return;
+      const isVisible = key === stage;
+      el.hidden = !isVisible;
+      el.style.display = isVisible ? "block" : "none";
+    });
   };
 
-  const showSubjectInsideActivities = () => {
-    if (subjectsListView) {
-      subjectsListView.hidden = true;
-      subjectsListView.style.display = "none";
-    }
-    if (subjectDetailView) {
-      subjectDetailView.hidden = false;
-      subjectDetailView.style.display = "block";
-    }
-  };
+  const showSubjectsCatalog = () => setActivityStage("catalog");
 
   document.querySelectorAll("[data-view]").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -334,139 +331,431 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const selectedSubjectHeading = document.getElementById("selectedSubjectHeading");
+  const activeSubjectProgressPill = document.getElementById("activeSubjectProgressPill");
+  const activeSubjectBannerCard = document.getElementById("activeSubjectBannerCard");
+  const activeSubjectTiles = document.getElementById("activeSubjectTiles");
   const subjectDetailCounterBadge = document.getElementById("subjectDetailCounterBadge");
+  const learningPathList = document.getElementById("learningPathList");
+  const subjectLevelsGrid = document.getElementById("subjectLevelsGrid");
+  const activeModuleBadge = document.getElementById("activeModuleBadge");
+  const activeQuizProgressBadge = document.getElementById("activeQuizProgressBadge");
   const quizBannerTitle = document.getElementById("quizBannerTitle");
-  const backToSubjectsBtn = document.getElementById("backToSubjectsBtn");
-
-  const subjectMetaMap = {
-    Matemática: { counter: "03/30", firstLevel: "Soma" },
-    Português: { counter: "0/30", firstLevel: "Soma" },
-    Biologia: { counter: "07/30", firstLevel: "Soma" },
-    Química: { counter: "16/30", firstLevel: "Soma" },
-    Física: { counter: "18/30", firstLevel: "Soma" },
-    Inglês: { counter: "22/30", firstLevel: "Soma" },
-    História: { counter: "09/30", firstLevel: "Soma" },
-  };
-
-  backToSubjectsBtn?.addEventListener("click", () => {
-    showSubjectsCatalog();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-
-  document.querySelectorAll("[data-subject], [data-open-subject]").forEach((card) => {
-    card.addEventListener("click", () => {
-      const subj = card.getAttribute("data-subject") || card.getAttribute("data-open-subject") || "Matemática";
-      const meta = subjectMetaMap[subj] || { counter: "03/30" };
-
-      showView("student-activities");
-      showSubjectInsideActivities();
-
-      if (selectedSubjectHeading) {
-        selectedSubjectHeading.textContent = `Trilha: ${subj} (${meta.counter})`;
-      }
-      if (subjectDetailCounterBadge) {
-        subjectDetailCounterBadge.textContent = `Matéria: ${subj} • Progresso: ${meta.counter}`;
-      }
-      if (quizBannerTitle) {
-        quizBannerTitle.textContent = `${subj} — Desafio`;
-      }
-      if (quizFeedbackMsg) {
-        quizFeedbackMsg.textContent = "";
-      }
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  });
-
-  const levelQuestions = {
-    Soma: {
-      title: "Soma",
-      question: "Some o ângulo por eles mesmo (36° + 36°):",
-      options: ["45º", "55º", "71º", "72º"],
-      correctIndex: 3,
-    },
-    Subtração: {
-      title: "Subtração",
-      question: "Qual é o suplemento de 108° (180° - 108°)?",
-      options: ["62º", "72º", "82º", "90º"],
-      correctIndex: 1,
-    },
-    Divisão: {
-      title: "Divisão",
-      question: "Divida o ângulo de 36° ao meio (bissetriz):",
-      options: ["12º", "16º", "18º", "24º"],
-      correctIndex: 2,
-    },
-    Multiplicação: {
-      title: "Multiplicação",
-      question: "Qual é o triplo do ângulo de 36°?",
-      options: ["96º", "108º", "112º", "120º"],
-      correctIndex: 1,
-    },
-  };
-
+  const angleDiagramBox = document.getElementById("angleDiagramBox");
   const quizQuestionText = document.getElementById("quizQuestionText");
   const quizOptionsGrid = document.getElementById("quizOptionsGrid");
   const quizFeedbackMsg = document.getElementById("quizFeedbackMsg");
+  const quizActiveCard = document.getElementById("quizActiveCard");
+  const quizCompletedCard = document.getElementById("quizCompletedCard");
 
-  const bindQuizButtons = () => {
-    quizOptionsGrid?.querySelectorAll(".quiz-option-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const isCorrect = btn.getAttribute("data-correct") === "true";
-        quizOptionsGrid.querySelectorAll(".quiz-option-btn").forEach((b) => {
-          b.classList.remove("correct", "wrong");
-        });
-
-        if (isCorrect) {
-          btn.classList.add("correct");
-          studentPoints += 50;
-          studyProgress = Math.min(100, studyProgress + 10);
-          updatePointsDisplay();
-          if (studyProgressLabel && studyProgressBar) {
-            studyProgressLabel.textContent = `${studyProgress}% de seu progresso!`;
-            studyProgressBar.style.width = `${studyProgress}%`;
-          }
-          if (quizFeedbackMsg) {
-            quizFeedbackMsg.style.color = "#16a34a";
-            quizFeedbackMsg.textContent = "🎉 Resposta correta! Você ganhou +50 pts no IN AULA!";
-          }
-        } else {
-          btn.classList.add("wrong");
-          if (quizFeedbackMsg) {
-            quizFeedbackMsg.style.color = "#dc2626";
-            quizFeedbackMsg.textContent = "🤔 Quase lá! Tente outra alternativa ou envie sua dúvida à Professora Tati abaixo.";
-          }
-        }
-      });
-    });
+  // Dados exclusivos por matéria: A trilha de Operações/Equações/Soma de Ângulos pertence SOMENTE a Matemática!
+  const subjectsCurriculum = {
+    Matemática: {
+      counter: "03/30",
+      bgClass: "bg-math",
+      tilesHtml: `
+        <div class="tile tile--front"><img src="assets/icon-math-plus.svg" alt="" /></div>
+        <div class="tile tile--back"><img src="assets/icon-math-percent.svg" alt="" /></div>
+      `,
+      modules: [
+        { title: "Operações", desc: "Aprenda as operações básicas", done: true, locked: false },
+        { title: "Equações de 1º grau", desc: "Aprenda a resolver equações", done: false, locked: false },
+        { title: "Equações de 2º grau", desc: "Aprenda equações complexas", done: false, locked: false },
+        { title: "Grupos numéricos", desc: "Aprenda conjuntos (Atividade Bloqueada)", done: false, locked: true },
+      ],
+      levels: [
+        "Nível 1: Soma",
+        "Nível 2: Subtração",
+        "Nível 3: Divisão",
+        "Nível 4: Multiplicação",
+        "Nível 5: Radiciação",
+        "Nível 6: Potenciação",
+        "Nível 7: Fração",
+        "Nível 8: Logaritmação",
+        "Nível 9: Soma de raiz",
+        "Nível 10: Divisão de raiz",
+        "Nível 11: Raiz cúbica",
+        "Nível 12: Raiz quarta",
+      ],
+      questions: [
+        {
+          banner: "Soma",
+          hasAngle36: true,
+          question: "Some o ângulo por eles mesmo:",
+          options: ["45º", "55º", "71º", "72º"],
+          correctIndex: 3,
+        },
+        {
+          banner: "Soma — Questão 2",
+          hasAngle9042: true,
+          question: "1- Dados os ângulos abaixo, 90º e 42º, some-os como apresentado em sala:",
+          options: ["132º", "133º", "134º", "135º"],
+          correctIndex: 0,
+        },
+      ],
+    },
+    Português: {
+      counter: "0/30",
+      bgClass: "bg-port",
+      tilesHtml: `
+        <div class="tile tile--front"><img src="assets/icon-port-a.svg" alt="" /></div>
+        <div class="tile tile--back"><img src="assets/icon-port-j.svg" alt="" /></div>
+      `,
+      modules: [
+        { title: "Interpretação Textual", desc: "Compreensão de textos e artigos", done: false, locked: false },
+        { title: "Classes Gramaticais", desc: "Substantivos, verbos e adjetivos", done: false, locked: false },
+        { title: "Redação Dissertativa", desc: "Estrutura e argumentação", done: false, locked: true },
+      ],
+      levels: ["Nível 1: Ortografia", "Nível 2: Acentuação", "Nível 3: Pontuação"],
+      questions: [
+        {
+          banner: "Português",
+          hasAngle36: false,
+          question: "Qual das palavras abaixo está grafada corretamente segundo a norma-padrão?",
+          options: ["Exceção", "Excessão", "Eceção", "Exceon"],
+          correctIndex: 0,
+        },
+      ],
+    },
+    Biologia: {
+      counter: "07/30",
+      bgClass: "bg-bio",
+      tilesHtml: `
+        <div class="tile tile--front"><img src="assets/icon-bio-lungs.svg" alt="" /></div>
+        <div class="tile tile--back"><img src="assets/icon-bio-heart.svg" alt="" /></div>
+      `,
+      modules: [
+        { title: "Fisiologia Humana", desc: "Sistemas respiratório e circulatório", done: true, locked: false },
+        { title: "Citologia", desc: "Estrutura das células e organelas", done: false, locked: false },
+        { title: "Genética Básica", desc: "Leis de Mendel e DNA", done: false, locked: true },
+      ],
+      levels: ["Nível 1: Sistema Respiratório", "Nível 2: Sistema Cardíaco", "Nível 3: Células"],
+      questions: [
+        {
+          banner: "Biologia",
+          hasAngle36: false,
+          question: "Qual organela celular é responsável pela respiração celular e produção de ATP?",
+          options: ["Complexo de Golgi", "Mitocôndria", "Lisossomo", "Ribossomo"],
+          correctIndex: 1,
+        },
+      ],
+    },
+    Química: {
+      counter: "16/30",
+      bgClass: "bg-chem",
+      tilesHtml: `
+        <div class="tile tile--front"><img src="assets/icon-chem-drop.svg" alt="" /></div>
+        <div class="tile tile--back"><img src="assets/icon-chem-hazard.svg" alt="" /></div>
+      `,
+      modules: [
+        { title: "Tabela Periódica", desc: "Elementos, famílias e períodos", done: true, locked: false },
+        { title: "Ligações Químicas", desc: "Iônica, covalente e metálica", done: false, locked: false },
+      ],
+      levels: ["Nível 1: Átomos", "Nível 2: Tabela Periódica", "Nível 3: Reações"],
+      questions: [
+        {
+          banner: "Química",
+          hasAngle36: false,
+          question: "Qual é o símbolo químico do elemento Oxigênio e seu número atômico?",
+          options: ["O (Z = 8)", "Ox (Z = 6)", "Og (Z = 16)", "O (Z = 12)"],
+          correctIndex: 0,
+        },
+      ],
+    },
+    Física: {
+      counter: "18/30",
+      bgClass: "bg-phys",
+      tilesHtml: `
+        <div class="tile tile--front"><img src="assets/icon-phys-atom.svg" alt="" /></div>
+        <div class="tile tile--back"><img src="assets/icon-phys-energy.svg" alt="" /></div>
+      `,
+      modules: [
+        { title: "Cinemática", desc: "Velocidade média e MRU", done: true, locked: false },
+        { title: "Leis de Newton", desc: "Dinâmica e forças", done: false, locked: false },
+      ],
+      levels: ["Nível 1: Velocidade Média", "Nível 2: Aceleração", "Nível 3: Força Resultante"],
+      questions: [
+        {
+          banner: "Física",
+          hasAngle36: false,
+          question: "Um móvel percorre 100 metros em 10 segundos. Qual é a sua velocidade média?",
+          options: ["5 m/s", "10 m/s", "20 m/s", "100 m/s"],
+          correctIndex: 1,
+        },
+      ],
+    },
+    Inglês: {
+      counter: "22/30",
+      bgClass: "bg-math",
+      tilesHtml: `
+        <div class="tile tile--front"><span class="tile-letter">EN</span></div>
+        <div class="tile tile--back"><img src="assets/icon-eng-lang.svg" alt="" /></div>
+      `,
+      modules: [
+        { title: "Basic Grammar", desc: "Verb To Be & Simple Present", done: true, locked: false },
+        { title: "Reading Comprehension", desc: "Leitura e vocabulário", done: false, locked: false },
+      ],
+      levels: ["Nível 1: Verb To Be", "Nível 2: Simple Present", "Nível 3: Vocabulary"],
+      questions: [
+        {
+          banner: "Inglês",
+          hasAngle36: false,
+          question: "Complete a frase corretamente: 'She ___ a dedicated student at In Aula.'",
+          options: ["am", "are", "is", "be"],
+          correctIndex: 2,
+        },
+      ],
+    },
+    História: {
+      counter: "09/30",
+      bgClass: "bg-port",
+      tilesHtml: `
+        <div class="tile tile--front"><img src="assets/icon-hist-temple.svg" alt="" /></div>
+        <div class="tile tile--back"><span class="tile-letter">🏛️</span></div>
+      `,
+      modules: [
+        { title: "Idade Antiga", desc: "Grécia, Roma e Império Bizantino", done: true, locked: false },
+        { title: "História do Brasil", desc: "Período Colonial e República", done: false, locked: false },
+      ],
+      levels: ["Nível 1: Antiguidade", "Nível 2: Idade Média", "Nível 3: Brasil República"],
+      questions: [
+        {
+          banner: "História",
+          hasAngle36: false,
+          question: "Em que ano ocorreu a Proclamação da República no Brasil?",
+          options: ["1822", "1888", "1889", "1930"],
+          correctIndex: 2,
+        },
+      ],
+    },
   };
 
-  bindQuizButtons();
+  let currentSubjectKey = "Matemática";
+  let currentModuleTitle = "Operações";
+  let currentQuestionIdx = 0;
 
-  document.querySelectorAll(".level-tile-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".level-tile-btn").forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      const levelName = btn.getAttribute("data-level");
-      const qData = levelQuestions[levelName] || {
-        title: levelName,
-        question: `Desafio de ${levelName}: Considerando o ângulo de 36°, qual o dobro desse valor?`,
-        options: ["45º", "55º", "71º", "72º"],
-        correctIndex: 3,
-      };
+  // Renderiza o Passo 2: Trilha de Módulos da Matéria Selecionada
+  const openSubjectTrail = (subjName) => {
+    currentSubjectKey = subjectsCurriculum[subjName] ? subjName : "Matemática";
+    const data = subjectsCurriculum[currentSubjectKey];
 
-      if (quizBannerTitle) quizBannerTitle.textContent = qData.title;
-      if (quizQuestionText) quizQuestionText.textContent = qData.question;
-      if (quizFeedbackMsg) quizFeedbackMsg.textContent = "";
+    showView("student-activities");
+    setActivityStage("trail");
 
-      if (quizOptionsGrid) {
-        quizOptionsGrid.innerHTML = qData.options
-          .map(
-            (opt, idx) =>
-              `<button type="button" class="quiz-option-btn" data-correct="${idx === qData.correctIndex}">${opt}</button>`
-          )
-          .join("");
-        bindQuizButtons();
+    if (subjectDetailCounterBadge) {
+      subjectDetailCounterBadge.textContent = `Matéria: ${currentSubjectKey} • ${data.counter}`;
+    }
+    if (activeSubjectProgressPill) {
+      activeSubjectProgressPill.textContent = data.counter;
+    }
+    if (selectedSubjectHeading) {
+      selectedSubjectHeading.textContent = currentSubjectKey;
+    }
+    if (activeSubjectBannerCard) {
+      activeSubjectBannerCard.className = `subject-banner-header ${data.bgClass}`;
+    }
+    if (activeSubjectTiles) {
+      activeSubjectTiles.innerHTML = data.tilesHtml;
+    }
+
+    if (learningPathList) {
+      learningPathList.innerHTML = data.modules
+        .map(
+          (m) => `
+          <div class="path-node ${m.done ? "done" : ""} ${m.locked ? "locked" : ""}" data-module="${m.title}" data-locked="${m.locked}">
+            <div class="path-node__circle">${m.done ? "✓" : m.locked ? "🔒" : "🏆"}</div>
+            <div class="path-node__text">
+              <strong>${m.title}</strong>
+              <span>${m.desc}</span>
+            </div>
+            <span class="path-node__arrow">${m.locked ? "Bloqueada" : "❯"}</span>
+          </div>
+        `
+        )
+        .join("");
+
+      learningPathList.querySelectorAll(".path-node").forEach((node) => {
+        node.addEventListener("click", () => {
+          if (node.getAttribute("data-locked") === "true") return;
+          const modName = node.getAttribute("data-module") || data.modules[0].title;
+          openModuleLevels(modName);
+        });
+      });
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Renderiza o Passo 3: Níveis do Módulo Selecionado (Figma Atividade 2 - LEVEL 1)
+  const openModuleLevels = (modName) => {
+    currentModuleTitle = modName;
+    const data = subjectsCurriculum[currentSubjectKey];
+    setActivityStage("levels");
+
+    if (activeModuleBadge) {
+      activeModuleBadge.textContent = `${currentSubjectKey} • Módulo: ${currentModuleTitle}`;
+    }
+
+    if (subjectLevelsGrid) {
+      subjectLevelsGrid.innerHTML = data.levels
+        .map(
+          (lvl) => `
+          <button type="button" class="level-tile-btn" data-level="${lvl}">
+            ${lvl}
+          </button>
+        `
+        )
+        .join("");
+
+      subjectLevelsGrid.querySelectorAll(".level-tile-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const lvlLabel = btn.getAttribute("data-level") || data.levels[0];
+          openLevelQuiz(lvlLabel, 0);
+        });
+      });
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Renderiza o Passo 4: Exercício / Desafio do Nível (Figma Atividade 3, 14 e 5)
+  const openLevelQuiz = (levelLabel, questionIndex = 0) => {
+    const data = subjectsCurriculum[currentSubjectKey];
+    currentQuestionIdx = questionIndex;
+    const qList = data.questions;
+    const q = qList[currentQuestionIdx] || qList[0];
+
+    setActivityStage("quiz");
+
+    if (quizActiveCard) {
+      quizActiveCard.hidden = false;
+      quizActiveCard.style.display = "block";
+    }
+    if (quizCompletedCard) {
+      quizCompletedCard.hidden = true;
+      quizCompletedCard.style.display = "none";
+    }
+
+    if (activeQuizProgressBadge) {
+      activeQuizProgressBadge.textContent = `${currentSubjectKey} • ${levelLabel} (${currentQuestionIdx + 1}/${qList.length})`;
+    }
+
+    const shortTitle = levelLabel.includes(":") ? levelLabel.split(":")[1].trim() : q.banner;
+    if (quizBannerTitle) {
+      quizBannerTitle.textContent = currentQuestionIdx === 0 ? shortTitle : q.banner;
+    }
+
+    if (angleDiagramBox) {
+      if (q.hasAngle36) {
+        angleDiagramBox.style.display = "flex";
+        angleDiagramBox.innerHTML = `
+          <svg width="220" height="120" viewBox="0 0 220 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M35 100 L145 20 M145 20 L125 20 M145 20 L145 38" stroke="#164A68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M35 100 L185 100 M185 100 L172 88 M185 100 L172 112" stroke="#164A68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M88 100 A52 52 0 0 0 76 68" stroke="#164A68" stroke-width="4" fill="none"/>
+            <text x="102" y="82" fill="#164A68" font-family="Nunito, sans-serif" font-weight="800" font-size="22">36°</text>
+          </svg>
+        `;
+      } else if (q.hasAngle9042) {
+        angleDiagramBox.style.display = "flex";
+        angleDiagramBox.innerHTML = `
+          <svg width="280" height="120" viewBox="0 0 280 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25 25 L25 100 L110 100" stroke="#164A68" stroke-width="4" stroke-linecap="round"/>
+            <rect x="25" y="82" width="18" height="18" stroke="#164A68" stroke-width="3" fill="none"/>
+            <text x="52" y="75" fill="#164A68" font-family="Nunito, sans-serif" font-weight="800" font-size="20">90°</text>
+            <path d="M155 100 L235 40 M155 100 L255 100" stroke="#164A68" stroke-width="4" stroke-linecap="round"/>
+            <text x="200" y="86" fill="#164A68" font-family="Nunito, sans-serif" font-weight="800" font-size="20">42°</text>
+          </svg>
+        `;
+      } else {
+        angleDiagramBox.style.display = "none";
+        angleDiagramBox.innerHTML = "";
       }
+    }
+
+    if (quizQuestionText) {
+      quizQuestionText.textContent = q.question;
+    }
+    if (quizFeedbackMsg) {
+      quizFeedbackMsg.textContent = "";
+    }
+
+    if (quizOptionsGrid) {
+      quizOptionsGrid.innerHTML = q.options
+        .map(
+          (opt, idx) =>
+            `<button type="button" class="quiz-option-btn" data-correct="${idx === q.correctIndex}">${opt}</button>`
+        )
+        .join("");
+
+      quizOptionsGrid.querySelectorAll(".quiz-option-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const isCorrect = btn.getAttribute("data-correct") === "true";
+          quizOptionsGrid.querySelectorAll(".quiz-option-btn").forEach((b) => {
+            b.classList.remove("correct", "wrong");
+          });
+
+          if (isCorrect) {
+            btn.classList.add("correct");
+            studentPoints += 10;
+            studyProgress = Math.min(100, studyProgress + 5);
+            updatePointsDisplay();
+            if (studyProgressLabel && studyProgressBar) {
+              studyProgressLabel.textContent = `${studyProgress}% de seu progresso!`;
+              studyProgressBar.style.width = `${studyProgress}%`;
+            }
+            if (quizFeedbackMsg) {
+              quizFeedbackMsg.style.color = "#16a34a";
+              quizFeedbackMsg.textContent = "🎉 Resposta certa! Avançando...";
+            }
+
+            setTimeout(() => {
+              if (currentQuestionIdx + 1 < qList.length) {
+                openLevelQuiz(levelLabel, currentQuestionIdx + 1);
+              } else {
+                if (quizActiveCard) {
+                  quizActiveCard.hidden = true;
+                  quizActiveCard.style.display = "none";
+                }
+                if (quizCompletedCard) {
+                  quizCompletedCard.hidden = false;
+                  quizCompletedCard.style.display = "block";
+                }
+              }
+            }, 900);
+          } else {
+            btn.classList.add("wrong");
+            if (quizFeedbackMsg) {
+              quizFeedbackMsg.style.color = "#dc2626";
+              quizFeedbackMsg.textContent = "🤔 Resposta incorreta! Tente novamente ou envie sua dúvida abaixo.";
+            }
+          }
+        });
+      });
+    }
+  };
+
+  // Botões de navegação de volta entre as 4 etapas
+  document.getElementById("backToSubjectsBtn")?.addEventListener("click", () => {
+    setActivityStage("catalog");
+  });
+  document.getElementById("backToTrailBtn")?.addEventListener("click", () => {
+    setActivityStage("trail");
+  });
+  document.getElementById("backToLevelsBtn")?.addEventListener("click", () => {
+    setActivityStage("levels");
+  });
+  document.getElementById("finishBackToLevelsBtn")?.addEventListener("click", () => {
+    setActivityStage("levels");
+  });
+  document.getElementById("reviewQuizBtn")?.addEventListener("click", () => {
+    openLevelQuiz("Nível 1: Soma", 0);
+  });
+
+  // Clicar em uma matéria abre o Passo 2 (Trilha exclusiva daquela matéria!)
+  document.querySelectorAll("[data-subject], [data-open-subject]").forEach((card) => {
+    card.addEventListener("click", () => {
+      const subj = card.getAttribute("data-subject") || card.getAttribute("data-open-subject") || "Matemática";
+      openSubjectTrail(subj);
     });
   });
 

@@ -563,246 +563,241 @@
           </div>
         </section>
 
-        <!-- VIEW 2: ATIVIDADES, TRILHAS & DESAFIOS GAMIFICADOS -->
+        <!-- VIEW 2: ATIVIDADES, TRILHAS & DESAFIOS GAMIFICADOS (Fluxo em Etapas Fiel ao Figma) -->
         <section class="view-screen" id="view-student-activities" hidden>
-            <!-- ETAPA 1: LISTA DE MATÉRIAS (Aparece primeiro; atividades só abrem ao clicar na matéria) -->
-            <div id="subjectsListView">
-              <div class="activities-header-bar">
-                <div class="search-box-figma">
-                  <span class="search-box-figma__icon">🔍</span>
-                  <input type="search" id="activitySearchInput" placeholder="Buscar atividade ou matéria..." />
+          <!-- ===============================================================
+               PASSO 1: CATÁLOGO DE MATÉRIAS (Figma: Home Atividades 16:582)
+               =============================================================== -->
+          <div id="stepSubjectsCatalog">
+            <div class="activities-header-bar">
+              <div class="search-box-figma">
+                <span class="search-box-figma__icon">🔍</span>
+                <input type="search" id="activitySearchInput" placeholder="Buscar atividade ou matéria..." />
+              </div>
+
+              <div class="studies-progress-summary">
+                <div>
+                  <strong>Seus estudos:</strong>
+                  <span id="studyProgressLabel">20% de seu progresso!</span>
+                  <div class="mini-progress-track">
+                    <div class="mini-progress-fill" id="studyProgressBar" style="width: 20%"></div>
+                  </div>
                 </div>
+                <div class="cup-circle">
+                  <img src="assets/icon-cup.svg" alt="Troféu" />
+                </div>
+              </div>
+            </div>
 
-                      <div class="studies-progress-summary">
-                        <div>
-                          <strong>Seus estudos:</strong>
-                          <span id="studyProgressLabel">20% de seu progresso!</span>
-                          <div class="mini-progress-track">
-                            <div class="mini-progress-fill" id="studyProgressBar" style="width: 20%"></div>
-                          </div>
-                        </div>
-                        <div class="cup-circle">
-                          <img src="assets/icon-cup.svg" alt="Troféu" />
-                        </div>
-                      </div>
+            <div class="desktop-panel">
+              <div class="desktop-panel__header">
+                <div>
+                  <h3 class="panel-section-title" style="margin-bottom:0.2rem">Disciplinas Disponíveis</h3>
+                  <p class="text-muted">Selecione uma matéria abaixo para abrir suas atividades exclusivas</p>
+                </div>
+              </div>
+
+              <div class="subject-cards-grid subject-cards-grid--full" id="subjectsGrid">
+                <article class="subject-card bg-math" data-subject="Matemática">
+                  <span class="subject-card__counter">03/30</span>
+                  <h4 class="subject-card__title">Matemática</h4>
+                  <button type="button" class="subject-card__btn">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
+                  <div class="subject-card__tiles">
+                    <div class="tile tile--front"><img src="assets/icon-math-plus.svg" alt="" /></div>
+                    <div class="tile tile--back"><img src="assets/icon-math-percent.svg" alt="" /></div>
+                  </div>
+                </article>
+
+                <article class="subject-card bg-port" data-subject="Português">
+                  <span class="subject-card__counter">0/30</span>
+                  <h4 class="subject-card__title">Português</h4>
+                  <button type="button" class="subject-card__btn subject-card__btn--blue">Começar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
+                  <div class="subject-card__tiles">
+                    <div class="tile tile--front"><img src="assets/icon-port-a.svg" alt="" /></div>
+                    <div class="tile tile--back"><img src="assets/icon-port-j.svg" alt="" /></div>
+                  </div>
+                </article>
+
+                <article class="subject-card bg-bio" data-subject="Biologia">
+                  <span class="subject-card__counter">07/30</span>
+                  <h4 class="subject-card__title">Biologia</h4>
+                  <button type="button" class="subject-card__btn">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
+                  <div class="subject-card__tiles">
+                    <div class="tile tile--front"><img src="assets/icon-bio-lungs.svg" alt="" /></div>
+                    <div class="tile tile--back"><img src="assets/icon-bio-heart.svg" alt="" /></div>
+                  </div>
+                </article>
+
+                <article class="subject-card bg-chem" data-subject="Química">
+                  <span class="subject-card__counter">16/30</span>
+                  <h4 class="subject-card__title">Química</h4>
+                  <button type="button" class="subject-card__btn">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
+                  <div class="subject-card__tiles">
+                    <div class="tile tile--front"><img src="assets/icon-chem-drop.svg" alt="" /></div>
+                    <div class="tile tile--back"><img src="assets/icon-chem-hazard.svg" alt="" /></div>
+                  </div>
+                </article>
+
+                <article class="subject-card bg-phys" data-subject="Física">
+                  <span class="subject-card__counter">18/30</span>
+                  <h4 class="subject-card__title">Física</h4>
+                  <button type="button" class="subject-card__btn">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
+                  <div class="subject-card__tiles">
+                    <div class="tile tile--front"><img src="assets/icon-phys-atom.svg" alt="" /></div>
+                    <div class="tile tile--back"><img src="assets/icon-phys-energy.svg" alt="" /></div>
+                  </div>
+                </article>
+
+                <article class="subject-card bg-math" data-subject="Inglês">
+                  <span class="subject-card__counter">22/30</span>
+                  <h4 class="subject-card__title">Inglês</h4>
+                  <button type="button" class="subject-card__btn">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
+                  <div class="subject-card__tiles">
+                    <div class="tile tile--front"><span class="tile-letter">EN</span></div>
+                    <div class="tile tile--back"><img src="assets/icon-eng-lang.svg" alt="" /></div>
+                  </div>
+                </article>
+
+                <article class="subject-card bg-port" data-subject="História">
+                  <span class="subject-card__counter">09/30</span>
+                  <h4 class="subject-card__title">História</h4>
+                  <button type="button" class="subject-card__btn">Continuar</button>
+                  <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
+                  <div class="subject-card__tiles">
+                    <div class="tile tile--front"><img src="assets/icon-hist-temple.svg" alt="" /></div>
+                    <div class="tile tile--back"><span class="tile-letter">🏛️</span></div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===============================================================
+               PASSO 2: TRILHA DA MATÉRIA SELECIONADA (Figma: Android - 55 / Atividade 1)
+               Aparece SOMENTE ao selecionar uma matéria
+               =============================================================== -->
+          <div id="stepSubjectTrail" hidden>
+            <div class="subject-detail-topbar">
+              <button type="button" class="btn-back-subjects" id="backToSubjectsBtn">
+                ← Voltar para Disciplinas
+              </button>
+              <span class="subject-detail-badge" id="subjectDetailCounterBadge">Matéria: Matemática • 03/30</span>
+            </div>
+
+            <div class="desktop-panel trail-stage-panel">
+              <div class="subject-banner-header bg-math" id="activeSubjectBannerCard">
+                <div>
+                  <span class="subject-banner-header__tag" id="activeSubjectProgressPill">03/30</span>
+                  <h3 id="selectedSubjectHeading">Matemática</h3>
+                  <p id="selectedSubjectSubtitle">Clique em um módulo da trilha abaixo para abrir os níveis desta matéria</p>
+                </div>
+                <div class="subject-card__tiles" id="activeSubjectTiles">
+                  <div class="tile tile--front"><img src="assets/icon-math-plus.svg" alt="" /></div>
+                  <div class="tile tile--back"><img src="assets/icon-math-percent.svg" alt="" /></div>
+                </div>
+              </div>
+
+              <div class="learning-path-list learning-path-list--clickable" id="learningPathList"></div>
+
+              <div class="trail-doubt-bar">
+                <div>
+                  <strong>Tire suas dúvidas:</strong>
+                  <span>Fale com o professor</span>
+                </div>
+                <button type="button" class="btn-chat-send" data-go-view="student-chat">
+                  <img src="assets/icon-chat-badge.svg" alt="Chat" />
+                  <span>Abrir Chat com Professor</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===============================================================
+               PASSO 3: LISTA DE NÍVEIS DO MÓDULO (Figma: Atividade 2 - LEVEL 1)
+               Aparece SOMENTE ao clicar em um módulo da Trilha
+               =============================================================== -->
+          <div id="stepModuleLevels" hidden>
+            <div class="subject-detail-topbar">
+              <button type="button" class="btn-back-subjects" id="backToTrailBtn">
+                ← Voltar para a Trilha da Matéria
+              </button>
+              <span class="subject-detail-badge" id="activeModuleBadge">Matemática • Módulo: Operações</span>
+            </div>
+
+            <div class="desktop-panel levels-stage-panel">
+              <div class="level-header-badge" id="levelStageHeader">LEVEL 1</div>
+              <p class="text-muted" style="text-align:center; margin-bottom:1.25rem">
+                Selecione um nível abaixo para abrir o exercício correspondente:
+              </p>
+              <div class="levels-grid levels-grid--large" id="subjectLevelsGrid"></div>
+            </div>
+          </div>
+
+          <!-- ===============================================================
+               PASSO 4: EXERCÍCIO / DESAFIO DO NÍVEL (Figma: Atividade 3, 14 e 5)
+               Aparece SOMENTE ao clicar em um Nível (ex: Nível 1: Soma)
+               =============================================================== -->
+          <div id="stepLevelQuiz" hidden>
+            <div class="subject-detail-topbar">
+              <button type="button" class="btn-back-subjects" id="backToLevelsBtn">
+                ← Voltar para os Níveis (LEVEL 1)
+              </button>
+              <span class="subject-detail-badge" id="activeQuizProgressBadge">Matemática • Questão 1 de 2</span>
+            </div>
+
+            <div class="desktop-panel quiz-box-figma quiz-box-figma--centered" id="quizActiveCard">
+              <div class="quiz-box-figma__banner" id="quizBannerTitle">Soma</div>
+
+              <div class="angle-diagram" id="angleDiagramBox" aria-label="Ilustração de ângulo"></div>
+
+              <h4 class="quiz-box-figma__question" id="quizQuestionText">
+                Some o ângulo por eles mesmo:
+              </h4>
+
+              <div class="quiz-options-grid" id="quizOptionsGrid"></div>
+
+              <p class="quiz-feedback" id="quizFeedbackMsg" role="status"></p>
+
+              <div class="doubt-comment-section">
+                <h5>Dúvida ou comentários</h5>
+                <form id="activityDoubtForm" class="doubt-comment-form">
+                  <textarea id="activityDoubtInput" rows="2" placeholder="Mensagem para a Professora Tati sobre esta atividade..."></textarea>
+                  <div class="doubt-comment-footer">
+                    <div>
+                      <strong>Tire suas dúvidas:</strong>
+                      <span>Fale com o professor</span>
                     </div>
+                    <button type="submit" class="btn-chat-send" title="Enviar dúvida ao professor">
+                      <img src="assets/icon-chat-badge.svg" alt="Chat" />
+                      <span>Enviar ao Professor</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
 
-                    <div class="desktop-panel">
-                        <div class="desktop-panel__header">
-                          <div>
-                            <h3 class="panel-section-title" style="margin-bottom:0.2rem">Disciplinas Disponíveis</h3>
-                            <p class="text-muted">Clique em uma matéria abaixo para abrir a trilha de estudos, níveis e
-                              atividades</p>
-                          </div>
-                        </div>
-
-                        <div class="subject-cards-grid subject-cards-grid--full" id="subjectsGrid">
-                          <article class="subject-card bg-math" data-subject="Matemática">
-                            <span class="subject-card__counter">03/30</span>
-                            <h4 class="subject-card__title">Matemática</h4>
-                            <button type="button" class="subject-card__btn">Continuar</button>
-                            <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                            <div class="subject-card__tiles">
-                              <div class="tile tile--front"><img src="assets/icon-math-plus.svg" alt="" /></div>
-                              <div class="tile tile--back"><img src="assets/icon-math-percent.svg" alt="" /></div>
-                            </div>
-                          </article>
-
-                          <article class="subject-card bg-port" data-subject="Português">
-                            <span class="subject-card__counter">0/30</span>
-                            <h4 class="subject-card__title">Português</h4>
-                            <button type="button" class="subject-card__btn subject-card__btn--blue">Começar</button>
-                            <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                            <div class="subject-card__tiles">
-                              <div class="tile tile--front"><img src="assets/icon-port-a.svg" alt="" /></div>
-                              <div class="tile tile--back"><img src="assets/icon-port-j.svg" alt="" /></div>
-                            </div>
-                          </article>
-
-                          <article class="subject-card bg-bio" data-subject="Biologia">
-                            <span class="subject-card__counter">07/30</span>
-                            <h4 class="subject-card__title">Biologia</h4>
-                            <button type="button" class="subject-card__btn">Continuar</button>
-                            <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                            <div class="subject-card__tiles">
-                              <div class="tile tile--front"><img src="assets/icon-bio-lungs.svg" alt="" /></div>
-                              <div class="tile tile--back"><img src="assets/icon-bio-heart.svg" alt="" /></div>
-                            </div>
-                          </article>
-
-                          <article class="subject-card bg-chem" data-subject="Química">
-                            <span class="subject-card__counter">16/30</span>
-                            <h4 class="subject-card__title">Química</h4>
-                            <button type="button" class="subject-card__btn">Continuar</button>
-                            <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                            <div class="subject-card__tiles">
-                              <div class="tile tile--front"><img src="assets/icon-chem-drop.svg" alt="" /></div>
-                              <div class="tile tile--back"><img src="assets/icon-chem-hazard.svg" alt="" /></div>
-                            </div>
-                          </article>
-
-                          <article class="subject-card bg-phys" data-subject="Física">
-                            <span class="subject-card__counter">18/30</span>
-                            <h4 class="subject-card__title">Física</h4>
-                            <button type="button" class="subject-card__btn">Continuar</button>
-                            <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                            <div class="subject-card__tiles">
-                              <div class="tile tile--front"><img src="assets/icon-phys-atom.svg" alt="" /></div>
-                              <div class="tile tile--back"><img src="assets/icon-phys-energy.svg" alt="" /></div>
-                            </div>
-                          </article>
-
-                          <article class="subject-card bg-math" data-subject="Inglês">
-                            <span class="subject-card__counter">22/30</span>
-                            <h4 class="subject-card__title">Inglês</h4>
-                            <button type="button" class="subject-card__btn">Continuar</button>
-                            <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                            <div class="subject-card__tiles">
-                              <div class="tile tile--front"><span class="tile-letter">EN</span></div>
-                              <div class="tile tile--back"><img src="assets/icon-eng-lang.svg" alt="" /></div>
-                            </div>
-                          </article>
-
-                          <article class="subject-card bg-port" data-subject="História">
-                            <span class="subject-card__counter">09/30</span>
-                            <h4 class="subject-card__title">História</h4>
-                            <button type="button" class="subject-card__btn">Continuar</button>
-                            <img src="assets/card-wave-mask.svg" alt="" class="subject-card__wave" />
-                            <div class="subject-card__tiles">
-                              <div class="tile tile--front"><img src="assets/icon-hist-temple.svg" alt="" /></div>
-                              <div class="tile tile--back"><span class="tile-letter">🏛️</span></div>
-                            </div>
-                          </article>
-                        </div>
-                      </div>
-                    </div>
-
-                      <!-- ETAPA 2: INTERNO DA MATÉRIA (Oculto inicialmente; aparece SOMENTE ao entrar em uma matéria) -->
-                      <div id="subjectDetailView" hidden>
-                        <div class="subject-detail-topbar">
-                          <button type="button" class="btn-back-subjects" id="backToSubjectsBtn">
-                            ← Voltar para Todas as Matérias
-                          </button>
-                          <span class="subject-detail-badge" id="subjectDetailCounterBadge">Progresso na matéria:
-                            03/30</span>
-                        </div>
-
-                        <div class="activities-desktop-layout">
-                          <div class="desktop-panel">
-                            <div class="desktop-panel__header">
-                              <div>
-                                <h3 id="selectedSubjectHeading">Trilha: Matemática (03/30)</h3>
-                                <p class="text-muted">Selecione o módulo e o nível para praticar</p>
-                              </div>
-                            </div>
-
-                              <div class="learning-path-list" id="learningPathList">
-                                <div class="path-node done">
-                                  <div class="path-node__circle">✓</div>
-                                  <div class="path-node__text">
-                                    <strong>Operações</strong>
-                                    <span>Aprenda as operações básicas</span>
-                                  </div>
-                                </div>
-
-                                <div class="path-node">
-                                  <div class="path-node__circle">2</div>
-                                  <div class="path-node__text">
-                                    <strong>Equações de 1º grau</strong>
-                                    <span>Aprenda a resolver equações</span>
-                                  </div>
-                                </div>
-
-                                <div class="path-node">
-                                  <div class="path-node__circle">3</div>
-                                  <div class="path-node__text">
-                                    <strong>Equações de 2º grau</strong>
-                                    <span>Aprenda equações complexas</span>
-                                  </div>
-                                </div>
-
-                                <div class="path-node">
-                                  <div class="path-node__circle">4</div>
-                                  <div class="path-node__text">
-                                    <strong>Grupos numéricos</strong>
-                                    <span>Aprenda conjuntos</span>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="level-header-badge">LEVEL 1</div>
-                                <div class="levels-grid" id="subjectLevelsGrid">
-                                  <button type="button" class="level-tile-btn active" data-level="Soma">Nível 1:
-                                    Soma</button>
-                                  <button type="button" class="level-tile-btn" data-level="Subtração">Nível 2:
-                                    Subtração</button>
-                                  <button type="button" class="level-tile-btn" data-level="Divisão">Nível 3:
-                                    Divisão</button>
-                                  <button type="button" class="level-tile-btn" data-level="Multiplicação">Nível 4:
-                                    Multiplicação</button>
-                                  <button type="button" class="level-tile-btn" data-level="Radiciação">Nível 5:
-                                    Radiciação</button>
-                                  <button type="button" class="level-tile-btn" data-level="Potenciação">Nível 6:
-                                    Potenciação</button>
-                                  <button type="button" class="level-tile-btn" data-level="Fração">Nível 7:
-                                    Fração</button>
-                                  <button type="button" class="level-tile-btn" data-level="Logaritmação">Nível 8:
-                                    Logaritmação</button>
-                                  <button type="button" class="level-tile-btn" data-level="Soma de raiz">Nível 9: Soma
-                                    de raiz</button>
-                                </div>
-                              </div>
-
-                              <div class="desktop-panel quiz-box-figma">
-                                <div class="quiz-box-figma__banner" id="quizBannerTitle">Soma</div>
-
-                                  <div class="angle-diagram" id="angleDiagramBox" aria-label="Ângulo de 36 graus">
-                                    <svg width="220" height="120" viewBox="0 0 220 120" fill="none"
-                                      xmlns="http://www.w3.org/2000/svg">
-                                      <path d="M35 100 L145 20 M145 20 L125 20 M145 20 L145 38" stroke="#164A68"
-                                        stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-                                      <path d="M35 100 L185 100 M185 100 L172 88 M185 100 L172 112" stroke="#164A68"
-                                        stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-                                      <path d="M88 100 A52 52 0 0 0 76 68" stroke="#164A68" stroke-width="4"
-                                        fill="none" />
-                                      <text x="102" y="82" fill="#164A68" font-family="Nunito, sans-serif"
-                                        font-weight="800" font-size="22">36°</text>
-                                    </svg>
-                                  </div>
-
-                                  <h4 class="quiz-box-figma__question" id="quizQuestionText">
-                                    Some o ângulo por eles mesmo:
-                                  </h4>
-
-                                  <div class="quiz-options-grid" id="quizOptionsGrid">
-                                    <button type="button" class="quiz-option-btn" data-correct="false">45º</button>
-                                    <button type="button" class="quiz-option-btn" data-correct="false">55º</button>
-                                    <button type="button" class="quiz-option-btn" data-correct="false">71º</button>
-                                    <button type="button" class="quiz-option-btn" data-correct="true">72º</button>
-                                  </div>
-
-                                  <p class="quiz-feedback" id="quizFeedbackMsg" role="status"></p>
-
-                                  <div class="doubt-comment-section">
-                                    <h5>Dúvida ou comentários</h5>
-                                    <form id="activityDoubtForm" class="doubt-comment-form">
-                                      <textarea id="activityDoubtInput" rows="2"
-                                        placeholder="Mensagem para a Professora Tati sobre esta atividade..."></textarea>
-                                      <div class="doubt-comment-footer">
-                                        <div>
-                                          <strong>Tire suas dúvidas:</strong>
-                                          <span>Fale com o professor</span>
-                                        </div>
-                                        <button type="submit" class="btn-chat-send" title="Enviar dúvida ao professor">
-                                          <img src="assets/icon-chat-badge.svg" alt="Chat" />
-                                          <span>Enviar ao Professor</span>
-                                        </button>
-                                      </div>
-                                    </form>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+            <div class="desktop-panel quiz-completed-card" id="quizCompletedCard" hidden>
+              <div class="completed-check-circle">✓</div>
+              <span class="completed-pts-pill">+10 Pts conquistados!</span>
+              <h3>Atividade Concluída</h3>
+              <p class="text-muted">Parabéns! Você finalizou todas as questões deste nível com sucesso.</p>
+              <div class="completed-actions">
+                <button type="button" class="btn-figma-primary btn-figma-primary--sm" id="reviewQuizBtn">
+                  Revisar
+                </button>
+                <button type="button" class="btn-back-subjects" id="finishBackToLevelsBtn">
+                  Voltar para Níveis
+                </button>
+              </div>
+              <img src="assets/logo-inaula.png" alt="IN AULA" class="completed-logo" />
+            </div>
+          </div>
         </section>
 
         <!-- VIEW 3: LOJA DE RECOMPENSAS IN AULA -->
