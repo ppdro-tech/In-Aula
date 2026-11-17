@@ -145,6 +145,7 @@
 
           <!-- Botão "Login" (Frame 3 - 16:108) -->
           <button type="submit" class="figma-submit-btn">Login</button>
+          <p class="form-feedback" id="loginFeedbackMsg"></p>
 
           <!-- Rodapé "Crie uma Conta Inscreva-se" (Group 33679 - 16:86) -->
           <div class="figma-bottom-switch">
@@ -224,6 +225,7 @@
 
           <!-- Botão Criar Conta -->
           <button type="submit" class="figma-submit-btn">Criar Conta</button>
+          <p class="form-feedback" id="signupFeedbackMsg"></p>
 
           <!-- Rodapé "Já tenho um conta Login" -->
           <div class="figma-bottom-switch">
@@ -279,18 +281,18 @@
         <img src="assets/logo-inaula.png" alt="Logo IN AULA" class="sidebar__logo-img" />
       </div>
 
-      <!-- Seletor de Modo: Estudante vs Professor -->
+      <!-- Indicador fixo do Setor autenticado no Login (sem troca livre entre Aluno e Professor) -->
       <div class="sidebar__role-switch">
-        <span class="sidebar__section-label">PERFIL ATIVO</span>
+        <span class="sidebar__section-label">SETOR AUTENTICADO</span>
         <div class="role-pills">
-          <button type="button" class="role-pill active" id="switchStudentMode" data-mode="student">
+          <div class="role-pill active" id="activeStudentSectorBadge" style="grid-column: 1 / -1; cursor: default;">
             <img src="assets/icon-reading-book.png" alt="" />
-            <span>Estudante</span>
-          </button>
-          <button type="button" class="role-pill" id="switchTeacherMode" data-mode="teacher">
+            <span id="activeStudentSectorLabel">Setor: Estudante</span>
+          </div>
+          <div class="role-pill active" id="activeTeacherSectorBadge" hidden style="grid-column: 1 / -1; cursor: default;">
             <img src="assets/icon-school.png" alt="" />
-            <span>Professor(a)</span>
-          </button>
+            <span>Setor: Instituição (Docente)</span>
+          </div>
         </div>
       </div>
 

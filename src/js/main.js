@@ -34,8 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginFullscreenOverlay = document.getElementById("loginFullscreenOverlay");
   const mainDesktopApp = document.getElementById("mainDesktopApp");
 
-  const switchStudentMode = document.getElementById("switchStudentMode");
-  const switchTeacherMode = document.getElementById("switchTeacherMode");
+  const activeStudentSectorBadge = document.getElementById("activeStudentSectorBadge");
+  const activeStudentSectorLabel = document.getElementById("activeStudentSectorLabel");
+  const activeTeacherSectorBadge = document.getElementById("activeTeacherSectorBadge");
   const studentNav = document.getElementById("studentNav");
   const teacherNav = document.getElementById("teacherNav");
   const topbarAvatar = document.getElementById("topbarAvatar");
@@ -44,6 +45,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const topbarPointsBox = document.getElementById("topbarPointsBox");
   const currentViewTitle = document.getElementById("currentViewTitle");
   const currentViewSubtitle = document.getElementById("currentViewSubtitle");
+
+  // Setor autenticado no momento do Login: "estudante", "responsaveis" ou "instituicao"
+  let authenticatedSector = null;
 
   const viewTitles = {
     "student-home": ["Painel do Estudante", "Bruno Delorence • Turma 3°E • Top 1"],
@@ -59,6 +63,14 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const showView = (viewId) => {
+    // Bloqueio estrito: qualquer tela de professora exige login pelo setor INSTITUIÇÃO
+    if (viewId && viewId.startsWith("teacher-") && authenticatedSector !== "instituicao") {
+      return;
+    }
+    if (viewId && viewId.startsWith("student-") && authenticatedSector === "instituicao") {
+      return;
+    }
+
     document.querySelectorAll(".view-screen").forEach((sec) => {
       const isTarget = sec.id === `view-${viewId}`;
       sec.hidden = !isTarget;
@@ -77,9 +89,22 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const setRoleMode = (mode) => {
-    const isStudent = mode === "student";
-    switchStudentMode?.classList.toggle("active", isStudent);
-    switchTeacherMode?.classList.toggle("active", !isStudent);
+    // O perfil de professora só pode ser ativado se o login foi feito pelo setor INSTITUIÇÃO
+    const effectiveMode = mode === "teacher" && authenticatedSector === "instituicao" ? "teacher" : "student";
+    const isStudent = effectiveMode === "student";
+
+    if (activeStudentSectorBadge) {
+      activeStudentSectorBadge.hidden = !isStudent;
+      activeStudentSectorBadge.style.display = isStudent ? "flex" : "none";
+      if (activeStudentSectorLabel) {
+        activeStudentSectorLabel.textContent =
+          authenticatedSector === "responsaveis" ? "Setor: Responsáveis" : "Setor: Estudante";
+      }
+    }
+    if (activeTeacherSectorBadge) {
+      activeTeacherSectorBadge.hidden = isStudent;
+      activeTeacherSectorBadge.style.display = isStudent ? "none" : "flex";
+    }
     if (studentNav) {
       studentNav.hidden = !isStudent;
       studentNav.style.display = isStudent ? "flex" : "none";
@@ -93,7 +118,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isStudent) {
       if (topbarAvatar) topbarAvatar.src = "assets/avatar-bruno.png";
       if (topbarName) topbarName.textContent = "Bruno Delorence";
-      if (topbarRole) topbarRole.textContent = "Estudante • Top 1 (3°E)";
+      if (topbarRole) {
+        topbarRole.textContent =
+          authenticatedSector === "responsaveis"
+            ? "Acesso Responsável • Bruno Delorence (3°E)"
+            : "Estudante • Top 1 (3°E)";
+      }
       showView("student-home");
     } else {
       if (topbarAvatar) topbarAvatar.src = "assets/avatar-tatiane.png";
@@ -117,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const returnToLoginScreen = () => {
+    authenticatedSector = null;
     if (mainDesktopApp) {
       mainDesktopApp.hidden = true;
       mainDesktopApp.style.display = "none";
@@ -127,9 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  switchStudentMode?.addEventListener("click", () => setRoleMode("student"));
-  switchTeacherMode?.addEventListener("click", () => setRoleMode("teacher"));
 
   const stepSubjectsCatalog = document.getElementById("stepSubjectsCatalog");
   const stepSubjectTrail = document.getElementById("stepSubjectTrail");
@@ -166,10 +194,13 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[data-go-view]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const target = btn.getAttribute("data-go-view");
-      if (target.startsWith("teacher-")) {
-        setRoleMode("teacher");
-      } else if (target.startsWith("student-")) {
-        setRoleMode("student");
+      if (!target) return;
+      // Bloqueia navegação para telas de professora se o login não foi pelo setor INSTITUIÇÃO
+      if (target.startsWith("teacher-") && authenticatedSector !== "instituicao") {
+        return;
+      }
+      if (target.startsWith("student-") && authenticatedSector === "instituicao") {
+        return;
       }
       showView(target);
       if (target === "student-activities") {
@@ -190,6 +221,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginUser = document.getElementById("loginUser");
   const signupUsername = document.getElementById("signupUsername");
   const signupEmail = document.getElementById("signupEmail");
+  const loginFeedbackMsg = document.getElementById("loginFeedbackMsg");
+  const signupFeedbackMsg = document.getElementById("signupFeedbackMsg");
+
+  const clearAuthFeedback = () => {
+    if (loginFeedbackMsg) loginFeedbackMsg.textContent = "";
+    if (signupFeedbackMsg) signupFeedbackMsg.textContent = "";
+  };
 
   const profilePresets = {
     responsaveis: {
@@ -219,6 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
       chosenProfile = btn.getAttribute("data-select-profile") || "estudante";
       const preset = profilePresets[chosenProfile] || profilePresets.estudante;
 
+      clearAuthFeedback();
       if (selectedProfileBadge) {
         selectedProfileBadge.innerHTML = `Perfil: <strong>${preset.label}</strong>`;
       }
@@ -229,6 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const switchAuthTab = (tabName) => {
+    clearAuthFeedback();
     document.querySelectorAll("[data-auth-tab]").forEach((t) => {
       t.classList.toggle("active", t.getAttribute("data-auth-tab") === tabName);
     });
@@ -272,16 +312,41 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Função direta de Login / Cadastro
+  // Função direta de Login / Cadastro com validação estrita do setor INSTITUIÇÃO
   const handleAuthAccess = (e) => {
     if (e) e.preventDefault();
+    clearAuthFeedback();
+
     const userVal = (document.getElementById("loginUser")?.value || "").toLowerCase();
-    if (userVal.includes("tatiane") || userVal.includes("prof") || chosenProfile === "instituicao") {
+    const signupEmailVal = (document.getElementById("signupEmail")?.value || "").toLowerCase();
+    const isTryingTeacherAccount =
+      userVal.includes("tatiane") ||
+      userVal.includes("prof") ||
+      signupEmailVal.includes("tatiane") ||
+      signupEmailVal.includes("prof");
+
+    // Regra estrita: O perfil de professora SÓ pode ter acesso se fizer login pelo setor de INSTITUIÇÃO
+    if (chosenProfile === "instituicao") {
+      authenticatedSector = "instituicao";
       enterDashboard("teacher");
-    } else {
-      const preset = profilePresets[chosenProfile] || profilePresets.estudante;
-      enterDashboard(preset.mode);
+      return;
     }
+
+    if (isTryingTeacherAccount && chosenProfile !== "instituicao") {
+      const msg = "⚠️ Acesso negado: O perfil de Professora só pode ser acessado selecionando o setor INSTITUIÇÃO ao lado.";
+      if (loginFeedbackMsg) {
+        loginFeedbackMsg.style.color = "#ef4444";
+        loginFeedbackMsg.textContent = msg;
+      }
+      if (signupFeedbackMsg) {
+        signupFeedbackMsg.style.color = "#ef4444";
+        signupFeedbackMsg.textContent = msg;
+      }
+      return;
+    }
+
+    authenticatedSector = chosenProfile;
+    enterDashboard("student");
   };
 
   // Submit Login
