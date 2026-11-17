@@ -1,4 +1,4 @@
-# Base de Site Institucional (HTML + CSS + JS + Docker)
+# Base de Site Institucional (HTML + CSS + JS )
 
 Estrutura base para um site institucional responsivo, utilizando **HTML5**, **CSS3 moderno** (Variáveis CSS, Flexbox e Grid) e **JavaScript puro**, servido com **Nginx** via **Docker Compose**.
 
