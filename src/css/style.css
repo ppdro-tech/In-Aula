@@ -79,7 +79,7 @@ textarea {
   min-height: 100vh;
 }
 
-.barraLateral {
+.barra-lateral {
   background: var(--fundo-barra-lateral);
   border-right: 1px solid var(--cor-borda);
   display: flex;
@@ -2605,7 +2605,7 @@ textarea {
         grid-template-columns: 240px 1fr;
       }
 
-      .conteiner-tela {
+      .conteiner-telas {
         padding: 1.5rem;
       }
 
@@ -2619,7 +2619,7 @@ textarea {
         grid-template-columns: 1fr;
       }
 
-      .barraLateral {
+      .barra-lateral {
         position: relative;
         height: auto;
         border-right: none;
@@ -2645,12 +2645,11 @@ textarea {
         padding: 1rem 1.25rem;
       }
 
-      .conteiner-tela-cheia-login,
-      .grade-computador-inicio,
+      .vitrine-computador-login,
+      .colunas-computador-inicio,
       .grade-computador-classificacao,
       .cartao-perfil-computador,
-      .grade-computador-chamada,
-      .grade-computador-notas,
+      .layout-dividido-professora,
       .grade-computador-conversa-professora {
         grid-template-columns: 1fr;
       }
@@ -2661,9 +2660,9 @@ textarea {
         height: 480px;
       }
 
-      .grade-materias,
+      .grade-cartoes-materias,
       .grade-produtos-loja,
-      .grade-cartoes-turmas {
+      .grade-turmas-professora {
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       }
     }
@@ -2673,8 +2672,8 @@ textarea {
         padding: 1rem;
       }
 
-      .seletor-perfil-login,
-      .cartao-autenticacao-login {
+      .painel-esquerdo-login,
+      .painel-direito-login {
         padding: 1.25rem;
       }
 
@@ -2685,7 +2684,7 @@ textarea {
         gap: 0.85rem;
       }
 
-      .conteiner-tela {
+      .conteiner-telas {
         padding: 1rem;
       }
 
@@ -2736,8 +2735,8 @@ textarea {
         font-size: 0.88rem;
       }
 
-      .grade-niveis-9,
-      .grade-opcoes-angulo {
+      .grade-niveis,
+      .grade-opcoes-desafio {
         grid-template-columns: 1fr;
       }
     }
