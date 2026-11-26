@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-tema="claro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IN AULA | Loja de Pontos IN AULA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-pagina-perfil="estudante" data-pagina-id="estudante-loja">
+  <div class="aplicacao-computador" id="aplicacaoPrincipalComputador">
+    <aside class="barra-lateral" id="barraLateral">
+      <div class="barra-lateral__marca" id="botaoAbrirBoasVindas" title="Voltar para a Tela de Login">
+        <img src="assets/logo-inaula.png" alt="Logo IN AULA" class="barra-lateral__imagem-logo" />
+      </div>
+      <div class="barra-lateral__seletor-setor">
+        <span class="barra-lateral__rotulo-secao">SETOR AUTENTICADO</span>
+        <div class="pilulas-setor">
+          <div class="pilula-setor ativo" id="seloSetorEstudanteAtivo" style="grid-column: 1 / -1; cursor: default;">
+            <img src="assets/icon-reading-book.png" alt="" />
+            <span id="rotuloSetorEstudanteAtivo">Setor: Estudante</span>
+          </div>
+        </div>
+      </div>
+      <nav class="barra-lateral__navegacao" id="navegacaoEstudante" aria-label="Menu do Estudante">
+        <span class="barra-lateral__rotulo-secao">MENU DO ESTUDANTE</span>
+        <a href="estudante-inicio.html" class="item-navegacao " data-tela="estudante-inicio" style="text-decoration:none"><span class="item-navegacao__icone">🏠</span><span>Início (Painel)</span></a>
+        <a href="estudante-atividades.html" class="item-navegacao " data-tela="estudante-atividades" style="text-decoration:none"><span class="item-navegacao__icone">⭐</span><span>Atividades &amp; Níveis</span><span class="item-navegacao__selo">4</span></a>
+        <a href="estudante-loja.html" class="item-navegacao ativo" data-tela="estudante-loja" style="text-decoration:none"><span class="item-navegacao__icone">🏪</span><span>Loja de Pontos</span></a>
+        <a href="estudante-classificacao.html" class="item-navegacao " data-tela="estudante-classificacao" style="text-decoration:none"><span class="item-navegacao__icone">📊</span><span>Ranking da Turma</span></a>
+        <a href="estudante-conversa.html" class="item-navegacao " data-tela="estudante-conversa" style="text-decoration:none"><span class="item-navegacao__icone">💬</span><span>Chat com Professora</span></a>
+        <a href="estudante-perfil.html" class="item-navegacao " data-tela="estudante-perfil" style="text-decoration:none"><span class="item-navegacao__icone">👤</span><span>Meu Perfil</span></a>
+      </nav>
+      <div class="barra-lateral__rodape">
+        <button type="button" class="botao-entrada-portal" id="botaoSairBarraLateral">🔐 Trocar Conta / Tela de Login</button>
+      </div>
+    </aside>
+    <div class="area-trabalho-principal">
+      <header class="barra-topo">
+        <div class="barra-topo__esquerda">
+          <h1 class="barra-topo__titulo" id="tituloTelaAtual">Loja de Pontos IN AULA</h1>
+          <p class="barra-topo__subtitulo" id="subtituloTelaAtual">Troque seus pontos acumulados por materiais e prêmios</p>
+        </div>
+        <div class="barra-topo__direita">
+          <div class="pilula-pontos" id="caixaPontosTopo" title="Seus pontos acumulados nas atividades"><img src="assets/icon-medal-pts.svg" alt="" class="pilula-pontos__icone" /><strong id="pontosGlobaisEstudante">2564</strong><span>pts</span></div>
+          <button type="button" class="botao-alternar-tema" id="botaoAlternarTema" aria-label="Alternar modo claro e escuro">
+            <span class="elemento-icone-tema" id="iconeTema">🌙</span>
+            <span class="elemento-rotulo-tema" id="rotuloTema">Modo Escuro</span>
+          </button>
+          <div class="bloco-usuario" id="blocoUsuarioTopo">
+            <img src="assets/avatar-bruno.png" alt="Bruno Delorence" id="avatarBarraTopo" class="bloco-usuario__avatar" />
+            <div class="bloco-usuario__informacoes">
+              <strong id="nomeBarraTopo">Bruno Delorence</strong>
+              <span id="cargoBarraTopo">Estudante • 1º Lugar (3°E)</span>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main class="conteiner-telas">
+        <section class="tela-visualizacao ativo" id="tela-estudante-loja">
+          <div class="cabecalho-topo-loja">
+            <div class="cabecalho-topo-loja__esquerda">
+              <img src="assets/logo-inaula.png" alt="IN AULA" class="logo-loja" />
+              <div>
+                <h3>Loja de Recompensas IN AULA</h3>
+                <p class="texto-suave">Troque os pontos conquistados nas aulas e atividades por prêmios!</p>
+              </div>
+            </div>
+            <div class="barra-filtros-loja">
+              <div class="caixa-busca-figma">
+                <span class="caixa-busca-figma__icone">🔍</span>
+                <input type="search" id="campoBuscaLoja" placeholder="Buscar produto..." />
+              </div>
+              <div class="pilulas-categoria-loja">
+                <button type="button" class="pilula-categoria-loja ativo" data-categoria-loja="todos">Tudo</button>
+                <button type="button" class="pilula-categoria-loja" data-categoria-loja="objeto">Objeto</button>
+                <button type="button" class="pilula-categoria-loja" data-categoria-loja="eletronicos">Eletrônicos</button>
+              </div>
+            </div>
+          </div>
+          <p class="retorno-loja" id="mensagemRetornoLoja" role="status"></p>
+          <div class="grade-produtos-loja" id="gradeProdutosLoja"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>

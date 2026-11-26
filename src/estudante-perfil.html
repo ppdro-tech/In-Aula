@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-tema="claro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IN AULA | Meu Perfil de Estudante</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-pagina-perfil="estudante" data-pagina-id="estudante-perfil">
+  <div class="aplicacao-computador" id="aplicacaoPrincipalComputador">
+    <aside class="barra-lateral" id="barraLateral">
+      <div class="barra-lateral__marca" id="botaoAbrirBoasVindas" title="Voltar para a Tela de Login">
+        <img src="assets/logo-inaula.png" alt="Logo IN AULA" class="barra-lateral__imagem-logo" />
+      </div>
+      <div class="barra-lateral__seletor-setor">
+        <span class="barra-lateral__rotulo-secao">SETOR AUTENTICADO</span>
+        <div class="pilulas-setor">
+          <div class="pilula-setor ativo" id="seloSetorEstudanteAtivo" style="grid-column: 1 / -1; cursor: default;">
+            <img src="assets/icon-reading-book.png" alt="" />
+            <span id="rotuloSetorEstudanteAtivo">Setor: Estudante</span>
+          </div>
+        </div>
+      </div>
+      <nav class="barra-lateral__navegacao" id="navegacaoEstudante" aria-label="Menu do Estudante">
+        <span class="barra-lateral__rotulo-secao">MENU DO ESTUDANTE</span>
+        <a href="estudante-inicio.html" class="item-navegacao " data-tela="estudante-inicio" style="text-decoration:none"><span class="item-navegacao__icone">🏠</span><span>Início (Painel)</span></a>
+        <a href="estudante-atividades.html" class="item-navegacao " data-tela="estudante-atividades" style="text-decoration:none"><span class="item-navegacao__icone">⭐</span><span>Atividades &amp; Níveis</span><span class="item-navegacao__selo">4</span></a>
+        <a href="estudante-loja.html" class="item-navegacao " data-tela="estudante-loja" style="text-decoration:none"><span class="item-navegacao__icone">🏪</span><span>Loja de Pontos</span></a>
+        <a href="estudante-classificacao.html" class="item-navegacao " data-tela="estudante-classificacao" style="text-decoration:none"><span class="item-navegacao__icone">📊</span><span>Ranking da Turma</span></a>
+        <a href="estudante-conversa.html" class="item-navegacao " data-tela="estudante-conversa" style="text-decoration:none"><span class="item-navegacao__icone">💬</span><span>Chat com Professora</span></a>
+        <a href="estudante-perfil.html" class="item-navegacao ativo" data-tela="estudante-perfil" style="text-decoration:none"><span class="item-navegacao__icone">👤</span><span>Meu Perfil</span></a>
+      </nav>
+      <div class="barra-lateral__rodape">
+        <button type="button" class="botao-entrada-portal" id="botaoSairBarraLateral">🔐 Trocar Conta / Tela de Login</button>
+      </div>
+    </aside>
+    <div class="area-trabalho-principal">
+      <header class="barra-topo">
+        <div class="barra-topo__esquerda">
+          <h1 class="barra-topo__titulo" id="tituloTelaAtual">Meu Perfil de Estudante</h1>
+          <p class="barra-topo__subtitulo" id="subtituloTelaAtual">Dados cadastrais e configurações da conta</p>
+        </div>
+        <div class="barra-topo__direita">
+          <div class="pilula-pontos" id="caixaPontosTopo" title="Seus pontos acumulados nas atividades"><img src="assets/icon-medal-pts.svg" alt="" class="pilula-pontos__icone" /><strong id="pontosGlobaisEstudante">2564</strong><span>pts</span></div>
+          <button type="button" class="botao-alternar-tema" id="botaoAlternarTema" aria-label="Alternar modo claro e escuro">
+            <span class="elemento-icone-tema" id="iconeTema">🌙</span>
+            <span class="elemento-rotulo-tema" id="rotuloTema">Modo Escuro</span>
+          </button>
+          <div class="bloco-usuario" id="blocoUsuarioTopo">
+            <img src="assets/avatar-bruno.png" alt="Bruno Delorence" id="avatarBarraTopo" class="bloco-usuario__avatar" />
+            <div class="bloco-usuario__informacoes">
+              <strong id="nomeBarraTopo">Bruno Delorence</strong>
+              <span id="cargoBarraTopo">Estudante • 1º Lugar (3°E)</span>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main class="conteiner-telas">
+        <section class="tela-visualizacao ativo" id="tela-estudante-perfil">
+          <div class="cartao-perfil-computador">
+            <div class="cartao-perfil-computador__esquerda">
+              <img src="assets/avatar-bruno.png" alt="Bruno Delorence" class="avatar-grande-perfil" />
+              <h3>Bruno Delorence</h3>
+              <p class="texto-suave">Turma 3°E • 1º Lugar no Ranking</p>
+              <img src="assets/logo-inaula.png" alt="IN AULA" class="mini-logo-perfil" />
+              <button type="button" class="botao-sair-figma" id="botaoSairPerfil">Sair</button>
+            </div>
+            <form class="cartao-perfil-computador__formulario" id="formularioPerfilEstudante">
+              <h3>Meus Dados Cadastrais</h3>
+              <div class="campo-perfil">
+                <label>Nome</label>
+                <div class="campo-perfil__envoltorio-entrada">
+                  <input type="text" value="Bruno Delorence" readonly />
+                  <span>🔒</span>
+                </div>
+              </div>
+              <div class="campo-perfil">
+                <label>Nome de Usuário</label>
+                <div class="campo-perfil__envoltorio-entrada">
+                  <input type="text" value="brunodelorence" />
+                </div>
+              </div>
+              <div class="campo-perfil">
+                <label>Senha</label>
+                <div class="campo-perfil__envoltorio-entrada">
+                  <input type="password" value="******" />
+                </div>
+              </div>
+              <div class="campo-perfil">
+                <label>E-mail</label>
+                <div class="campo-perfil__envoltorio-entrada">
+                  <input type="email" value="brunodelorence@gmail.com" />
+                  <span>❕</span>
+                </div>
+              </div>
+              <button type="submit" class="botao-primario-figma">Salvar Alterações</button>
+              <p class="retorno-formulario" id="retornoPerfilSalvo"></p>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>
