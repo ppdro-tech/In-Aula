@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".tela-visualizacao").forEach((secao) => {
       const ehAlvo = secao.id === `tela-${identificadorTela}`;
       secao.hidden = !ehAlvo;
-      secao.style.display = ehAlvo ? "block" : "none";
+      secao.style.display = ehAlvo ? "flex" : "none";
       secao.classList.toggle("ativo", ehAlvo);
     });
     document.querySelectorAll(".barra-lateral .item-navegacao").forEach((botao) => { botao.classList.toggle("ativo", botao.getAttribute("data-tela") === identificadorTela); });
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const etapaDesafioNivel = document.getElementById("etapaDesafioNivel");
   const definirEtapaAtividade = (etapa) => {
     const mapaEtapas = { catalogo: etapaCatalogoMaterias, trilha: etapaTrilhaMateria, niveis: etapaNiveisModulo, desafio: etapaDesafioNivel, };
-    Object.entries(mapaEtapas).forEach(([chave, elemento]) => { if (!elemento) return; const estaVisivel = chave === etapa; elemento.hidden = !estaVisivel; elemento.style.display = estaVisivel ? "block" : "none"; });
+    Object.entries(mapaEtapas).forEach(([chave, elemento]) => { if (!elemento) return; const estaVisivel = chave === etapa; elemento.hidden = !estaVisivel; elemento.style.display = estaVisivel ? (chave === "catalogo" ? "flex" : "block") : "none"; });
   };
   const mostrarCatalogoMaterias = () => definirEtapaAtividade("catalogo");
   document.querySelectorAll("[data-tela]").forEach((botao) => {
@@ -345,6 +345,48 @@ document.addEventListener("DOMContentLoaded", () => {
       questoes: [
         { tituloBanner: "Artes — Questão 1", possuiAngulo36: false, enunciado: "Quais são as três cores primárias no sistema pigmento tradicional?", alternativas: ["Verde, Roxo e Laranja", "Vermelho, Amarelo e Azul", "Branco, Preto e Cinza", "Azul, Verde e Amarelo"], indiceCorreto: 1 },
         { tituloBanner: "Artes — Questão 2", possuiAngulo36: false, enunciado: "Em que cidade brasileira ocorreu a histórica Semana de Arte Moderna de 1922?", alternativas: ["Rio de Janeiro", "Salvador", "São Paulo", "Belo Horizonte"], indiceCorreto: 2 },
+      ],
+    },
+    Filosofia: {
+      contador: "15/30", classeFundo: "fundo-fisica", htmlBlocos: `<div class="bloco bloco--frente"><span class="letra-bloco">🦉</span></div> <div class="bloco bloco--fundo"><span class="letra-bloco">💡</span></div>`,
+      modulos: [
+        { titulo: "Filosofia Antiga", descricao: "Pré-socráticos, Sócrates, Platão e Aristóteles", concluido: true, bloqueado: false },
+        { titulo: "Ética e Moral", descricao: "Virtude, liberdade e responsabilidade", concluido: false, bloqueado: false },
+        { titulo: "Teoria do Conhecimento", descricao: "Racionalismo, empirismo e ciência", concluido: false, bloqueado: false },
+        { titulo: "Filosofia Contemporânea", descricao: "Existencialismo e Escola de Frankfurt (Atividade Bloqueada)", concluido: false, bloqueado: true },
+      ],
+      niveis: [ "Nível 1: Mito e Razão", "Nível 2: Pré-Socráticos", "Nível 3: Sócrates", "Nível 4: Platão", "Nível 5: Aristóteles", "Nível 6: Filosofia Medieval", "Nível 7: Racionalismo", "Nível 8: Empirismo", "Nível 9: Iluminismo", "Nível 10: Ética de Kant", "Nível 11: Existencialismo", "Nível 12: Lógica e Ciência" ],
+      questoes: [
+        { tituloBanner: "Filosofia — Questão 1", possuiAngulo36: false, enunciado: "Qual filósofo grego é autor da célebre frase 'Só sei que nada sei'?", alternativas: ["Aristóteles", "Sócrates", "Tales de Mileto", "Epicuro"], indiceCorreto: 1 },
+        { tituloBanner: "Filosofia — Questão 2", possuiAngulo36: false, enunciado: "Quem formulou a famosa Alegoria da Caverna na obra 'A República'?", alternativas: ["Platão", "Descartes", "Kant", "Nietzsche"], indiceCorreto: 0 },
+      ],
+    },
+    Sociologia: {
+      contador: "12/30", classeFundo: "fundo-matematica", htmlBlocos: `<div class="bloco bloco--frente"><span class="letra-bloco">👥</span></div> <div class="bloco bloco--fundo"><span class="letra-bloco">🌐</span></div>`,
+      modulos: [
+        { titulo: "Clássicos da Sociologia", descricao: "Durkheim, Weber e Karl Marx", concluido: true, bloqueado: false },
+        { titulo: "Cultura e Sociedade", descricao: "Identidade, diversidade e socialização", concluido: false, bloqueado: false },
+        { titulo: "Cidadania e Direitos", descricao: "Estado, democracia e movimentos sociais", concluido: false, bloqueado: false },
+        { titulo: "Trabalho no Mundo Atual", descricao: "Tecnologia e relações de trabalho (Atividade Bloqueada)", concluido: false, bloqueado: true },
+      ],
+      niveis: [ "Nível 1: Surgimento da Sociologia", "Nível 2: Émile Durkheim", "Nível 3: Fato Social", "Nível 4: Max Weber", "Nível 5: Ação Social", "Nível 6: Karl Marx", "Nível 7: Cultura e Ideologia", "Nível 8: Estratificação Social", "Nível 9: Cidadania", "Nível 10: Movimentos Sociais", "Nível 11: Sociologia no Brasil", "Nível 12: Globalização" ],
+      questoes: [
+        { tituloBanner: "Sociologia — Questão 1", possuiAngulo36: false, enunciado: "Qual sociólogo francês definiu o conceito de 'Fato Social' como objeto da Sociologia?", alternativas: ["Max Weber", "Émile Durkheim", "Auguste Comte", "Zygmunt Bauman"], indiceCorreto: 1 },
+        { tituloBanner: "Sociologia — Questão 2", possuiAngulo36: false, enunciado: "Para Max Weber, o objeto central de estudo da Sociologia compreensiva é:", alternativas: ["A Ação Social", "O Estado Absoluto", "A Biologia Humana", "O Clima"], indiceCorreto: 0 },
+      ],
+    },
+    "Educação Física": {
+      contador: "20/30", classeFundo: "fundo-portugues", htmlBlocos: `<div class="bloco bloco--frente"><span class="letra-bloco">⚽</span></div> <div class="bloco bloco--fundo"><span class="letra-bloco">🏅</span></div>`,
+      modulos: [
+        { titulo: "Esportes Coletivos", descricao: "Futsal, voleibol, basquete e handebol", concluido: true, bloqueado: false },
+        { titulo: "Saúde e Qualidade de Vida", descricao: "Capacidades físicas, nutrição e bem-estar", concluido: false, bloqueado: false },
+        { titulo: "Jogos, Lutas e Ginástica", descricao: "Atletismo, artes marciais e movimento", concluido: false, bloqueado: false },
+        { titulo: "Fisiologia do Exercício", descricao: "Treinamento e prevenção de lesões (Atividade Bloqueada)", concluido: false, bloqueado: true },
+      ],
+      niveis: [ "Nível 1: Aquecimento e Alongamento", "Nível 2: Futsal", "Nível 3: Voleibol", "Nível 4: Basquetebol", "Nível 5: Handebol", "Nível 6: Atletismo", "Nível 7: Ginástica", "Nível 8: Resistência Aeróbica", "Nível 9: Força e Flexibilidade", "Nível 10: Esportes Olímpicos", "Nível 11: Dança e Ritmo", "Nível 12: Saúde e Nutrição" ],
+      questoes: [
+        { tituloBanner: "Educação Física — Questão 1", possuiAngulo36: false, enunciado: "Quantos jogadores titulares compõem uma equipe de Voleibol em quadra?", alternativas: ["5 jogadores", "6 jogadores", "7 jogadores", "11 jogadores"], indiceCorreto: 1 },
+        { tituloBanner: "Educação Física — Questão 2", possuiAngulo36: false, enunciado: "Qual capacidade física está diretamente relacionada à amplitude de movimento das articulações?", alternativas: ["Velocidade", "Flexibilidade", "Equilíbrio", "Agilidade"], indiceCorreto: 1 },
       ],
     },
   };
