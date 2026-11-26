@@ -573,7 +573,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   const listaConversas = [
     {
-      id: "bruno", nomeEstudante: "Bruno Delorence", topico: "Atividade de Operações", horario: "2 min", avatar: "assets/avatar-bruno.png", naoLida: true, mensagens: [
+      id: "bruno", nomeEstudante: "Bruno Delorence", topico: "Atividade de Operações", horario: "2 min", avatar: "assets/avatar-bruno.png", naoLida: false, mensagens: [
         { remetente: "estudante", texto: "Professora, como faço a soma de dois números?" }, { remetente: "professora", texto: "Basta pegar a quantidade e contar mais a outra!!" }, { remetente: "estudante", texto: "Verdade! Havia esquecido! Obrigado!!! :D" }, { remetente: "professora", texto: "Por nada, qualquer outra dúvida é só chamar." }, { remetente: "estudante", texto: "Tá bom professora, você é a melhor!" }, { remetente: "professora", texto: "Muito obrigada! Você também é um ótimo aluno." }, ], }, {
       id: "davi", nomeEstudante: "Davi Almeida", topico: "Atividade de Operações", horario: "5 min", avatar: "assets/avatar-david.png", naoLida: true, mensagens: [ { remetente: "estudante", texto: "Professora Tati, fiquei com dúvida na soma dos ângulos de 36°." }, ], }, {
       id: "teresa", nomeEstudante: "Teresa Souza", topico: "Atividade de Operações", horario: "8 min", avatar: "assets/avatar-theresa.png", naoLida: true, mensagens: [ { remetente: "estudante", texto: "Posso entregar a lista de revisão até amanhã?" }, ], }, {
@@ -599,15 +599,26 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!listaEntradaProfessora || !mensagensConversaProfessora) return;
     const apenasNaoRespondidas = caixaFiltrarNaoRespondidas?.checked;
     const totalNaoLidas = listaConversas.filter((conversa) => conversa.naoLida).length;
-    if (seloNaoLidasProfessora) { seloNaoLidasProfessora.textContent = String(totalNaoLidas); }
+    if (seloNaoLidasProfessora) {
+      seloNaoLidasProfessora.textContent = String(totalNaoLidas);
+      seloNaoLidasProfessora.hidden = totalNaoLidas === 0;
+      seloNaoLidasProfessora.style.display = totalNaoLidas === 0 ? "none" : "inline-block";
+    }
     const conversasVisiveis = listaConversas.filter((conversa) =>
-      !apenasNaoRespondidas ? true : conversa.naoLida
+      !apenasNaoRespondidas ? true : conversa.naoLida || conversa.id === idConversaAtiva
     );
     listaEntradaProfessora.innerHTML = conversasVisiveis.map(
         (conversa) => `<div class="item-entrada ${conversa.naoLida ? "nao-lida" : ""} ${conversa.id === idConversaAtiva ? "ativo" : ""}" data-id-conversa="${conversa.id}"> ${conversa.naoLida ? '<span class="ponto-entrada"></span>' : ""} <img src="${conversa.avatar}" alt="${conversa.nomeEstudante}" class="avatar-entrada" /> <div class="informacoes-entrada"> <strong>${conversa.nomeEstudante}</strong> <span>${conversa.topico}</span> </div> <span class="horario-entrada">${conversa.horario}</span> </div>`
       ).join("");
     listaEntradaProfessora.querySelectorAll(".item-entrada").forEach((item) => {
-      item.addEventListener("click", () => { idConversaAtiva = item.getAttribute("data-id-conversa") || "bruno"; renderizarConversaProfessora(); });
+      item.addEventListener("click", () => {
+        idConversaAtiva = item.getAttribute("data-id-conversa") || "bruno";
+        const conversaClicada = listaConversas.find((conversa) => conversa.id === idConversaAtiva);
+        if (conversaClicada) {
+          conversaClicada.naoLida = false;
+        }
+        renderizarConversaProfessora();
+      });
     });
     const conversaAtiva = listaConversas.find((conversa) => conversa.id === idConversaAtiva) || listaConversas[0];
     if (conversaAtiva) {
