@@ -222,36 +222,135 @@ document.addEventListener("DOMContentLoaded", () => {
   const cartaoDesafioConcluido = document.getElementById("cartaoDesafioConcluido");
   const curriculoMaterias = {
     Matemática: {
-      contador: "03/30", classeFundo: "fundo-matematica", htmlBlocos: `<div class="bloco bloco--frente"><img src="assets/icon-math-plus.svg" alt="" /></div> <div class="bloco bloco--fundo"><img src="assets/icon-math-percent.svg" alt="" /></div>`, modulos: [
-        { titulo: "Operações", descricao: "Aprenda as operações básicas", concluido: true, bloqueado: false }, { titulo: "Equações de 1º grau", descricao: "Aprenda a resolver equações", concluido: false, bloqueado: false }, { titulo: "Equações de 2º grau", descricao: "Aprenda equações complexas", concluido: false, bloqueado: false }, { titulo: "Grupos numéricos", descricao: "Aprenda conjuntos (Atividade Bloqueada)", concluido: false, bloqueado: true }, ], niveis: [
-        "Nível 1: Soma", "Nível 2: Subtração", "Nível 3: Divisão", "Nível 4: Multiplicação", "Nível 5: Radiciação", "Nível 6: Potenciação", "Nível 7: Fração", "Nível 8: Logaritmação", "Nível 9: Soma de raiz", "Nível 10: Divisão de raiz", "Nível 11: Raiz cúbica", "Nível 12: Raiz quarta", ], questoes: [
-        { tituloBanner: "Soma", possuiAngulo36: true, enunciado: "Some o ângulo por eles mesmo:", alternativas: ["45º", "55º", "71º", "72º"], indiceCorreto: 3, }, {
-          tituloBanner: "Soma — Questão 2", possuiAngulo9042: true, enunciado: "1- Dados os ângulos abaixo, 90º e 42º, some-os como apresentado em sala:", alternativas: ["132º", "133º", "134º", "135º"], indiceCorreto: 0, }, ], }, Português: {
-      contador: "0/30", classeFundo: "fundo-portugues", htmlBlocos: `<div class="bloco bloco--frente"><img src="assets/icon-port-a.svg" alt="" /></div> <div class="bloco bloco--fundo"><img src="assets/icon-port-j.svg" alt="" /></div>`, modulos: [
-        { titulo: "Interpretação Textual", descricao: "Compreensão de textos e artigos", concluido: false, bloqueado: false }, { titulo: "Classes Gramaticais", descricao: "Substantivos, verbos e adjetivos", concluido: false, bloqueado: false }, { titulo: "Redação Dissertativa", descricao: "Estrutura e argumentação", concluido: false, bloqueado: true }, ], niveis: ["Nível 1: Ortografia", "Nível 2: Acentuação", "Nível 3: Pontuação"], questoes: [
-        {
-          tituloBanner: "Português", possuiAngulo36: false, enunciado: "Qual das palavras abaixo está grafada corretamente segundo a norma-padrão?", alternativas: ["Exceção", "Excessão", "Eceção", "Exceon"], indiceCorreto: 0, }, ], }, Biologia: {
-      contador: "07/30", classeFundo: "fundo-biologia", htmlBlocos: `<div class="bloco bloco--frente"><img src="assets/icon-bio-lungs.svg" alt="" /></div> <div class="bloco bloco--fundo"><img src="assets/icon-bio-heart.svg" alt="" /></div>`, modulos: [
-        { titulo: "Fisiologia Humana", descricao: "Sistemas respiratório e circulatório", concluido: true, bloqueado: false }, { titulo: "Citologia", descricao: "Estrutura das células e organelas", concluido: false, bloqueado: false }, { titulo: "Genética Básica", descricao: "Leis de Mendel e DNA", concluido: false, bloqueado: true }, ], niveis: ["Nível 1: Sistema Respiratório", "Nível 2: Sistema Cardíaco", "Nível 3: Células"], questoes: [
-        {
-          tituloBanner: "Biologia", possuiAngulo36: false, enunciado: "Qual organela celular é responsável pela respiração celular e produção de ATP?", alternativas: ["Complexo de Golgi", "Mitocôndria", "Lisossomo", "Ribossomo"], indiceCorreto: 1, }, ], }, Química: {
-      contador: "16/30", classeFundo: "fundo-quimica", htmlBlocos: `<div class="bloco bloco--frente"><img src="assets/icon-chem-drop.svg" alt="" /></div> <div class="bloco bloco--fundo"><img src="assets/icon-chem-hazard.svg" alt="" /></div>`, modulos: [
-        { titulo: "Tabela Periódica", descricao: "Elementos, famílias e períodos", concluido: true, bloqueado: false }, { titulo: "Ligações Químicas", descricao: "Iônica, covalente e metálica", concluido: false, bloqueado: false }, ], niveis: ["Nível 1: Átomos", "Nível 2: Tabela Periódica", "Nível 3: Reações"], questoes: [
-        {
-          tituloBanner: "Química", possuiAngulo36: false, enunciado: "Qual é o símbolo químico do elemento Oxigênio e seu número atômico?", alternativas: ["O (Z = 8)", "Ox (Z = 6)", "Og (Z = 16)", "O (Z = 12)"], indiceCorreto: 0, }, ], }, Física: {
-      contador: "18/30", classeFundo: "fundo-fisica", htmlBlocos: `<div class="bloco bloco--frente"><img src="assets/icon-phys-atom.svg" alt="" /></div> <div class="bloco bloco--fundo"><img src="assets/icon-phys-energy.svg" alt="" /></div>`, modulos: [ { titulo: "Cinemática", descricao: "Velocidade média e MRU", concluido: true, bloqueado: false }, { titulo: "Leis de Newton", descricao: "Dinâmica e forças", concluido: false, bloqueado: false }, ], niveis: ["Nível 1: Velocidade Média", "Nível 2: Aceleração", "Nível 3: Força Resultante"], questoes: [
-        {
-          tituloBanner: "Física", possuiAngulo36: false, enunciado: "Um móvel percorre 100 metros em 10 segundos. Qual é a sua velocidade média?", alternativas: ["5 m/s", "10 m/s", "20 m/s", "100 m/s"], indiceCorreto: 1, }, ], }, Inglês: {
-      contador: "22/30", classeFundo: "fundo-matematica", htmlBlocos: `<div class="bloco bloco--frente"><span class="letra-bloco">EN</span></div> <div class="bloco bloco--fundo"><img src="assets/icon-eng-lang.svg" alt="" /></div>`, modulos: [
-        { titulo: "Gramática Básica", descricao: "Verbo To Be e Presente Simples", concluido: true, bloqueado: false }, { titulo: "Compreensão de Leitura", descricao: "Leitura e vocabulário em inglês", concluido: false, bloqueado: false }, ], niveis: ["Nível 1: Verbo To Be", "Nível 2: Presente Simples", "Nível 3: Vocabulário"], questoes: [
-        {
-          tituloBanner: "Inglês", possuiAngulo36: false, enunciado: "Complete a frase corretamente: 'She ___ a dedicated student at In Aula.'", alternativas: ["am", "are", "is", "be"], indiceCorreto: 2, }, ], }, História: {
-      contador: "09/30", classeFundo: "fundo-portugues", htmlBlocos: `<div class="bloco bloco--frente"><img src="assets/icon-hist-temple.svg" alt="" /></div> <div class="bloco bloco--fundo"><span class="letra-bloco">🏛️</span></div>`, modulos: [
-        { titulo: "Idade Antiga", descricao: "Grécia, Roma e Império Bizantino", concluido: true, bloqueado: false }, { titulo: "História do Brasil", descricao: "Período Colonial e República", concluido: false, bloqueado: false }, ], niveis: ["Nível 1: Antiguidade", "Nível 2: Idade Média", "Nível 3: Brasil República"], questoes: [
-        {
-          tituloBanner: "História", possuiAngulo36: false, enunciado: "Em que ano ocorreu a Proclamação da República no Brasil?", alternativas: ["1822", "1888", "1889", "1930"], indiceCorreto: 2, }, ], }, };
+      contador: "03/30", classeFundo: "fundo-matematica", htmlBlocos: `<div class="bloco bloco--frente"><img src="assets/icon-math-plus.svg" alt="" /></div> <div class="bloco bloco--fundo"><img src="assets/icon-math-percent.svg" alt="" /></div>`,
+      modulos: [
+        { titulo: "Operações", descricao: "Aprenda as operações básicas", concluido: true, bloqueado: false },
+        { titulo: "Equações de 1º grau", descricao: "Aprenda a resolver equações", concluido: false, bloqueado: false },
+        { titulo: "Equações de 2º grau", descricao: "Aprenda equações complexas", concluido: false, bloqueado: false },
+        { titulo: "Grupos numéricos", descricao: "Aprenda conjuntos (Atividade Bloqueada)", concluido: false, bloqueado: true },
+      ],
+      niveis: [ "Nível 1: Soma", "Nível 2: Subtração", "Nível 3: Divisão", "Nível 4: Multiplicação", "Nível 5: Radiciação", "Nível 6: Potenciação", "Nível 7: Fração", "Nível 8: Logaritmação", "Nível 9: Soma de raiz", "Nível 10: Divisão de raiz", "Nível 11: Raiz cúbica", "Nível 12: Raiz quarta" ],
+      questoes: [
+        { tituloBanner: "Soma", possuiAngulo36: true, enunciado: "Some o ângulo por eles mesmo:", alternativas: ["45º", "55º", "71º", "72º"], indiceCorreto: 3 },
+        { tituloBanner: "Soma — Questão 2", possuiAngulo9042: true, enunciado: "1- Dados os ângulos abaixo, 90º e 42º, some-os como apresentado em sala:", alternativas: ["132º", "133º", "134º", "135º"], indiceCorreto: 0 },
+      ],
+    },
+    Português: {
+      contador: "0/30", classeFundo: "fundo-portugues", htmlBlocos: `<div class="bloco bloco--frente"><img src="assets/icon-port-a.svg" alt="" /></div> <div class="bloco bloco--fundo"><img src="assets/icon-port-j.svg" alt="" /></div>`,
+      modulos: [
+        { titulo: "Interpretação Textual", descricao: "Compreensão de textos e artigos", concluido: true, bloqueado: false },
+        { titulo: "Classes Gramaticais", descricao: "Substantivos, verbos e adjetivos", concluido: false, bloqueado: false },
+        { titulo: "Sintaxe e Período", descricao: "Análise sintática e orações", concluido: false, bloqueado: false },
+        { titulo: "Redação Dissertativa", descricao: "Estrutura e argumentação (Atividade Bloqueada)", concluido: false, bloqueado: true },
+      ],
+      niveis: [ "Nível 1: Ortografia", "Nível 2: Acentuação", "Nível 3: Pontuação", "Nível 4: Substantivos", "Nível 5: Verbos", "Nível 6: Adjetivos", "Nível 7: Pronomes", "Nível 8: Concordância", "Nível 9: Regência", "Nível 10: Crase", "Nível 11: Figuras de Linguagem", "Nível 12: Coesão Textual" ],
+      questoes: [
+        { tituloBanner: "Português — Questão 1", possuiAngulo36: false, enunciado: "Qual das palavras abaixo está grafada corretamente segundo a norma-padrão?", alternativas: ["Exceção", "Excessão", "Eceção", "Exceon"], indiceCorreto: 0 },
+        { tituloBanner: "Português — Questão 2", possuiAngulo36: false, enunciado: "Assinale a alternativa em que o uso da crase está correto:", alternativas: ["Fui à escola cedo.", "Comprei à vista o livro.", "Ambas estão corretas.", "Nenhuma está correta."], indiceCorreto: 2 },
+      ],
+    },
+    Biologia: {
+      contador: "07/30", classeFundo: "fundo-biologia", htmlBlocos: `<div class="bloco bloco--frente"><img src="assets/icon-bio-lungs.svg" alt="" /></div> <div class="bloco bloco--fundo"><img src="assets/icon-bio-heart.svg" alt="" /></div>`,
+      modulos: [
+        { titulo: "Fisiologia Humana", descricao: "Sistemas respiratório e circulatório", concluido: true, bloqueado: false },
+        { titulo: "Citologia", descricao: "Estrutura das células e organelas", concluido: false, bloqueado: false },
+        { titulo: "Ecologia e Biomas", descricao: "Cadeias alimentares e ecossistemas", concluido: false, bloqueado: false },
+        { titulo: "Genética Básica", descricao: "Leis de Mendel e DNA (Atividade Bloqueada)", concluido: false, bloqueado: true },
+      ],
+      niveis: [ "Nível 1: Sistema Respiratório", "Nível 2: Sistema Cardíaco", "Nível 3: Células", "Nível 4: Mitocôndria e ATP", "Nível 5: Fotossíntese", "Nível 6: Divisão Celular", "Nível 7: DNA e RNA", "Nível 8: Sistema Nervoso", "Nível 9: Sistema Digestório", "Nível 10: Ecologia", "Nível 11: Evolução", "Nível 12: Imunologia" ],
+      questoes: [
+        { tituloBanner: "Biologia — Questão 1", possuiAngulo36: false, enunciado: "Qual organela celular é responsável pela respiração celular e produção de ATP?", alternativas: ["Complexo de Golgi", "Mitocôndria", "Lisossomo", "Ribossomo"], indiceCorreto: 1 },
+        { tituloBanner: "Biologia — Questão 2", possuiAngulo36: false, enunciado: "Em qual estrutura dos pulmões ocorre a troca gasosa (hematose)?", alternativas: ["Brônquios", "Traqueia", "Alvéolos pulmonares", "Laringe"], indiceCorreto: 2 },
+      ],
+    },
+    Química: {
+      contador: "16/30", classeFundo: "fundo-quimica", htmlBlocos: `<div class="bloco bloco--frente"><img src="assets/icon-chem-drop.svg" alt="" /></div> <div class="bloco bloco--fundo"><img src="assets/icon-chem-hazard.svg" alt="" /></div>`,
+      modulos: [
+        { titulo: "Tabela Periódica", descricao: "Elementos, famílias e períodos", concluido: true, bloqueado: false },
+        { titulo: "Ligações Químicas", descricao: "Iônica, covalente e metálica", concluido: false, bloqueado: false },
+        { titulo: "Funções Inorgânicas", descricao: "Ácidos, bases, sais e óxidos", concluido: false, bloqueado: false },
+        { titulo: "Estequiometria", descricao: "Cálculos químicos e mol (Atividade Bloqueada)", concluido: false, bloqueado: true },
+      ],
+      niveis: [ "Nível 1: Átomos", "Nível 2: Tabela Periódica", "Nível 3: Reações", "Nível 4: Ligação Iônica", "Nível 5: Ligação Covalente", "Nível 6: Ácidos e Bases", "Nível 7: Sais e Óxidos", "Nível 8: Balanceamento", "Nível 9: Massa Molar", "Nível 10: Soluções", "Nível 11: Termoquímica", "Nível 12: Eletroquímica" ],
+      questoes: [
+        { tituloBanner: "Química — Questão 1", possuiAngulo36: false, enunciado: "Qual é o símbolo químico do elemento Oxigênio e seu número atômico?", alternativas: ["O (Z = 8)", "Ox (Z = 6)", "Og (Z = 16)", "O (Z = 12)"], indiceCorreto: 0 },
+        { tituloBanner: "Química — Questão 2", possuiAngulo36: false, enunciado: "Qual é o valor de pH característico de uma solução ácida a 25 °C?", alternativas: ["pH = 7", "pH < 7", "pH > 7", "pH = 14"], indiceCorreto: 1 },
+      ],
+    },
+    Física: {
+      contador: "18/30", classeFundo: "fundo-fisica", htmlBlocos: `<div class="bloco bloco--frente"><img src="assets/icon-phys-atom.svg" alt="" /></div> <div class="bloco bloco--fundo"><img src="assets/icon-phys-energy.svg" alt="" /></div>`,
+      modulos: [
+        { titulo: "Cinemática", descricao: "Velocidade média, MRU e MRUV", concluido: true, bloqueado: false },
+        { titulo: "Leis de Newton", descricao: "Dinâmica, inércia e forças", concluido: false, bloqueado: false },
+        { titulo: "Trabalho e Energia", descricao: "Energia cinética e potencial", concluido: false, bloqueado: false },
+        { titulo: "Eletrodinâmica", descricao: "Corrente, tensão e resistores (Atividade Bloqueada)", concluido: false, bloqueado: true },
+      ],
+      niveis: [ "Nível 1: Velocidade Média", "Nível 2: Aceleração", "Nível 3: Força Resultante", "Nível 4: 1ª Lei de Newton", "Nível 5: 2ª Lei de Newton", "Nível 6: 3ª Lei de Newton", "Nível 7: Energia Cinética", "Nível 8: Energia Potencial", "Nível 9: Calorimetria", "Nível 10: Óptica", "Nível 11: Ondulatória", "Nível 12: Lei de Ohm" ],
+      questoes: [
+        { tituloBanner: "Física — Questão 1", possuiAngulo36: false, enunciado: "Um móvel percorre 100 metros em 10 segundos. Qual é a sua velocidade média?", alternativas: ["5 m/s", "10 m/s", "20 m/s", "100 m/s"], indiceCorreto: 1 },
+        { tituloBanner: "Física — Questão 2", possuiAngulo36: false, enunciado: "Segundo a 2ª Lei de Newton (F = m · a), qual a força resultante em um corpo de 4 kg com aceleração de 3 m/s²?", alternativas: ["7 N", "12 N", "1,3 N", "24 N"], indiceCorreto: 1 },
+      ],
+    },
+    Inglês: {
+      contador: "22/30", classeFundo: "fundo-matematica", htmlBlocos: `<div class="bloco bloco--frente"><span class="letra-bloco">EN</span></div> <div class="bloco bloco--fundo"><img src="assets/icon-eng-lang.svg" alt="" /></div>`,
+      modulos: [
+        { titulo: "Gramática Básica", descricao: "Verbo To Be e Presente Simples", concluido: true, bloqueado: false },
+        { titulo: "Compreensão de Leitura", descricao: "Leitura e interpretação em inglês", concluido: false, bloqueado: false },
+        { titulo: "Tempos Verbais", descricao: "Passado Simples e Futuro", concluido: false, bloqueado: false },
+        { titulo: "Conversação Avançada", descricao: "Expressões idiomáticas (Atividade Bloqueada)", concluido: false, bloqueado: true },
+      ],
+      niveis: [ "Nível 1: Verbo To Be", "Nível 2: Presente Simples", "Nível 3: Vocabulário", "Nível 4: Pronomes", "Nível 5: Presente Contínuo", "Nível 6: Passado Simples", "Nível 7: Verbos Irregulares", "Nível 8: Futuro com Will", "Nível 9: Verbos Modais", "Nível 10: Preposições", "Nível 11: Comparativos", "Nível 12: Interpretação" ],
+      questoes: [
+        { tituloBanner: "Inglês — Questão 1", possuiAngulo36: false, enunciado: "Complete a frase corretamente: 'She ___ a dedicated student at In Aula.'", alternativas: ["am", "are", "is", "be"], indiceCorreto: 2 },
+        { tituloBanner: "Inglês — Questão 2", possuiAngulo36: false, enunciado: "Qual é o passado simples do verbo irregular 'go' (ir)?", alternativas: ["goed", "went", "gone", "going"], indiceCorreto: 1 },
+      ],
+    },
+    História: {
+      contador: "09/30", classeFundo: "fundo-portugues", htmlBlocos: `<div class="bloco bloco--frente"><img src="assets/icon-hist-temple.svg" alt="" /></div> <div class="bloco bloco--fundo"><span class="letra-bloco">🏛️</span></div>`,
+      modulos: [
+        { titulo: "Idade Antiga", descricao: "Grécia, Roma e Império Bizantino", concluido: true, bloqueado: false },
+        { titulo: "Idade Média e Moderna", descricao: "Feudalismo, Renascimento e Grandes Navegações", concluido: false, bloqueado: false },
+        { titulo: "História do Brasil", descricao: "Período Colonial, Império e República", concluido: false, bloqueado: false },
+        { titulo: "Século XX e Contemporânea", descricao: "Conflitos mundiais e globalização (Atividade Bloqueada)", concluido: false, bloqueado: true },
+      ],
+      niveis: [ "Nível 1: Antiguidade", "Nível 2: Grécia Antiga", "Nível 3: Império Romano", "Nível 4: Idade Média", "Nível 5: Renascimento", "Nível 6: Grandes Navegações", "Nível 7: Brasil Colônia", "Nível 8: Independência", "Nível 9: Brasil Império", "Nível 10: Brasil República", "Nível 11: Era Vargas", "Nível 12: Redemocratização" ],
+      questoes: [
+        { tituloBanner: "História — Questão 1", possuiAngulo36: false, enunciado: "Em que ano ocorreu a Proclamação da República no Brasil?", alternativas: ["1822", "1888", "1889", "1930"], indiceCorreto: 2 },
+        { tituloBanner: "História — Questão 2", possuiAngulo36: false, enunciado: "Qual civilização antiga ficou conhecida pelo desenvolvimento da democracia em Atenas?", alternativas: ["Egípcia", "Grega", "Fenícia", "Persa"], indiceCorreto: 1 },
+      ],
+    },
+    Geografia: {
+      contador: "14/30", classeFundo: "fundo-biologia", htmlBlocos: `<div class="bloco bloco--frente"><span class="letra-bloco">🌍</span></div> <div class="bloco bloco--fundo"><span class="letra-bloco">🧭</span></div>`,
+      modulos: [
+        { titulo: "Cartografia e Clima", descricao: "Coordenadas, fusos horários e climas", concluido: true, bloqueado: false },
+        { titulo: "Geografia do Brasil", descricao: "Regiões, relevo, hidrografia e biomas", concluido: false, bloqueado: false },
+        { titulo: "Geopolítica e Urbanização", descricao: "Globalização, demografia e blocos econômicos", concluido: false, bloqueado: false },
+        { titulo: "Meio Ambiente e Energia", descricao: "Fontes renováveis e sustentabilidade (Atividade Bloqueada)", concluido: false, bloqueado: true },
+      ],
+      niveis: [ "Nível 1: Cartografia", "Nível 2: Fusos Horários", "Nível 3: Relevo Brasileiro", "Nível 4: Clima e Vegetação", "Nível 5: Hidrografia", "Nível 6: Biomas do Brasil", "Nível 7: Urbanização", "Nível 8: Demografia", "Nível 9: Industrialização", "Nível 10: Agropecuária", "Nível 11: Fontes de Energia", "Nível 12: Geopolítica Mundial" ],
+      questoes: [
+        { tituloBanner: "Geografia — Questão 1", possuiAngulo36: false, enunciado: "Qual é o maior bioma brasileiro em extensão territorial?", alternativas: ["Cerrado", "Mata Atlântica", "Amazônia", "Caatinga"], indiceCorreto: 2 },
+        { tituloBanner: "Geografia — Questão 2", possuiAngulo36: false, enunciado: "Como se chama a linha imaginária que divide a Terra nos hemisférios Norte e Sul?", alternativas: ["Meridiano de Greenwich", "Linha do Equador", "Trópico de Capricórnio", "Trópico de Câncer"], indiceCorreto: 1 },
+      ],
+    },
+    Artes: {
+      contador: "11/30", classeFundo: "fundo-quimica", htmlBlocos: `<div class="bloco bloco--frente"><span class="letra-bloco">🎨</span></div> <div class="bloco bloco--fundo"><span class="letra-bloco">🎭</span></div>`,
+      modulos: [
+        { titulo: "História da Arte", descricao: "Da arte rupestre ao Renascimento", concluido: true, bloqueado: false },
+        { titulo: "Arte Moderna no Brasil", descricao: "Semana de Arte Moderna de 1922 e vanguardas", concluido: false, bloqueado: false },
+        { titulo: "Cores, Formas e Música", descricao: "Teoria das cores, expressão visual e ritmos", concluido: false, bloqueado: false },
+        { titulo: "Arte Contemporânea", descricao: "Instalações, fotografia e cinema (Atividade Bloqueada)", concluido: false, bloqueado: true },
+      ],
+      niveis: [ "Nível 1: Arte Rupestre", "Nível 2: Arte Clássica", "Nível 3: Renascimento", "Nível 4: Barroco no Brasil", "Nível 5: Impressionismo", "Nível 6: Expressionismo", "Nível 7: Cubismo", "Nível 8: Semana de 1922", "Nível 9: Teoria das Cores", "Nível 10: Teatro e Dança", "Nível 11: Música Brasileira", "Nível 12: Fotografia e Cinema" ],
+      questoes: [
+        { tituloBanner: "Artes — Questão 1", possuiAngulo36: false, enunciado: "Quais são as três cores primárias no sistema pigmento tradicional?", alternativas: ["Verde, Roxo e Laranja", "Vermelho, Amarelo e Azul", "Branco, Preto e Cinza", "Azul, Verde e Amarelo"], indiceCorreto: 1 },
+        { tituloBanner: "Artes — Questão 2", possuiAngulo36: false, enunciado: "Em que cidade brasileira ocorreu a histórica Semana de Arte Moderna de 1922?", alternativas: ["Rio de Janeiro", "Salvador", "São Paulo", "Belo Horizonte"], indiceCorreto: 2 },
+      ],
+    },
+  };
   let chaveMateriaAtual = "Matemática";
   let tituloModuloAtual = "Operações";
+  let rotuloNivelAtual = "Nível 1: Soma";
   let indiceQuestaoAtual = 0;
   const abrirTrilhaMateria = (nomeMateria) => {
     chaveMateriaAtual = curriculoMaterias[nomeMateria] ? nomeMateria : "Matemática";
@@ -300,6 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   const abrirDesafioNivel = (rotuloNivel, indiceQuestao = 0) => {
     const dadosMateria = curriculoMaterias[chaveMateriaAtual];
+    rotuloNivelAtual = rotuloNivel;
     indiceQuestaoAtual = indiceQuestao;
     const listaQuestoes = dadosMateria.questoes;
     const questaoAtual = listaQuestoes[indiceQuestaoAtual] || listaQuestoes[0];
@@ -361,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("botaoVoltarTrilha")?.addEventListener("click", () => { definirEtapaAtividade("trilha"); });
   document.getElementById("botaoVoltarNiveis")?.addEventListener("click", () => { definirEtapaAtividade("niveis"); });
   document.getElementById("botaoConcluirVoltarNiveis")?.addEventListener("click", () => { definirEtapaAtividade("niveis"); });
-  document.getElementById("botaoRevisarDesafio")?.addEventListener("click", () => { abrirDesafioNivel("Nível 1: Soma", 0); });
+  document.getElementById("botaoRevisarDesafio")?.addEventListener("click", () => { abrirDesafioNivel(rotuloNivelAtual, 0); });
   document.querySelectorAll("[data-materia], [data-abrir-materia]").forEach((cartao) => {
     cartao.addEventListener("click", () => { const materiaSelecionada = cartao.getAttribute("data-materia") || cartao.getAttribute("data-abrir-materia") || "Matemática"; abrirTrilhaMateria(materiaSelecionada); });
   });
