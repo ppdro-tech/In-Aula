@@ -11,6 +11,12 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <!-- ==========================================================================
+       TELA INICIAL DE ACESSO (LOGIN, CRIAR CONTA E RECUPERAR SENHA)
+       Explicação: É a primeira tela que aparece. Ao lado esquerdo a pessoa
+       escolhe quem ela é (Responsável, Estudante ou Instituição/Professora)
+       e ao lado direito digita o e-mail e a senha para entrar.
+       ========================================================================== -->
   <div class="sobreposicao-tela-cheia-acesso" id="sobreposicaoTelaCheiaAcesso">
     <div class="barra-topo-acesso">
       <div class="barra-topo-login__marca">
@@ -21,6 +27,7 @@
       <div class="barra-topo-login__acoes"><button type="button" class="botao-alternar-tema" id="alternarTemaAcesso"> <span class="elemento-icone-tema">🌙</span> <span class="elemento-rotulo-tema">Modo Escuro</span></button></div>
     </div>
     <div class="vitrine-computador-acesso">
+      <!-- LADO ESQUERDO DO ACESSO: Botões azuis para escolher o tipo de perfil -->
       <section class="painel-esquerdo-acesso" aria-label="Seleção de tipo de perfil">
         <div class="caixa-logo-acesso">
           <img src="assets/logo-inaula.png" alt="Logo IN AULA" class="imagem-logo-acesso" />
@@ -37,6 +44,7 @@
         </div>
         <div class="decoracao-barra-inferior-acesso"></div>
       </section>
+      <!-- LADO DIREITO DO ACESSO: Formulários para Entrar, Criar Conta ou Recuperar Senha -->
       <section class="painel-direito-acesso" aria-label="Formulário de autenticação">
         <div class="topo-cartao-acesso">
           <button type="button" class="seta-voltar-acesso" id="botaoSetaVoltarAutenticacao" title="Voltar para Acesso">
@@ -53,6 +61,7 @@
           <button type="button" class="aba-autenticacao" data-aba-autenticacao="cadastro">Criar Conta</button>
           <button type="button" class="aba-autenticacao" data-aba-autenticacao="recuperar">Esqueceu a Senha</button>
         </div>
+        <!-- FORMULÁRIO 1: Entrar com usuário e senha -->
         <form class="formulario-autenticacao-sistema" id="formularioAcesso">
           <h2 class="titulo-autenticacao-sistema">Bem-Vindo!</h2>
           <div class="campo-sistema">
@@ -80,6 +89,7 @@
           <div class="troca-inferior-sistema"><span>Crie uma Conta</span> <button type="button" class="atalho-troca-sistema" data-trocar-autenticacao="cadastro">Inscreva-se</button></div>
           <div class="decoracao-barra-inferior-acesso"></div>
         </form>
+        <!-- FORMULÁRIO 2: Criar uma nova conta (aparece ao clicar na aba Criar Conta) -->
         <form class="formulario-autenticacao-sistema" id="formularioCadastro" hidden>
           <h2 class="titulo-autenticacao-sistema">Crie uma conta!</h2>
           <div class="campo-sistema">
@@ -124,6 +134,7 @@
           <div class="troca-inferior-sistema"><span>Já tenho um conta</span> <button type="button" class="atalho-troca-sistema" data-trocar-autenticacao="entrar">Entrar</button></div>
           <div class="decoracao-barra-inferior-acesso"></div>
         </form>
+        <!-- FORMULÁRIO 3: Recuperar senha por e-mail (aparece ao clicar em Esqueceu a Senha) -->
         <form class="formulario-autenticacao-sistema" id="formularioRecuperacao" hidden>
           <h2 class="titulo-autenticacao-sistema">Esqueceu sua<br />Senha?</h2>
           <div class="campo-sistema">
@@ -142,7 +153,13 @@
       </section>
     </div>
   </div>
+  <!-- ==========================================================================
+       PAINEL PRINCIPAL DO SISTEMA (APARECE DEPOIS QUE A PESSOA ENTRA)
+       Explicação: Divide a tela em duas partes: o Menu Lateral à esquerda
+       e a Área Principal à direita onde cada página do sistema é exibida.
+       ========================================================================== -->
   <div class="aplicacao-computador" id="aplicacaoPrincipalComputador" hidden>
+    <!-- MENU LATERAL ESQUERDO: Mostra a logo, o setor logado e os botões de navegação -->
     <aside class="barra-lateral" id="barraLateral">
       <div class="barra-lateral__marca" id="botaoAbrirBoasVindas" title="Voltar para a Tela de Acesso">
         <img src="assets/logo-inaula.png" alt="Logo IN AULA" class="barra-lateral__imagem-logo" />
@@ -157,6 +174,7 @@
           <div class="pilula-setor ativo" id="seloSetorProfessoraAtivo" hidden style="grid-column: 1 / -1; cursor: default;"><img src="assets/icon-school.png" alt="" /> <span>Setor: Instituição (Docente)</span></div>
         </div>
       </div>
+      <!-- Botões do Menu quando quem entrou foi um ESTUDANTE ou RESPONSÁVEL -->
       <nav class="barra-lateral__navegacao" id="navegacaoEstudante" aria-label="Menu do Estudante">
         <span class="barra-lateral__rotulo-secao">MENU DO ESTUDANTE</span>
         <button type="button" class="item-navegacao ativo" data-tela="estudante-inicio">
@@ -178,6 +196,7 @@
 <span class="item-navegacao__icone">👤</span>
  <span>Meu Perfil</span></button>
       </nav>
+      <!-- Botões do Menu quando quem entrou foi a PROFESSORA (Setor Instituição) -->
       <nav class="barra-lateral__navegacao" id="navegacaoProfessora" aria-label="Menu do Professor" hidden>
         <span class="barra-lateral__rotulo-secao">MENU DO PROFESSOR</span>
         <button type="button" class="item-navegacao ativo" data-tela="professora-inicio">
@@ -197,6 +216,7 @@
       <div class="barra-lateral__rodape"><button type="button" class="botao-entrada-portal" id="botaoSairBarraLateral">🔐 Trocar Conta / Tela de Acesso</button></div>
     </aside>
     <div class="area-trabalho-principal">
+      <!-- BARRA DO TOPO: Mostra o título da página atual, pontos do aluno, botão de Modo Claro/Escuro e foto do usuário -->
       <header class="barra-topo">
         <div class="barra-topo__esquerda">
           <h1 class="barra-topo__titulo" id="tituloTelaAtual">Painel do Estudante</h1>
@@ -221,6 +241,11 @@
         </div>
       </header>
       <main class="conteiner-telas">
+        <!-- ======================================================================
+           PÁGINA 1 DO ALUNO: INÍCIO (PAINEL PRINCIPAL)
+           Mostra o cartão de boas-vindas do aluno Bruno, os 4 avisos coloridos
+           de atividades, as matérias em andamento e a tabela de notas.
+           ====================================================================== -->
         <section class="tela-visualizacao ativo" id="tela-estudante-inicio">
           <div class="destaque-principal-estudante" style="background-image: url('assets/banner-student.png');">
             <div class="destaque-principal-estudante__sobreposicao">
@@ -381,7 +406,15 @@
             </div>
           </div>
         </section>
+        <!-- ======================================================================
+           PÁGINA 2 DO ALUNO: ATIVIDADES, TRILHAS E DESAFIOS (EM 4 PASSOS)
+           Passo 1 (etapaCatalogoMaterias): Lista todas as 12 matérias.
+           Passo 2 (etapaTrilhaMateria): Mostra os módulos da matéria escolhida.
+           Passo 3 (etapaNiveisModulo): Mostra os 12 níveis do módulo.
+           Passo 4 (etapaDesafioNivel): Mostra a pergunta/exercício para responder.
+           ====================================================================== -->
         <section class="tela-visualizacao" id="tela-estudante-atividades" hidden>
+          <!-- PASSO 1 DAS ATIVIDADES: Grade com todas as 12 disciplinas disponíveis -->
           <div id="etapaCatalogoMaterias">
             <div class="barra-cabecalho-atividades">
               <div class="caixa-busca-sistema">
@@ -531,6 +564,7 @@
               </div>
             </div>
           </div>
+          <!-- PASSO 2 DAS ATIVIDADES: Trilha de módulos da matéria que o aluno clicou -->
           <div id="etapaTrilhaMateria" hidden>
             <div class="barra-topo-detalhe-materia">
               <button type="button" class="botao-voltar-materias" id="botaoVoltarMaterias">← Voltar para Disciplinas</button>
@@ -559,6 +593,7 @@
               </div>
             </div>
           </div>
+          <!-- PASSO 3 DAS ATIVIDADES: Grade com os 12 níveis de dificuldade do módulo -->
           <div id="etapaNiveisModulo" hidden>
             <div class="barra-topo-detalhe-materia">
               <button type="button" class="botao-voltar-materias" id="botaoVoltarTrilha">← Voltar para a Trilha da Matéria</button>
@@ -570,6 +605,7 @@
               <div class="grade-niveis grade-niveis--grande" id="gradeNiveisMateria"></div>
             </div>
           </div>
+          <!-- PASSO 4 DAS ATIVIDADES: Tela da questão (desafio) e cartão de parabéns ao concluir -->
           <div id="etapaDesafioNivel" hidden>
             <div class="barra-topo-detalhe-materia">
               <button type="button" class="botao-voltar-materias" id="botaoVoltarNiveis">← Voltar para os Níveis (NÍVEL 1)</button>
@@ -609,6 +645,11 @@
             </div>
           </div>
         </section>
+        <!-- ======================================================================
+           PÁGINA 3 DO ALUNO: LOJA DE PONTOS
+           Aqui o estudante usa os pontos que ganhou nas atividades para
+           resgatar prêmios e materiais escolares.
+           ====================================================================== -->
         <section class="tela-visualizacao" id="tela-estudante-loja" hidden>
           <div class="cabecalho-topo-loja">
             <div class="cabecalho-topo-loja__esquerda">
@@ -633,6 +674,11 @@
           <p class="retorno-loja" id="mensagemRetornoLoja" role="status"></p>
           <div class="grade-produtos-loja" id="gradeProdutosLoja"></div>
         </section>
+        <!-- ======================================================================
+           PÁGINA 4 DO ALUNO: CLASSIFICAÇÃO DA TURMA (RANKING)
+           À esquerda mostra o Pódio (1º, 2º e 3º lugar) e à direita a lista
+           com a pontuação dos demais colegas da turma.
+           ====================================================================== -->
         <section class="tela-visualizacao" id="tela-estudante-classificacao" hidden>
           <div class="barra-cabecalho-classificacao">
             <div class="pilulas-periodo-classificacao">
@@ -683,6 +729,10 @@
             </div>
           </div>
         </section>
+        <!-- ======================================================================
+           PÁGINA 5 DO ALUNO: CONVERSA COM A PROFESSORA TATI
+           Mensagens da professora aparecem à esquerda e as do aluno à direita.
+           ====================================================================== -->
         <section class="tela-visualizacao" id="tela-estudante-conversa" hidden>
           <div class="painel-computador painel-janela-conversa">
             <div class="janela-conversa__cabecalho">
@@ -699,6 +749,10 @@
             <form class="barra-entrada-conversa" id="formularioConversaEstudante"><input type="text" id="campoConversaEstudante" placeholder="Mensagem..." required /> <button type="submit" class="circulo-enviar-conversa" title="Enviar mensagem">↑</button></form>
           </div>
         </section>
+        <!-- ======================================================================
+           PÁGINA 6 DO ALUNO: MEU PERFIL
+           Mostra a foto grande do estudante e seus dados cadastrais (nome, usuário, senha e e-mail).
+           ====================================================================== -->
         <section class="tela-visualizacao" id="tela-estudante-perfil" hidden>
           <div class="cartao-perfil-computador">
             <div class="cartao-perfil-computador__esquerda">
@@ -741,6 +795,11 @@
             </form>
           </div>
         </section>
+        <!-- ======================================================================
+           PÁGINA 1 DA PROFESSORA: INÍCIO E TURMAS (SÓ ABRE PELO SETOR INSTITUIÇÃO)
+           Mostra a saudação da Profª. Tatiane Soma, alertas de faltas/reforço
+           e os cartões coloridos das 6 turmas ativas.
+           ====================================================================== -->
         <section class="tela-visualizacao" id="tela-professora-inicio" hidden>
           <div class="destaque-principal-professora">
             <div class="destaque-principal-professora__esquerda">
@@ -851,6 +910,10 @@
             </div>
           </div>
         </section>
+        <!-- ======================================================================
+           PÁGINA 2 DA PROFESSORA: CHAMADA DIGITAL
+           Permite escolher a turma à esquerda e marcar a presença dos alunos à direita.
+           ====================================================================== -->
         <section class="tela-visualizacao" id="tela-professora-chamada" hidden>
           <div class="layout-dividido-professora">
             <div class="painel-computador painel-seletor-turma">
@@ -889,6 +952,10 @@
             </div>
           </div>
         </section>
+        <!-- ======================================================================
+           PÁGINA 3 DA PROFESSORA: LANÇAMENTO DE NOTAS E FREQUÊNCIA
+           Permite escolher um aluno da lista e editar suas notas em cada matéria.
+           ====================================================================== -->
         <section class="tela-visualizacao" id="tela-professora-notas" hidden>
           <div class="layout-dividido-professora">
             <div class="painel-computador">
@@ -917,6 +984,11 @@
             </div>
           </div>
         </section>
+        <!-- ======================================================================
+           PÁGINA 4 DA PROFESSORA: CENTRAL DE DÚVIDAS DOS ALUNOS
+           À esquerda fica a lista de alunos que mandaram mensagem (a bolinha azul
+           de notificação some ao clicar) e à direita a janela para responder.
+           ====================================================================== -->
         <section class="tela-visualizacao" id="tela-professora-conversa" hidden>
           <div class="grade-computador-conversa-professora">
             <div class="painel-computador">

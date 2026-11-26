@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // =========================================================================
+  // PARTE 1: MODO CLARO E MODO ESCURO
+  // O que faz: Quando a pessoa clica no botão "Modo Escuro" (ou "Modo Claro"),
+  // muda as cores de fundo do sistema e troca a imagem da logo para a versão
+  // transparente correspondente.
+  // =========================================================================
   const raizHtml = document.documentElement;
   const botaoAlternarTema = document.getElementById("botaoAlternarTema");
   const alternarTemaAcesso = document.getElementById("alternarTemaAcesso");
@@ -15,6 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const manipularAlternanciaTema = () => { const proximoTema = raizHtml.getAttribute("data-tema") === "escuro" ? "claro" : "escuro"; aplicarTema(proximoTema); };
   botaoAlternarTema?.addEventListener("click", manipularAlternanciaTema);
   alternarTemaAcesso?.addEventListener("click", manipularAlternanciaTema);
+
+  // =========================================================================
+  // PARTE 2: CONTROLE DE TELAS E NAVEGAÇÃO PELO MENU LATERAL
+  // O que faz: Guarda os elementos principais da tela e controla qual página
+  // deve aparecer quando o usuário clica em um botão do menu esquerdo.
+  // =========================================================================
   const sobreposicaoTelaCheiaAcesso = document.getElementById("sobreposicaoTelaCheiaAcesso");
   const aplicacaoPrincipalComputador = document.getElementById("aplicacaoPrincipalComputador");
   const seloSetorEstudanteAtivo = document.getElementById("seloSetorEstudanteAtivo");
@@ -31,6 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let setorAutenticado = null;
   const titulosTelas = {
     "estudante-inicio": ["Painel do Estudante", "Bruno Delorence • Turma 3°E • 1º Lugar"], "estudante-atividades": [ "Atividades e Trilhas Gamificadas", "Complete os níveis e tire dúvidas direto com seu professor", ], "estudante-loja": [ "Loja de Pontos IN AULA", "Troque seus pontos acumulados por materiais e prêmios", ], "estudante-classificacao": [ "Classificação de Engajamento", "Classificação oficial da Turma 3°E", ], "estudante-conversa": [ "Conversa com a Professora Tati", "Canal direto para reforço e dúvidas das atividades", ], "estudante-perfil": [ "Meu Perfil de Estudante", "Dados cadastrais e configurações da conta", ], "professora-inicio": [ "Painel Docente — Profª. Tatiane Soma", "Gestão de turmas, lembretes de evasão e reforço escolar", ], "professora-chamada": [ "Chamada Digital por Turma", "Controle de presença diária e alerta de faltas", ], "professora-notas": [ "Gestão de Notas e Frequência", "Boletim bimestral dos estudantes da Turma 3C", ], "professora-conversa": [ "Central de Dúvidas dos Alunos", "Atendimento virtual para reforço pedagógico", ], };
+
+  // Função que abre a página escolhida no menu e esconde as demais páginas:
   const mostrarTela = (identificadorTela) => {
     if (
       identificadorTela && identificadorTela.startsWith("professora-") && setorAutenticado !== "instituicao"
@@ -47,6 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".barra-lateral .item-navegacao").forEach((botao) => { botao.classList.toggle("ativo", botao.getAttribute("data-tela") === identificadorTela); });
     if (titulosTelas[identificadorTela] && tituloTelaAtual && subtituloTelaAtual) { tituloTelaAtual.textContent = titulosTelas[identificadorTela][0]; subtituloTelaAtual.textContent = titulosTelas[identificadorTela][1]; }
   };
+
+  // Função que prepara o painel para o Estudante (Bruno) ou para a Professora (Tatiane):
   const definirModoPerfil = (modo) => {
     const modoEfetivo = modo === "professora" && setorAutenticado === "instituicao" ? "professora" : "estudante";
     const ehEstudante = modoEfetivo === "estudante";
@@ -71,12 +87,16 @@ document.addEventListener("DOMContentLoaded", () => {
       mostrarTela("professora-inicio");
     }
   };
+
+  // Função que fecha a tela de login e abre o painel principal do sistema:
   const entrarPainel = (modo) => {
     if (sobreposicaoTelaCheiaAcesso) { sobreposicaoTelaCheiaAcesso.hidden = true; sobreposicaoTelaCheiaAcesso.style.display = "none"; }
     if (aplicacaoPrincipalComputador) { aplicacaoPrincipalComputador.hidden = false; aplicacaoPrincipalComputador.style.display = "grid"; }
     definirModoPerfil(modo);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  // Função do botão "Sair / Trocar Conta": limpa a sessão e volta para a tela de acesso:
   const voltarTelaAcesso = () => {
     setorAutenticado = null;
     if (aplicacaoPrincipalComputador) { aplicacaoPrincipalComputador.hidden = true; aplicacaoPrincipalComputador.style.display = "none"; }
@@ -87,6 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const etapaTrilhaMateria = document.getElementById("etapaTrilhaMateria");
   const etapaNiveisModulo = document.getElementById("etapaNiveisModulo");
   const etapaDesafioNivel = document.getElementById("etapaDesafioNivel");
+
+  // Função que alterna entre os 4 passos da tela de Atividades (Matérias -> Trilha -> Níveis -> Desafio):
   const definirEtapaAtividade = (etapa) => {
     const mapaEtapas = { catalogo: etapaCatalogoMaterias, trilha: etapaTrilhaMateria, niveis: etapaNiveisModulo, desafio: etapaDesafioNivel, };
     Object.entries(mapaEtapas).forEach(([chave, elemento]) => { if (!elemento) return; const estaVisivel = chave === etapa; elemento.hidden = !estaVisivel; elemento.style.display = estaVisivel ? (chave === "catalogo" ? "flex" : "block") : "none"; });
@@ -112,6 +134,13 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("botaoAbrirBoasVindas")?.addEventListener("click", voltarTelaAcesso);
   document.getElementById("botaoSairBarraLateral")?.addEventListener("click", voltarTelaAcesso);
   document.getElementById("botaoSairPerfil")?.addEventListener("click", voltarTelaAcesso);
+
+  // =========================================================================
+  // PARTE 3: TELA DE ACESSO (ESCOLHA DE SETOR, ENTRAR, CADASTRO E SENHA)
+  // O que faz: Identifica qual botão azul foi escolhido à esquerda
+  // (Responsáveis, Estudante ou Instituição). Regra importante: o perfil da
+  // Professora SÓ pode ser acessado se a pessoa selecionar o setor INSTITUIÇÃO.
+  // =========================================================================
   let perfilEscolhido = "estudante";
   const seloPerfilSelecionado = document.getElementById("seloPerfilSelecionado");
   const usuarioAcesso = document.getElementById("usuarioAcesso");
@@ -158,6 +187,8 @@ document.addEventListener("DOMContentLoaded", () => {
       campoInput.type = campoInput.type === "password" ? "text" : "password";
     });
   });
+
+  // Função executada ao clicar no botão "Entrar" ou "Criar Conta":
   const processarAcessoAutenticacao = (evento) => {
     if (evento) evento.preventDefault();
     limparMensagensAutenticacao();
@@ -191,6 +222,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setTimeout(() => { if (mensagemRetornoRecuperacao) mensagemRetornoRecuperacao.textContent = ""; alternarAbaAutenticacao("entrar"); }, 2500);
   });
+
+  // =========================================================================
+  // PARTE 4: PONTUAÇÃO DO ALUNO, DISCIPLINAS, TRILHAS, NÍVEIS E EXERCÍCIOS
+  // O que faz: Guarda os conteúdos exclusivos de cada uma das 12 matérias.
+  // As questões de soma de ângulos pertencem somente à matéria de Matemática.
+  // Quando o aluno acerta uma questão, ele ganha +10 pontos e avança.
+  // =========================================================================
   let pontosEstudante = 2564;
   let progressoEstudos = 20;
   const pontosGlobaisEstudante = document.getElementById("pontosGlobaisEstudante");
@@ -394,6 +432,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let tituloModuloAtual = "Operações";
   let rotuloNivelAtual = "Nível 1: Soma";
   let indiceQuestaoAtual = 0;
+
+  // Passo 2 das Atividades: Abre a trilha de módulos da matéria em que o aluno clicou:
   const abrirTrilhaMateria = (nomeMateria) => {
     chaveMateriaAtual = curriculoMaterias[nomeMateria] ? nomeMateria : "Matemática";
     const dadosMateria = curriculoMaterias[chaveMateriaAtual];
@@ -422,6 +462,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  // Passo 3 das Atividades: Abre a lista com os 12 níveis do módulo escolhido:
   const abrirNiveisModulo = (nomeModulo) => {
     tituloModuloAtual = nomeModulo;
     const dadosMateria = curriculoMaterias[chaveMateriaAtual];
@@ -439,6 +481,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  // Passo 4 das Atividades: Mostra a pergunta do nível, verifica se a resposta está certa e soma pontos:
   const abrirDesafioNivel = (rotuloNivel, indiceQuestao = 0) => {
     const dadosMateria = curriculoMaterias[chaveMateriaAtual];
     rotuloNivelAtual = rotuloNivel;
@@ -507,6 +551,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[data-materia], [data-abrir-materia]").forEach((cartao) => {
     cartao.addEventListener("click", () => { const materiaSelecionada = cartao.getAttribute("data-materia") || cartao.getAttribute("data-abrir-materia") || "Matemática"; abrirTrilhaMateria(materiaSelecionada); });
   });
+
+  // =========================================================================
+  // PARTE 5: LOJA DE PONTOS (RESGATE DE PRÊMIOS E MATERIAIS)
+  // O que faz: Lista os 16 prêmios da loja, permite filtrar por categoria
+  // ou pesquisar pelo nome, e desconta os pontos do aluno ao resgatar.
+  // =========================================================================
   const produtosLoja = [
     { nome: "Caderno", pontos: 10, categoria: "objeto", corFundo: "#a4deff", imagem: "assets/shop-caderno.png" }, { nome: "Mochila", pontos: 25, categoria: "objeto", corFundo: "rgba(64,154,186,0.45)", imagem: "assets/shop-mochila.png" }, { nome: "Fones de ouvido", pontos: 50, categoria: "eletronicos", corFundo: "rgba(0,149,255,0.22)", imagem: "assets/shop-fones.png" }, { nome: "Notebook", pontos: 800, categoria: "eletronicos", corFundo: "rgba(183,223,245,0.35)", imagem: "assets/shop-notebook.png" }, { nome: "Tênis esportivo", pontos: 100, categoria: "objeto", corFundo: "rgba(202,247,147,0.35)", imagem: "assets/shop-tenis.png" }, { nome: "Camiseta esportiva", pontos: 150, categoria: "objeto", corFundo: "rgba(187,45,240,0.22)", imagem: "assets/shop-camiseta.png" }, { nome: "Calça moletom", pontos: 120, categoria: "objeto", corFundo: "rgba(239,185,11,0.25)", imagem: "assets/shop-calca.png" }, { nome: "CD Musical", pontos: 500, categoria: "objeto", corFundo: "rgba(216,17,10,0.22)", imagem: "assets/shop-cd.png" }, { nome: "DVD Filme", pontos: 520, categoria: "objeto", corFundo: "rgba(83,52,7,0.22)", imagem: "assets/shop-dvd.png" }, { nome: "Aparelho Blu-ray", pontos: 415, categoria: "eletronicos", corFundo: "rgba(211,176,224,0.35)", imagem: "assets/shop-bluray.png" }, { nome: "Videogame PS3", pontos: 3000, categoria: "eletronicos", corFundo: "rgba(253,229,152,0.35)", imagem: "assets/shop-ps3.png" }, { nome: "Vale-presente", pontos: 80, categoria: "objeto", corFundo: "rgba(24,216,149,0.25)", imagem: "assets/shop-vale.png" }, { nome: "Cesta básica", pontos: 65, categoria: "objeto", corFundo: "rgba(247,165,147,0.3)", imagem: "assets/shop-cesta.png" }, { nome: "Refrigerante", pontos: 40, categoria: "objeto", corFundo: "rgba(205,7,178,0.22)", imagem: "assets/shop-coca.png" }, { nome: "Ovo de Páscoa", pontos: 25, categoria: "objeto", corFundo: "rgba(253,229,152,0.35)", imagem: "assets/shop-ovo.png" }, { nome: "Kit Canetinhas", pontos: 5, categoria: "objeto", corFundo: "rgba(183,223,245,0.35)", imagem: "assets/shop-canetinhas.png" }, ];
   let categoriaAtivaLoja = "todos";
@@ -552,6 +602,12 @@ document.addEventListener("DOMContentLoaded", () => {
       renderizarProdutosLoja();
     });
   });
+
+  // =========================================================================
+  // PARTE 6: CLASSIFICAÇÃO DA TURMA (RANKING DE PONTOS)
+  // O que faz: Monta a lista de alunos classificados do 4º ao 17º lugar e
+  // atualiza a pontuação ao alternar entre "Hoje", "Esta semana" e "Este mês".
+  // =========================================================================
   const registrosClassificacao = [
     { posicao: "04", nome: "Jéssica Andrade", pontos: 992, foto: "assets/avatar-rank4.png", subiu: true }, { posicao: "05", nome: "Sofia Andrade", pontos: 777, foto: "assets/avatar-rank5.png", subiu: false }, { posicao: "06", nome: "Heitor Castro", pontos: 448, foto: "assets/avatar-rank6.png", subiu: true }, { posicao: "07", nome: "Lucas Martins", pontos: 580, foto: "assets/avatar-rank7.png", subiu: true }, { posicao: "08", nome: "Otávio Silva", pontos: 580, foto: "assets/avatar-rank8.png", subiu: false }, { posicao: "09", nome: "Rebeca Andrade", pontos: 584, foto: "assets/avatar-rank5.png", subiu: false }, { posicao: "10", nome: "João Castro", pontos: 448, foto: "assets/avatar-rank6.png", subiu: true }, { posicao: "11", nome: "William Martins", pontos: 580, foto: "assets/avatar-rank7.png", subiu: true }, { posicao: "12", nome: "Guilherme Silva", pontos: 580, foto: "assets/avatar-rank8.png", subiu: false }, { posicao: "13", nome: "Samanta Atilho", pontos: 584, foto: "assets/avatar-rank4.png", subiu: false }, { posicao: "14", nome: "Henrique Castro", pontos: 448, foto: "assets/avatar-rank6.png", subiu: true }, { posicao: "15", nome: "Enzo Martins", pontos: 446, foto: "assets/avatar-rank7.png", subiu: true }, { posicao: "16", nome: "Luiz Silva", pontos: 446, foto: "assets/avatar-rank8.png", subiu: false }, { posicao: "17", nome: "Sâmila Lisboa", pontos: 445, foto: "assets/avatar-rank4.png", subiu: false }, ];
   const listaClassificacaoGeral = document.getElementById("listaClassificacaoGeral");
@@ -571,6 +627,14 @@ document.addEventListener("DOMContentLoaded", () => {
       renderizarClassificacao(multiplicador);
     });
   });
+
+  // =========================================================================
+  // PARTE 7: CONVERSA (CHAT) ENTRE ALUNO E PROFESSORA TATI
+  // O que faz:
+  // - Na visão do Aluno: mensagens da professora ficam à esquerda e as do aluno à direita.
+  // - Na visão da Professora: mensagens do aluno ficam à esquerda e as respostas à direita.
+  // - Ao clicar em uma conversa na lista da professora, a bolinha azul de notificação some.
+  // =========================================================================
   const listaConversas = [
     {
       id: "bruno", nomeEstudante: "Bruno Delorence", topico: "Atividade de Operações", horario: "2 min", foto: "assets/avatar-bruno.png", naoLida: false, mensagens: [
@@ -678,6 +742,12 @@ document.addEventListener("DOMContentLoaded", () => {
       renderizarConversaEstudante();
     }
   });
+
+  // =========================================================================
+  // PARTE 8: CHAMADA DIGITAL E BOLETIM DE NOTAS (PAINEL DA PROFESSORA)
+  // O que faz: Gera a lista de presença da turma para marcar quem compareceu
+  // e permite clicar em cada estudante para visualizar ou alterar suas notas.
+  // =========================================================================
   const estudantesTurma3C = [
     { numero: "#1", nome: "Agnaldo Abreu", foto: "assets/avatar-wilson.png", presente: true }, { numero: "#2", nome: "Bruno Delorence", foto: "assets/avatar-bruno.png", presente: true }, { numero: "#3", nome: "Carlos Eduardo", foto: "assets/avatar-david.png", presente: true }, { numero: "#4", nome: "Darley Souza", foto: "assets/avatar-marvin.png", presente: false }, { numero: "#5", nome: "Edmundo Brito", foto: "assets/avatar-devon.png", presente: true }, { numero: "#6", nome: "Fernando Prado", foto: "assets/avatar-wilson.png", presente: true }, { numero: "#7", nome: "Gabriel Rocha", foto: "assets/avatar-david.png", presente: true }, { numero: "#8", nome: "Henrique Alves", foto: "assets/avatar-marvin.png", presente: true }, { numero: "#9", nome: "Irineu Neves", foto: "assets/avatar-devon.png", presente: true }, { numero: "#10", nome: "Josué Barbosa", foto: "assets/avatar-bruno.png", presente: true }, ];
   const listaPresencaChamada = document.getElementById("listaPresencaChamada");
