@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const raizHtml = document.documentElement;
   const botaoAlternarTema = document.getElementById("botaoAlternarTema");
-  const alternarTemaLogin = document.getElementById("alternarTemaLogin");
+  const alternarTemaAcesso = document.getElementById("alternarTemaAcesso");
   const aplicarTema = (tema) => {
     const temaNormalizado = tema === "escuro" || tema === "dark" ? "escuro" : "claro";
     raizHtml.setAttribute("data-tema", temaNormalizado);
@@ -14,15 +14,15 @@ document.addEventListener("DOMContentLoaded", () => {
   aplicarTema(localStorage.getItem("inaula_tema_computador") || "claro");
   const manipularAlternanciaTema = () => { const proximoTema = raizHtml.getAttribute("data-tema") === "escuro" ? "claro" : "escuro"; aplicarTema(proximoTema); };
   botaoAlternarTema?.addEventListener("click", manipularAlternanciaTema);
-  alternarTemaLogin?.addEventListener("click", manipularAlternanciaTema);
-  const sobreposicaoTelaCheiaLogin = document.getElementById("sobreposicaoTelaCheiaLogin");
+  alternarTemaAcesso?.addEventListener("click", manipularAlternanciaTema);
+  const sobreposicaoTelaCheiaAcesso = document.getElementById("sobreposicaoTelaCheiaAcesso");
   const aplicacaoPrincipalComputador = document.getElementById("aplicacaoPrincipalComputador");
   const seloSetorEstudanteAtivo = document.getElementById("seloSetorEstudanteAtivo");
   const rotuloSetorEstudanteAtivo = document.getElementById("rotuloSetorEstudanteAtivo");
   const seloSetorProfessoraAtivo = document.getElementById("seloSetorProfessoraAtivo");
   const navegacaoEstudante = document.getElementById("navegacaoEstudante");
   const navegacaoProfessora = document.getElementById("navegacaoProfessora");
-  const avatarBarraTopo = document.getElementById("avatarBarraTopo");
+  const fotoBarraTopo = document.getElementById("fotoBarraTopo");
   const nomeBarraTopo = document.getElementById("nomeBarraTopo");
   const cargoBarraTopo = document.getElementById("cargoBarraTopo");
   const caixaPontosTopo = document.getElementById("caixaPontosTopo");
@@ -60,27 +60,27 @@ document.addEventListener("DOMContentLoaded", () => {
     if (navegacaoProfessora) { navegacaoProfessora.hidden = ehEstudante; navegacaoProfessora.style.display = ehEstudante ? "none" : "flex"; }
     if (caixaPontosTopo) { caixaPontosTopo.style.display = ehEstudante ? "flex" : "none"; }
     if (ehEstudante) {
-      if (avatarBarraTopo) avatarBarraTopo.src = "assets/avatar-bruno.png";
+      if (fotoBarraTopo) fotoBarraTopo.src = "assets/avatar-bruno.png";
       if (nomeBarraTopo) nomeBarraTopo.textContent = "Bruno Delorence";
       if (cargoBarraTopo) { cargoBarraTopo.textContent = setorAutenticado === "responsaveis" ? "Acesso Responsável • Bruno Delorence (3°E)" : "Estudante • 1º Lugar (3°E)"; }
       mostrarTela("estudante-inicio");
     } else {
-      if (avatarBarraTopo) avatarBarraTopo.src = "assets/avatar-tatiane.png";
+      if (fotoBarraTopo) fotoBarraTopo.src = "assets/avatar-tatiane.png";
       if (nomeBarraTopo) nomeBarraTopo.textContent = "Profª. Tatiane Soma";
       if (cargoBarraTopo) cargoBarraTopo.textContent = "Docente • Matemática e Algoritmos";
       mostrarTela("professora-inicio");
     }
   };
   const entrarPainel = (modo) => {
-    if (sobreposicaoTelaCheiaLogin) { sobreposicaoTelaCheiaLogin.hidden = true; sobreposicaoTelaCheiaLogin.style.display = "none"; }
+    if (sobreposicaoTelaCheiaAcesso) { sobreposicaoTelaCheiaAcesso.hidden = true; sobreposicaoTelaCheiaAcesso.style.display = "none"; }
     if (aplicacaoPrincipalComputador) { aplicacaoPrincipalComputador.hidden = false; aplicacaoPrincipalComputador.style.display = "grid"; }
     definirModoPerfil(modo);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  const voltarTelaLogin = () => {
+  const voltarTelaAcesso = () => {
     setorAutenticado = null;
     if (aplicacaoPrincipalComputador) { aplicacaoPrincipalComputador.hidden = true; aplicacaoPrincipalComputador.style.display = "none"; }
-    if (sobreposicaoTelaCheiaLogin) { sobreposicaoTelaCheiaLogin.hidden = false; sobreposicaoTelaCheiaLogin.style.display = "flex"; }
+    if (sobreposicaoTelaCheiaAcesso) { sobreposicaoTelaCheiaAcesso.hidden = false; sobreposicaoTelaCheiaAcesso.style.display = "flex"; }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const etapaCatalogoMaterias = document.getElementById("etapaCatalogoMaterias");
@@ -109,17 +109,17 @@ document.addEventListener("DOMContentLoaded", () => {
       if (telaAlvo === "estudante-atividades") { mostrarCatalogoMaterias(); }
     });
   });
-  document.getElementById("botaoAbrirBoasVindas")?.addEventListener("click", voltarTelaLogin);
-  document.getElementById("botaoSairBarraLateral")?.addEventListener("click", voltarTelaLogin);
-  document.getElementById("botaoSairPerfil")?.addEventListener("click", voltarTelaLogin);
+  document.getElementById("botaoAbrirBoasVindas")?.addEventListener("click", voltarTelaAcesso);
+  document.getElementById("botaoSairBarraLateral")?.addEventListener("click", voltarTelaAcesso);
+  document.getElementById("botaoSairPerfil")?.addEventListener("click", voltarTelaAcesso);
   let perfilEscolhido = "estudante";
   const seloPerfilSelecionado = document.getElementById("seloPerfilSelecionado");
-  const usuarioLogin = document.getElementById("usuarioLogin");
+  const usuarioAcesso = document.getElementById("usuarioAcesso");
   const nomeUsuarioCadastro = document.getElementById("nomeUsuarioCadastro");
   const emailCadastro = document.getElementById("emailCadastro");
-  const mensagemRetornoLogin = document.getElementById("mensagemRetornoLogin");
+  const mensagemRetornoAcesso = document.getElementById("mensagemRetornoAcesso");
   const mensagemRetornoCadastro = document.getElementById("mensagemRetornoCadastro");
-  const limparMensagensAutenticacao = () => { if (mensagemRetornoLogin) mensagemRetornoLogin.textContent = ""; if (mensagemRetornoCadastro) mensagemRetornoCadastro.textContent = ""; };
+  const limparMensagensAutenticacao = () => { if (mensagemRetornoAcesso) mensagemRetornoAcesso.textContent = ""; if (mensagemRetornoCadastro) mensagemRetornoCadastro.textContent = ""; };
   const predefinicoesPerfil = {
     responsaveis: { rotulo: "RESPONSÁVEIS", usuario: "responsavel.bruno@gmail.com", nomeUsuario: "responsavel.bruno", modo: "estudante", }, estudante: { rotulo: "ESTUDANTE", usuario: "brunodelorence@gmail.com", nomeUsuario: "brunodelorence", modo: "estudante", }, instituicao: { rotulo: "INSTITUIÇÃO / PROFESSOR", usuario: "tatianesoma@gmail.com", nomeUsuario: "Tatiane Soma", modo: "professora", }, };
   document.querySelectorAll("[data-selecionar-perfil]").forEach((botao) => {
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (seloPerfilSelecionado) {
         seloPerfilSelecionado.innerHTML = `Perfil: <strong>${predefinicao.rotulo}</strong>`;
       }
-      if (usuarioLogin) usuarioLogin.value = predefinicao.usuario;
+      if (usuarioAcesso) usuarioAcesso.value = predefinicao.usuario;
       if (nomeUsuarioCadastro) nomeUsuarioCadastro.value = predefinicao.nomeUsuario;
       if (emailCadastro) emailCadastro.value = predefinicao.usuario;
     });
@@ -140,16 +140,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const alternarAbaAutenticacao = (nomeAba) => {
     limparMensagensAutenticacao();
     document.querySelectorAll("[data-aba-autenticacao]").forEach((aba) => { aba.classList.toggle("ativo", aba.getAttribute("data-aba-autenticacao") === nomeAba); });
-    const formularioLogin = document.getElementById("formularioLogin");
+    const formularioAcesso = document.getElementById("formularioAcesso");
     const formularioCadastro = document.getElementById("formularioCadastro");
     const formularioRecuperacao = document.getElementById("formularioRecuperacao");
-    if (formularioLogin) { formularioLogin.hidden = nomeAba !== "login"; formularioLogin.style.display = nomeAba === "login" ? "block" : "none"; }
-    if (formularioCadastro) { formularioCadastro.hidden = nomeAba !== "signup"; formularioCadastro.style.display = nomeAba === "signup" ? "block" : "none"; }
-    if (formularioRecuperacao) { formularioRecuperacao.hidden = nomeAba !== "recover"; formularioRecuperacao.style.display = nomeAba === "recover" ? "block" : "none"; }
+    if (formularioAcesso) { formularioAcesso.hidden = nomeAba !== "entrar"; formularioAcesso.style.display = nomeAba === "entrar" ? "block" : "none"; }
+    if (formularioCadastro) { formularioCadastro.hidden = nomeAba !== "cadastro"; formularioCadastro.style.display = nomeAba === "cadastro" ? "block" : "none"; }
+    if (formularioRecuperacao) { formularioRecuperacao.hidden = nomeAba !== "recuperar"; formularioRecuperacao.style.display = nomeAba === "recuperar" ? "block" : "none"; }
   };
   document.querySelectorAll("[data-aba-autenticacao]").forEach((botao) => { botao.addEventListener("click", () => alternarAbaAutenticacao(botao.getAttribute("data-aba-autenticacao")) ); });
   document.querySelectorAll("[data-trocar-autenticacao]").forEach((botao) => { botao.addEventListener("click", () => alternarAbaAutenticacao(botao.getAttribute("data-trocar-autenticacao")) ); });
-  document.getElementById("botaoSetaVoltarAutenticacao")?.addEventListener("click", () => { alternarAbaAutenticacao("login"); });
+  document.getElementById("botaoSetaVoltarAutenticacao")?.addEventListener("click", () => { alternarAbaAutenticacao("entrar"); });
   document.querySelectorAll("[data-alternar-senha]").forEach((botao) => {
     botao.addEventListener("click", () => {
       const idCampoAlvo = botao.getAttribute("data-alternar-senha");
@@ -161,26 +161,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const processarAcessoAutenticacao = (evento) => {
     if (evento) evento.preventDefault();
     limparMensagensAutenticacao();
-    const valorUsuario = (document.getElementById("usuarioLogin")?.value || "").toLowerCase();
+    const valorUsuario = (document.getElementById("usuarioAcesso")?.value || "").toLowerCase();
     const valorEmailCadastro = (document.getElementById("emailCadastro")?.value || "").toLowerCase();
     const tentandoContaProfessora = valorUsuario.includes("tatiane") || valorUsuario.includes("prof") || valorEmailCadastro.includes("tatiane") || valorEmailCadastro.includes("prof");
     if (perfilEscolhido === "instituicao") { setorAutenticado = "instituicao"; entrarPainel("professora"); return; }
     if (tentandoContaProfessora && perfilEscolhido !== "instituicao") {
       const aviso = "⚠️ Acesso negado: O perfil de Professora só pode ser acessado selecionando o setor INSTITUIÇÃO ao lado.";
-      if (mensagemRetornoLogin) { mensagemRetornoLogin.style.color = "#ef4444"; mensagemRetornoLogin.textContent = aviso; }
+      if (mensagemRetornoAcesso) { mensagemRetornoAcesso.style.color = "#ef4444"; mensagemRetornoAcesso.textContent = aviso; }
       if (mensagemRetornoCadastro) { mensagemRetornoCadastro.style.color = "#ef4444"; mensagemRetornoCadastro.textContent = aviso; }
       return;
     }
     setorAutenticado = perfilEscolhido;
     entrarPainel("estudante");
   };
-  document.getElementById("formularioLogin")?.addEventListener("submit", processarAcessoAutenticacao);
-  document.querySelector("#formularioLogin .botao-enviar-figma")
+  document.getElementById("formularioAcesso")?.addEventListener("submit", processarAcessoAutenticacao);
+  document.querySelector("#formularioAcesso .botao-enviar-sistema")
     ?.addEventListener("click", processarAcessoAutenticacao);
   document
     .getElementById("formularioCadastro")
     ?.addEventListener("submit", processarAcessoAutenticacao);
-  document.querySelector("#formularioCadastro .botao-enviar-figma")
+  document.querySelector("#formularioCadastro .botao-enviar-sistema")
     ?.addEventListener("click", processarAcessoAutenticacao);
   document.getElementById("formularioRecuperacao")?.addEventListener("submit", (evento) => {
     evento.preventDefault();
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mensagemRetornoRecuperacao) {
       mensagemRetornoRecuperacao.textContent = `✅ Link de redefinição enviado para ${valorEmail}!`;
     }
-    setTimeout(() => { if (mensagemRetornoRecuperacao) mensagemRetornoRecuperacao.textContent = ""; alternarAbaAutenticacao("login"); }, 2500);
+    setTimeout(() => { if (mensagemRetornoRecuperacao) mensagemRetornoRecuperacao.textContent = ""; alternarAbaAutenticacao("entrar"); }, 2500);
   });
   let pontosEstudante = 2564;
   let progressoEstudos = 20;
@@ -206,14 +206,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   const tituloMateriaSelecionada = document.getElementById("tituloMateriaSelecionada");
   const pilulaProgressoMateriaAtiva = document.getElementById("pilulaProgressoMateriaAtiva");
-  const cartaoBannerMateriaAtiva = document.getElementById("cartaoBannerMateriaAtiva");
+  const cartaoDestaqueMateriaAtiva = document.getElementById("cartaoDestaqueMateriaAtiva");
   const blocosIconesMateriaAtiva = document.getElementById("blocosIconesMateriaAtiva");
   const seloContadorDetalheMateria = document.getElementById("seloContadorDetalheMateria");
   const listaTrilhaAprendizagem = document.getElementById("listaTrilhaAprendizagem");
   const gradeNiveisMateria = document.getElementById("gradeNiveisMateria");
   const seloModuloAtivo = document.getElementById("seloModuloAtivo");
   const seloProgressoDesafioAtivo = document.getElementById("seloProgressoDesafioAtivo");
-  const tituloBannerDesafio = document.getElementById("tituloBannerDesafio");
+  const tituloDestaqueDesafio = document.getElementById("tituloDestaqueDesafio");
   const caixaDiagramaAngulo = document.getElementById("caixaDiagramaAngulo");
   const textoPerguntaDesafio = document.getElementById("textoPerguntaDesafio");
   const gradeOpcoesDesafio = document.getElementById("gradeOpcoesDesafio");
@@ -231,8 +231,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       niveis: [ "Nível 1: Soma", "Nível 2: Subtração", "Nível 3: Divisão", "Nível 4: Multiplicação", "Nível 5: Radiciação", "Nível 6: Potenciação", "Nível 7: Fração", "Nível 8: Logaritmação", "Nível 9: Soma de raiz", "Nível 10: Divisão de raiz", "Nível 11: Raiz cúbica", "Nível 12: Raiz quarta" ],
       questoes: [
-        { tituloBanner: "Soma", possuiAngulo36: true, enunciado: "Some o ângulo por eles mesmo:", alternativas: ["45º", "55º", "71º", "72º"], indiceCorreto: 3 },
-        { tituloBanner: "Soma — Questão 2", possuiAngulo9042: true, enunciado: "1- Dados os ângulos abaixo, 90º e 42º, some-os como apresentado em sala:", alternativas: ["132º", "133º", "134º", "135º"], indiceCorreto: 0 },
+        { tituloDestaque: "Soma", possuiAngulo36: true, enunciado: "Some o ângulo por eles mesmo:", alternativas: ["45º", "55º", "71º", "72º"], indiceCorreto: 3 },
+        { tituloDestaque: "Soma — Questão 2", possuiAngulo9042: true, enunciado: "1- Dados os ângulos abaixo, 90º e 42º, some-os como apresentado em sala:", alternativas: ["132º", "133º", "134º", "135º"], indiceCorreto: 0 },
       ],
     },
     Português: {
@@ -245,8 +245,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       niveis: [ "Nível 1: Ortografia", "Nível 2: Acentuação", "Nível 3: Pontuação", "Nível 4: Substantivos", "Nível 5: Verbos", "Nível 6: Adjetivos", "Nível 7: Pronomes", "Nível 8: Concordância", "Nível 9: Regência", "Nível 10: Crase", "Nível 11: Figuras de Linguagem", "Nível 12: Coesão Textual" ],
       questoes: [
-        { tituloBanner: "Português — Questão 1", possuiAngulo36: false, enunciado: "Qual das palavras abaixo está grafada corretamente segundo a norma-padrão?", alternativas: ["Exceção", "Excessão", "Eceção", "Exceon"], indiceCorreto: 0 },
-        { tituloBanner: "Português — Questão 2", possuiAngulo36: false, enunciado: "Assinale a alternativa em que o uso da crase está correto:", alternativas: ["Fui à escola cedo.", "Comprei à vista o livro.", "Ambas estão corretas.", "Nenhuma está correta."], indiceCorreto: 2 },
+        { tituloDestaque: "Português — Questão 1", possuiAngulo36: false, enunciado: "Qual das palavras abaixo está grafada corretamente segundo a norma-padrão?", alternativas: ["Exceção", "Excessão", "Eceção", "Exceon"], indiceCorreto: 0 },
+        { tituloDestaque: "Português — Questão 2", possuiAngulo36: false, enunciado: "Assinale a alternativa em que o uso da crase está correto:", alternativas: ["Fui à escola cedo.", "Comprei à vista o livro.", "Ambas estão corretas.", "Nenhuma está correta."], indiceCorreto: 2 },
       ],
     },
     Biologia: {
@@ -259,8 +259,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       niveis: [ "Nível 1: Sistema Respiratório", "Nível 2: Sistema Cardíaco", "Nível 3: Células", "Nível 4: Mitocôndria e ATP", "Nível 5: Fotossíntese", "Nível 6: Divisão Celular", "Nível 7: DNA e RNA", "Nível 8: Sistema Nervoso", "Nível 9: Sistema Digestório", "Nível 10: Ecologia", "Nível 11: Evolução", "Nível 12: Imunologia" ],
       questoes: [
-        { tituloBanner: "Biologia — Questão 1", possuiAngulo36: false, enunciado: "Qual organela celular é responsável pela respiração celular e produção de ATP?", alternativas: ["Complexo de Golgi", "Mitocôndria", "Lisossomo", "Ribossomo"], indiceCorreto: 1 },
-        { tituloBanner: "Biologia — Questão 2", possuiAngulo36: false, enunciado: "Em qual estrutura dos pulmões ocorre a troca gasosa (hematose)?", alternativas: ["Brônquios", "Traqueia", "Alvéolos pulmonares", "Laringe"], indiceCorreto: 2 },
+        { tituloDestaque: "Biologia — Questão 1", possuiAngulo36: false, enunciado: "Qual organela celular é responsável pela respiração celular e produção de ATP?", alternativas: ["Complexo de Golgi", "Mitocôndria", "Lisossomo", "Ribossomo"], indiceCorreto: 1 },
+        { tituloDestaque: "Biologia — Questão 2", possuiAngulo36: false, enunciado: "Em qual estrutura dos pulmões ocorre a troca gasosa (hematose)?", alternativas: ["Brônquios", "Traqueia", "Alvéolos pulmonares", "Laringe"], indiceCorreto: 2 },
       ],
     },
     Química: {
@@ -273,8 +273,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       niveis: [ "Nível 1: Átomos", "Nível 2: Tabela Periódica", "Nível 3: Reações", "Nível 4: Ligação Iônica", "Nível 5: Ligação Covalente", "Nível 6: Ácidos e Bases", "Nível 7: Sais e Óxidos", "Nível 8: Balanceamento", "Nível 9: Massa Molar", "Nível 10: Soluções", "Nível 11: Termoquímica", "Nível 12: Eletroquímica" ],
       questoes: [
-        { tituloBanner: "Química — Questão 1", possuiAngulo36: false, enunciado: "Qual é o símbolo químico do elemento Oxigênio e seu número atômico?", alternativas: ["O (Z = 8)", "Ox (Z = 6)", "Og (Z = 16)", "O (Z = 12)"], indiceCorreto: 0 },
-        { tituloBanner: "Química — Questão 2", possuiAngulo36: false, enunciado: "Qual é o valor de pH característico de uma solução ácida a 25 °C?", alternativas: ["pH = 7", "pH < 7", "pH > 7", "pH = 14"], indiceCorreto: 1 },
+        { tituloDestaque: "Química — Questão 1", possuiAngulo36: false, enunciado: "Qual é o símbolo químico do elemento Oxigênio e seu número atômico?", alternativas: ["O (Z = 8)", "Ox (Z = 6)", "Og (Z = 16)", "O (Z = 12)"], indiceCorreto: 0 },
+        { tituloDestaque: "Química — Questão 2", possuiAngulo36: false, enunciado: "Qual é o valor de pH característico de uma solução ácida a 25 °C?", alternativas: ["pH = 7", "pH < 7", "pH > 7", "pH = 14"], indiceCorreto: 1 },
       ],
     },
     Física: {
@@ -287,8 +287,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       niveis: [ "Nível 1: Velocidade Média", "Nível 2: Aceleração", "Nível 3: Força Resultante", "Nível 4: 1ª Lei de Newton", "Nível 5: 2ª Lei de Newton", "Nível 6: 3ª Lei de Newton", "Nível 7: Energia Cinética", "Nível 8: Energia Potencial", "Nível 9: Calorimetria", "Nível 10: Óptica", "Nível 11: Ondulatória", "Nível 12: Lei de Ohm" ],
       questoes: [
-        { tituloBanner: "Física — Questão 1", possuiAngulo36: false, enunciado: "Um móvel percorre 100 metros em 10 segundos. Qual é a sua velocidade média?", alternativas: ["5 m/s", "10 m/s", "20 m/s", "100 m/s"], indiceCorreto: 1 },
-        { tituloBanner: "Física — Questão 2", possuiAngulo36: false, enunciado: "Segundo a 2ª Lei de Newton (F = m · a), qual a força resultante em um corpo de 4 kg com aceleração de 3 m/s²?", alternativas: ["7 N", "12 N", "1,3 N", "24 N"], indiceCorreto: 1 },
+        { tituloDestaque: "Física — Questão 1", possuiAngulo36: false, enunciado: "Um móvel percorre 100 metros em 10 segundos. Qual é a sua velocidade média?", alternativas: ["5 m/s", "10 m/s", "20 m/s", "100 m/s"], indiceCorreto: 1 },
+        { tituloDestaque: "Física — Questão 2", possuiAngulo36: false, enunciado: "Segundo a 2ª Lei de Newton (F = m · a), qual a força resultante em um corpo de 4 kg com aceleração de 3 m/s²?", alternativas: ["7 N", "12 N", "1,3 N", "24 N"], indiceCorreto: 1 },
       ],
     },
     Inglês: {
@@ -301,8 +301,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       niveis: [ "Nível 1: Verbo To Be", "Nível 2: Presente Simples", "Nível 3: Vocabulário", "Nível 4: Pronomes", "Nível 5: Presente Contínuo", "Nível 6: Passado Simples", "Nível 7: Verbos Irregulares", "Nível 8: Futuro com Will", "Nível 9: Verbos Modais", "Nível 10: Preposições", "Nível 11: Comparativos", "Nível 12: Interpretação" ],
       questoes: [
-        { tituloBanner: "Inglês — Questão 1", possuiAngulo36: false, enunciado: "Complete a frase corretamente: 'She ___ a dedicated student at In Aula.'", alternativas: ["am", "are", "is", "be"], indiceCorreto: 2 },
-        { tituloBanner: "Inglês — Questão 2", possuiAngulo36: false, enunciado: "Qual é o passado simples do verbo irregular 'go' (ir)?", alternativas: ["goed", "went", "gone", "going"], indiceCorreto: 1 },
+        { tituloDestaque: "Inglês — Questão 1", possuiAngulo36: false, enunciado: "Complete a frase corretamente: 'She ___ a dedicated student at In Aula.'", alternativas: ["am", "are", "is", "be"], indiceCorreto: 2 },
+        { tituloDestaque: "Inglês — Questão 2", possuiAngulo36: false, enunciado: "Qual é o passado simples do verbo irregular 'go' (ir)?", alternativas: ["goed", "went", "gone", "going"], indiceCorreto: 1 },
       ],
     },
     História: {
@@ -315,8 +315,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       niveis: [ "Nível 1: Antiguidade", "Nível 2: Grécia Antiga", "Nível 3: Império Romano", "Nível 4: Idade Média", "Nível 5: Renascimento", "Nível 6: Grandes Navegações", "Nível 7: Brasil Colônia", "Nível 8: Independência", "Nível 9: Brasil Império", "Nível 10: Brasil República", "Nível 11: Era Vargas", "Nível 12: Redemocratização" ],
       questoes: [
-        { tituloBanner: "História — Questão 1", possuiAngulo36: false, enunciado: "Em que ano ocorreu a Proclamação da República no Brasil?", alternativas: ["1822", "1888", "1889", "1930"], indiceCorreto: 2 },
-        { tituloBanner: "História — Questão 2", possuiAngulo36: false, enunciado: "Qual civilização antiga ficou conhecida pelo desenvolvimento da democracia em Atenas?", alternativas: ["Egípcia", "Grega", "Fenícia", "Persa"], indiceCorreto: 1 },
+        { tituloDestaque: "História — Questão 1", possuiAngulo36: false, enunciado: "Em que ano ocorreu a Proclamação da República no Brasil?", alternativas: ["1822", "1888", "1889", "1930"], indiceCorreto: 2 },
+        { tituloDestaque: "História — Questão 2", possuiAngulo36: false, enunciado: "Qual civilização antiga ficou conhecida pelo desenvolvimento da democracia em Atenas?", alternativas: ["Egípcia", "Grega", "Fenícia", "Persa"], indiceCorreto: 1 },
       ],
     },
     Geografia: {
@@ -329,8 +329,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       niveis: [ "Nível 1: Cartografia", "Nível 2: Fusos Horários", "Nível 3: Relevo Brasileiro", "Nível 4: Clima e Vegetação", "Nível 5: Hidrografia", "Nível 6: Biomas do Brasil", "Nível 7: Urbanização", "Nível 8: Demografia", "Nível 9: Industrialização", "Nível 10: Agropecuária", "Nível 11: Fontes de Energia", "Nível 12: Geopolítica Mundial" ],
       questoes: [
-        { tituloBanner: "Geografia — Questão 1", possuiAngulo36: false, enunciado: "Qual é o maior bioma brasileiro em extensão territorial?", alternativas: ["Cerrado", "Mata Atlântica", "Amazônia", "Caatinga"], indiceCorreto: 2 },
-        { tituloBanner: "Geografia — Questão 2", possuiAngulo36: false, enunciado: "Como se chama a linha imaginária que divide a Terra nos hemisférios Norte e Sul?", alternativas: ["Meridiano de Greenwich", "Linha do Equador", "Trópico de Capricórnio", "Trópico de Câncer"], indiceCorreto: 1 },
+        { tituloDestaque: "Geografia — Questão 1", possuiAngulo36: false, enunciado: "Qual é o maior bioma brasileiro em extensão territorial?", alternativas: ["Cerrado", "Mata Atlântica", "Amazônia", "Caatinga"], indiceCorreto: 2 },
+        { tituloDestaque: "Geografia — Questão 2", possuiAngulo36: false, enunciado: "Como se chama a linha imaginária que divide a Terra nos hemisférios Norte e Sul?", alternativas: ["Meridiano de Greenwich", "Linha do Equador", "Trópico de Capricórnio", "Trópico de Câncer"], indiceCorreto: 1 },
       ],
     },
     Artes: {
@@ -343,8 +343,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       niveis: [ "Nível 1: Arte Rupestre", "Nível 2: Arte Clássica", "Nível 3: Renascimento", "Nível 4: Barroco no Brasil", "Nível 5: Impressionismo", "Nível 6: Expressionismo", "Nível 7: Cubismo", "Nível 8: Semana de 1922", "Nível 9: Teoria das Cores", "Nível 10: Teatro e Dança", "Nível 11: Música Brasileira", "Nível 12: Fotografia e Cinema" ],
       questoes: [
-        { tituloBanner: "Artes — Questão 1", possuiAngulo36: false, enunciado: "Quais são as três cores primárias no sistema pigmento tradicional?", alternativas: ["Verde, Roxo e Laranja", "Vermelho, Amarelo e Azul", "Branco, Preto e Cinza", "Azul, Verde e Amarelo"], indiceCorreto: 1 },
-        { tituloBanner: "Artes — Questão 2", possuiAngulo36: false, enunciado: "Em que cidade brasileira ocorreu a histórica Semana de Arte Moderna de 1922?", alternativas: ["Rio de Janeiro", "Salvador", "São Paulo", "Belo Horizonte"], indiceCorreto: 2 },
+        { tituloDestaque: "Artes — Questão 1", possuiAngulo36: false, enunciado: "Quais são as três cores primárias no sistema pigmento tradicional?", alternativas: ["Verde, Roxo e Laranja", "Vermelho, Amarelo e Azul", "Branco, Preto e Cinza", "Azul, Verde e Amarelo"], indiceCorreto: 1 },
+        { tituloDestaque: "Artes — Questão 2", possuiAngulo36: false, enunciado: "Em que cidade brasileira ocorreu a histórica Semana de Arte Moderna de 1922?", alternativas: ["Rio de Janeiro", "Salvador", "São Paulo", "Belo Horizonte"], indiceCorreto: 2 },
       ],
     },
     Filosofia: {
@@ -357,8 +357,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       niveis: [ "Nível 1: Mito e Razão", "Nível 2: Pré-Socráticos", "Nível 3: Sócrates", "Nível 4: Platão", "Nível 5: Aristóteles", "Nível 6: Filosofia Medieval", "Nível 7: Racionalismo", "Nível 8: Empirismo", "Nível 9: Iluminismo", "Nível 10: Ética de Kant", "Nível 11: Existencialismo", "Nível 12: Lógica e Ciência" ],
       questoes: [
-        { tituloBanner: "Filosofia — Questão 1", possuiAngulo36: false, enunciado: "Qual filósofo grego é autor da célebre frase 'Só sei que nada sei'?", alternativas: ["Aristóteles", "Sócrates", "Tales de Mileto", "Epicuro"], indiceCorreto: 1 },
-        { tituloBanner: "Filosofia — Questão 2", possuiAngulo36: false, enunciado: "Quem formulou a famosa Alegoria da Caverna na obra 'A República'?", alternativas: ["Platão", "Descartes", "Kant", "Nietzsche"], indiceCorreto: 0 },
+        { tituloDestaque: "Filosofia — Questão 1", possuiAngulo36: false, enunciado: "Qual filósofo grego é autor da célebre frase 'Só sei que nada sei'?", alternativas: ["Aristóteles", "Sócrates", "Tales de Mileto", "Epicuro"], indiceCorreto: 1 },
+        { tituloDestaque: "Filosofia — Questão 2", possuiAngulo36: false, enunciado: "Quem formulou a famosa Alegoria da Caverna na obra 'A República'?", alternativas: ["Platão", "Descartes", "Kant", "Nietzsche"], indiceCorreto: 0 },
       ],
     },
     Sociologia: {
@@ -371,8 +371,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       niveis: [ "Nível 1: Surgimento da Sociologia", "Nível 2: Émile Durkheim", "Nível 3: Fato Social", "Nível 4: Max Weber", "Nível 5: Ação Social", "Nível 6: Karl Marx", "Nível 7: Cultura e Ideologia", "Nível 8: Estratificação Social", "Nível 9: Cidadania", "Nível 10: Movimentos Sociais", "Nível 11: Sociologia no Brasil", "Nível 12: Globalização" ],
       questoes: [
-        { tituloBanner: "Sociologia — Questão 1", possuiAngulo36: false, enunciado: "Qual sociólogo francês definiu o conceito de 'Fato Social' como objeto da Sociologia?", alternativas: ["Max Weber", "Émile Durkheim", "Auguste Comte", "Zygmunt Bauman"], indiceCorreto: 1 },
-        { tituloBanner: "Sociologia — Questão 2", possuiAngulo36: false, enunciado: "Para Max Weber, o objeto central de estudo da Sociologia compreensiva é:", alternativas: ["A Ação Social", "O Estado Absoluto", "A Biologia Humana", "O Clima"], indiceCorreto: 0 },
+        { tituloDestaque: "Sociologia — Questão 1", possuiAngulo36: false, enunciado: "Qual sociólogo francês definiu o conceito de 'Fato Social' como objeto da Sociologia?", alternativas: ["Max Weber", "Émile Durkheim", "Auguste Comte", "Zygmunt Bauman"], indiceCorreto: 1 },
+        { tituloDestaque: "Sociologia — Questão 2", possuiAngulo36: false, enunciado: "Para Max Weber, o objeto central de estudo da Sociologia compreensiva é:", alternativas: ["A Ação Social", "O Estado Absoluto", "A Biologia Humana", "O Clima"], indiceCorreto: 0 },
       ],
     },
     "Educação Física": {
@@ -385,8 +385,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       niveis: [ "Nível 1: Aquecimento e Alongamento", "Nível 2: Futsal", "Nível 3: Voleibol", "Nível 4: Basquetebol", "Nível 5: Handebol", "Nível 6: Atletismo", "Nível 7: Ginástica", "Nível 8: Resistência Aeróbica", "Nível 9: Força e Flexibilidade", "Nível 10: Esportes Olímpicos", "Nível 11: Dança e Ritmo", "Nível 12: Saúde e Nutrição" ],
       questoes: [
-        { tituloBanner: "Educação Física — Questão 1", possuiAngulo36: false, enunciado: "Quantos jogadores titulares compõem uma equipe de Voleibol em quadra?", alternativas: ["5 jogadores", "6 jogadores", "7 jogadores", "11 jogadores"], indiceCorreto: 1 },
-        { tituloBanner: "Educação Física — Questão 2", possuiAngulo36: false, enunciado: "Qual capacidade física está diretamente relacionada à amplitude de movimento das articulações?", alternativas: ["Velocidade", "Flexibilidade", "Equilíbrio", "Agilidade"], indiceCorreto: 1 },
+        { tituloDestaque: "Educação Física — Questão 1", possuiAngulo36: false, enunciado: "Quantos jogadores titulares compõem uma equipe de Voleibol em quadra?", alternativas: ["5 jogadores", "6 jogadores", "7 jogadores", "11 jogadores"], indiceCorreto: 1 },
+        { tituloDestaque: "Educação Física — Questão 2", possuiAngulo36: false, enunciado: "Qual capacidade física está diretamente relacionada à amplitude de movimento das articulações?", alternativas: ["Velocidade", "Flexibilidade", "Equilíbrio", "Agilidade"], indiceCorreto: 1 },
       ],
     },
   };
@@ -404,8 +404,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (pilulaProgressoMateriaAtiva) { pilulaProgressoMateriaAtiva.textContent = dadosMateria.contador; }
     if (tituloMateriaSelecionada) { tituloMateriaSelecionada.textContent = chaveMateriaAtual; }
-    if (cartaoBannerMateriaAtiva) {
-      cartaoBannerMateriaAtiva.className = `cabecalho-banner-materia ${dadosMateria.classeFundo}`;
+    if (cartaoDestaqueMateriaAtiva) {
+      cartaoDestaqueMateriaAtiva.className = `cabecalho-destaque-materia ${dadosMateria.classeFundo}`;
     }
     if (blocosIconesMateriaAtiva) { blocosIconesMateriaAtiva.innerHTML = dadosMateria.htmlBlocos; }
     if (listaTrilhaAprendizagem) {
@@ -453,8 +453,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const tituloCurto = rotuloNivel.includes(":")
       ? rotuloNivel.split(":")[1].trim()
-      : questaoAtual.tituloBanner;
-    if (tituloBannerDesafio) { tituloBannerDesafio.textContent = indiceQuestaoAtual === 0 ? tituloCurto : questaoAtual.tituloBanner; }
+      : questaoAtual.tituloDestaque;
+    if (tituloDestaqueDesafio) { tituloDestaqueDesafio.textContent = indiceQuestaoAtual === 0 ? tituloCurto : questaoAtual.tituloDestaque; }
     if (caixaDiagramaAngulo) {
       if (questaoAtual.possuiAngulo36) {
         caixaDiagramaAngulo.style.display = "flex";
@@ -553,12 +553,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   const registrosClassificacao = [
-    { posicao: "04", nome: "Jéssica Andrade", pontos: 992, avatar: "assets/avatar-rank4.png", subiu: true }, { posicao: "05", nome: "Sofia Andrade", pontos: 777, avatar: "assets/avatar-rank5.png", subiu: false }, { posicao: "06", nome: "Heitor Castro", pontos: 448, avatar: "assets/avatar-rank6.png", subiu: true }, { posicao: "07", nome: "Lucas Martins", pontos: 580, avatar: "assets/avatar-rank7.png", subiu: true }, { posicao: "08", nome: "Otávio Silva", pontos: 580, avatar: "assets/avatar-rank8.png", subiu: false }, { posicao: "09", nome: "Rebeca Andrade", pontos: 584, avatar: "assets/avatar-rank5.png", subiu: false }, { posicao: "10", nome: "João Castro", pontos: 448, avatar: "assets/avatar-rank6.png", subiu: true }, { posicao: "11", nome: "William Martins", pontos: 580, avatar: "assets/avatar-rank7.png", subiu: true }, { posicao: "12", nome: "Guilherme Silva", pontos: 580, avatar: "assets/avatar-rank8.png", subiu: false }, { posicao: "13", nome: "Samanta Atilho", pontos: 584, avatar: "assets/avatar-rank4.png", subiu: false }, { posicao: "14", nome: "Henrique Castro", pontos: 448, avatar: "assets/avatar-rank6.png", subiu: true }, { posicao: "15", nome: "Enzo Martins", pontos: 446, avatar: "assets/avatar-rank7.png", subiu: true }, { posicao: "16", nome: "Luiz Silva", pontos: 446, avatar: "assets/avatar-rank8.png", subiu: false }, { posicao: "17", nome: "Sâmila Lisboa", pontos: 445, avatar: "assets/avatar-rank4.png", subiu: false }, ];
+    { posicao: "04", nome: "Jéssica Andrade", pontos: 992, foto: "assets/avatar-rank4.png", subiu: true }, { posicao: "05", nome: "Sofia Andrade", pontos: 777, foto: "assets/avatar-rank5.png", subiu: false }, { posicao: "06", nome: "Heitor Castro", pontos: 448, foto: "assets/avatar-rank6.png", subiu: true }, { posicao: "07", nome: "Lucas Martins", pontos: 580, foto: "assets/avatar-rank7.png", subiu: true }, { posicao: "08", nome: "Otávio Silva", pontos: 580, foto: "assets/avatar-rank8.png", subiu: false }, { posicao: "09", nome: "Rebeca Andrade", pontos: 584, foto: "assets/avatar-rank5.png", subiu: false }, { posicao: "10", nome: "João Castro", pontos: 448, foto: "assets/avatar-rank6.png", subiu: true }, { posicao: "11", nome: "William Martins", pontos: 580, foto: "assets/avatar-rank7.png", subiu: true }, { posicao: "12", nome: "Guilherme Silva", pontos: 580, foto: "assets/avatar-rank8.png", subiu: false }, { posicao: "13", nome: "Samanta Atilho", pontos: 584, foto: "assets/avatar-rank4.png", subiu: false }, { posicao: "14", nome: "Henrique Castro", pontos: 448, foto: "assets/avatar-rank6.png", subiu: true }, { posicao: "15", nome: "Enzo Martins", pontos: 446, foto: "assets/avatar-rank7.png", subiu: true }, { posicao: "16", nome: "Luiz Silva", pontos: 446, foto: "assets/avatar-rank8.png", subiu: false }, { posicao: "17", nome: "Sâmila Lisboa", pontos: 445, foto: "assets/avatar-rank4.png", subiu: false }, ];
   const listaClassificacaoGeral = document.getElementById("listaClassificacaoGeral");
   const renderizarClassificacao = (multiplicador = 1) => {
     if (!listaClassificacaoGeral) return;
     listaClassificacaoGeral.innerHTML = registrosClassificacao.map(
-        (registro) => `<div class="linha-classificacao"> <div class="linha-classificacao__esquerda"> <span class="posicao-classificacao">${registro.posicao}</span> <img src="${registro.avatar}" alt="${registro.nome}" class="avatar-classificacao" /> <div> <div class="nome-classificacao">${registro.nome}</div> <div class="pontos-classificacao">${Math.round(registro.pontos * multiplicador)} pontos</div> </div> </div> <span class="selo-tendencia ${registro.subiu ? "tendencia--alta" : "tendencia--baixa"}">${registro.subiu ? "▲" : "▼"}</span> </div>`
+        (registro) => `<div class="linha-classificacao"> <div class="linha-classificacao__esquerda"> <span class="posicao-classificacao">${registro.posicao}</span> <img src="${registro.foto}" alt="${registro.nome}" class="foto-classificacao" /> <div> <div class="nome-classificacao">${registro.nome}</div> <div class="pontos-classificacao">${Math.round(registro.pontos * multiplicador)} pontos</div> </div> </div> <span class="selo-tendencia ${registro.subiu ? "tendencia--alta" : "tendencia--baixa"}">${registro.subiu ? "▲" : "▼"}</span> </div>`
       ).join("");
   };
   renderizarClassificacao(1);
@@ -573,13 +573,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   const listaConversas = [
     {
-      id: "bruno", nomeEstudante: "Bruno Delorence", topico: "Atividade de Operações", horario: "2 min", avatar: "assets/avatar-bruno.png", naoLida: false, mensagens: [
+      id: "bruno", nomeEstudante: "Bruno Delorence", topico: "Atividade de Operações", horario: "2 min", foto: "assets/avatar-bruno.png", naoLida: false, mensagens: [
         { remetente: "estudante", texto: "Professora, como faço a soma de dois números?" }, { remetente: "professora", texto: "Basta pegar a quantidade e contar mais a outra!!" }, { remetente: "estudante", texto: "Verdade! Havia esquecido! Obrigado!!! :D" }, { remetente: "professora", texto: "Por nada, qualquer outra dúvida é só chamar." }, { remetente: "estudante", texto: "Tá bom professora, você é a melhor!" }, { remetente: "professora", texto: "Muito obrigada! Você também é um ótimo aluno." }, ], }, {
-      id: "davi", nomeEstudante: "Davi Almeida", topico: "Atividade de Operações", horario: "5 min", avatar: "assets/avatar-david.png", naoLida: true, mensagens: [ { remetente: "estudante", texto: "Professora Tati, fiquei com dúvida na soma dos ângulos de 36°." }, ], }, {
-      id: "teresa", nomeEstudante: "Teresa Souza", topico: "Atividade de Operações", horario: "8 min", avatar: "assets/avatar-theresa.png", naoLida: true, mensagens: [ { remetente: "estudante", texto: "Posso entregar a lista de revisão até amanhã?" }, ], }, {
-      id: "marcos", nomeEstudante: "Marcos Oliveira", topico: "Atividade de Operações", horario: "30 min", avatar: "assets/avatar-marvin.png", naoLida: true, mensagens: [ { remetente: "estudante", texto: "Não entendi o exercício 4 da trilha de Matemática." }, ], }, {
-      id: "diego", nomeEstudante: "Diego Lima", topico: "Atividade de Equações", horario: "58 min", avatar: "assets/avatar-devon.png", naoLida: false, mensagens: [ { remetente: "estudante", texto: "Obrigado pela explicação de Equações de 1º grau!" }, { remetente: "professora", texto: "Excelente evolução, Diego! Continue praticando." }, ], }, {
-      id: "helena", nomeEstudante: "Helena Pena", topico: "Atividade de Operações", horario: "17 h", avatar: "assets/avatar-eleanor.png", naoLida: false, mensagens: [ { remetente: "estudante", texto: "Concluí todos os níveis da semana!" }, { remetente: "professora", texto: "Parabéns, Helena!" }, ], }, ];
+      id: "davi", nomeEstudante: "Davi Almeida", topico: "Atividade de Operações", horario: "5 min", foto: "assets/avatar-david.png", naoLida: true, mensagens: [ { remetente: "estudante", texto: "Professora Tati, fiquei com dúvida na soma dos ângulos de 36°." }, ], }, {
+      id: "teresa", nomeEstudante: "Teresa Souza", topico: "Atividade de Operações", horario: "8 min", foto: "assets/avatar-theresa.png", naoLida: true, mensagens: [ { remetente: "estudante", texto: "Posso entregar a lista de revisão até amanhã?" }, ], }, {
+      id: "marcos", nomeEstudante: "Marcos Oliveira", topico: "Atividade de Operações", horario: "30 min", foto: "assets/avatar-marvin.png", naoLida: true, mensagens: [ { remetente: "estudante", texto: "Não entendi o exercício 4 da trilha de Matemática." }, ], }, {
+      id: "diego", nomeEstudante: "Diego Lima", topico: "Atividade de Equações", horario: "58 min", foto: "assets/avatar-devon.png", naoLida: false, mensagens: [ { remetente: "estudante", texto: "Obrigado pela explicação de Equações de 1º grau!" }, { remetente: "professora", texto: "Excelente evolução, Diego! Continue praticando." }, ], }, {
+      id: "helena", nomeEstudante: "Helena Pena", topico: "Atividade de Operações", horario: "17 h", foto: "assets/avatar-eleanor.png", naoLida: false, mensagens: [ { remetente: "estudante", texto: "Concluí todos os níveis da semana!" }, { remetente: "professora", texto: "Parabéns, Helena!" }, ], }, ];
   let idConversaAtiva = "bruno";
   const mensagensConversaEstudante = document.getElementById("mensagensConversaEstudante");
   const listaEntradaProfessora = document.getElementById("listaEntradaProfessora");
@@ -608,7 +608,7 @@ document.addEventListener("DOMContentLoaded", () => {
       !apenasNaoRespondidas ? true : conversa.naoLida || conversa.id === idConversaAtiva
     );
     listaEntradaProfessora.innerHTML = conversasVisiveis.map(
-        (conversa) => `<div class="item-entrada ${conversa.naoLida ? "nao-lida" : ""} ${conversa.id === idConversaAtiva ? "ativo" : ""}" data-id-conversa="${conversa.id}"> ${conversa.naoLida ? '<span class="ponto-entrada"></span>' : ""} <img src="${conversa.avatar}" alt="${conversa.nomeEstudante}" class="avatar-entrada" /> <div class="informacoes-entrada"> <strong>${conversa.nomeEstudante}</strong> <span>${conversa.topico}</span> </div> <span class="horario-entrada">${conversa.horario}</span> </div>`
+        (conversa) => `<div class="item-entrada ${conversa.naoLida ? "nao-lida" : ""} ${conversa.id === idConversaAtiva ? "ativo" : ""}" data-id-conversa="${conversa.id}"> ${conversa.naoLida ? '<span class="ponto-entrada"></span>' : ""} <img src="${conversa.foto}" alt="${conversa.nomeEstudante}" class="foto-entrada" /> <div class="informacoes-entrada"> <strong>${conversa.nomeEstudante}</strong> <span>${conversa.topico}</span> </div> <span class="horario-entrada">${conversa.horario}</span> </div>`
       ).join("");
     listaEntradaProfessora.querySelectorAll(".item-entrada").forEach((item) => {
       item.addEventListener("click", () => {
@@ -622,10 +622,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     const conversaAtiva = listaConversas.find((conversa) => conversa.id === idConversaAtiva) || listaConversas[0];
     if (conversaAtiva) {
-      const avatarAtivo = document.getElementById("avatarEstudanteConversaAtiva");
+      const avatarAtivo = document.getElementById("fotoEstudanteConversaAtiva");
       const nomeAtivo = document.getElementById("nomeEstudanteConversaAtiva");
       const topicoAtivo = document.getElementById("topicoEstudanteConversaAtiva");
-      if (avatarAtivo) avatarAtivo.src = conversaAtiva.avatar;
+      if (avatarAtivo) avatarAtivo.src = conversaAtiva.foto;
       if (nomeAtivo) nomeAtivo.textContent = conversaAtiva.nomeEstudante;
       if (topicoAtivo) topicoAtivo.textContent = `${conversaAtiva.topico} • Turma 3C`;
       mensagensConversaProfessora.innerHTML = conversaAtiva.mensagens.map(
@@ -679,12 +679,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   const estudantesTurma3C = [
-    { numero: "#1", nome: "Agnaldo Abreu", avatar: "assets/avatar-wilson.png", presente: true }, { numero: "#2", nome: "Bruno Delorence", avatar: "assets/avatar-bruno.png", presente: true }, { numero: "#3", nome: "Carlos Eduardo", avatar: "assets/avatar-david.png", presente: true }, { numero: "#4", nome: "Darley Souza", avatar: "assets/avatar-marvin.png", presente: false }, { numero: "#5", nome: "Edmundo Brito", avatar: "assets/avatar-devon.png", presente: true }, { numero: "#6", nome: "Fernando Prado", avatar: "assets/avatar-wilson.png", presente: true }, { numero: "#7", nome: "Gabriel Rocha", avatar: "assets/avatar-david.png", presente: true }, { numero: "#8", nome: "Henrique Alves", avatar: "assets/avatar-marvin.png", presente: true }, { numero: "#9", nome: "Irineu Neves", avatar: "assets/avatar-devon.png", presente: true }, { numero: "#10", nome: "Josué Barbosa", avatar: "assets/avatar-bruno.png", presente: true }, ];
+    { numero: "#1", nome: "Agnaldo Abreu", foto: "assets/avatar-wilson.png", presente: true }, { numero: "#2", nome: "Bruno Delorence", foto: "assets/avatar-bruno.png", presente: true }, { numero: "#3", nome: "Carlos Eduardo", foto: "assets/avatar-david.png", presente: true }, { numero: "#4", nome: "Darley Souza", foto: "assets/avatar-marvin.png", presente: false }, { numero: "#5", nome: "Edmundo Brito", foto: "assets/avatar-devon.png", presente: true }, { numero: "#6", nome: "Fernando Prado", foto: "assets/avatar-wilson.png", presente: true }, { numero: "#7", nome: "Gabriel Rocha", foto: "assets/avatar-david.png", presente: true }, { numero: "#8", nome: "Henrique Alves", foto: "assets/avatar-marvin.png", presente: true }, { numero: "#9", nome: "Irineu Neves", foto: "assets/avatar-devon.png", presente: true }, { numero: "#10", nome: "Josué Barbosa", foto: "assets/avatar-bruno.png", presente: true }, ];
   const listaPresencaChamada = document.getElementById("listaPresencaChamada");
   const renderizarChamada = () => {
     if (!listaPresencaChamada) return;
     listaPresencaChamada.innerHTML = estudantesTurma3C.map(
-        (estudante, indice) => `<label class="cartao-linha-estudante"> <div class="cartao-linha-estudante__esquerda"> <img src="${estudante.avatar}" alt="${estudante.nome}" class="cartao-linha-estudante__avatar" /> <span class="cartao-linha-estudante__numero">${estudante.numero}</span> <span class="cartao-linha-estudante__nome">${estudante.nome}</span> </div> <input type="checkbox" class="marcador-circular-presenca" data-indice="${indice}" ${estudante.presente ? "checked" : ""} /> </label>`
+        (estudante, indice) => `<label class="cartao-linha-estudante"> <div class="cartao-linha-estudante__esquerda"> <img src="${estudante.foto}" alt="${estudante.nome}" class="cartao-linha-estudante__foto" /> <span class="cartao-linha-estudante__numero">${estudante.numero}</span> <span class="cartao-linha-estudante__nome">${estudante.nome}</span> </div> <input type="checkbox" class="marcador-circular-presenca" data-indice="${indice}" ${estudante.presente ? "checked" : ""} /> </label>`
       ).join("");
   };
   renderizarChamada();
@@ -716,7 +716,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (seletorEstudanteNotas) {
     seletorEstudanteNotas.innerHTML = estudantesTurma3C
       .slice(0, 8).map(
-        (estudante) => `<div class="cartao-linha-estudante" style="cursor:pointer" data-nota-estudante="${estudante.nome}"> <div class="cartao-linha-estudante__esquerda"> <img src="${estudante.avatar}" alt="${estudante.nome}" class="cartao-linha-estudante__avatar" /> <span class="cartao-linha-estudante__numero">${estudante.numero}</span> <span class="cartao-linha-estudante__nome">${estudante.nome}</span> </div> <span>→</span> </div>`
+        (estudante) => `<div class="cartao-linha-estudante" style="cursor:pointer" data-nota-estudante="${estudante.nome}"> <div class="cartao-linha-estudante__esquerda"> <img src="${estudante.foto}" alt="${estudante.nome}" class="cartao-linha-estudante__foto" /> <span class="cartao-linha-estudante__numero">${estudante.numero}</span> <span class="cartao-linha-estudante__nome">${estudante.nome}</span> </div> <span>→</span> </div>`
       ).join("");
     seletorEstudanteNotas.querySelectorAll("[data-nota-estudante]").forEach((linha) => {
       linha.addEventListener("click", () => {
