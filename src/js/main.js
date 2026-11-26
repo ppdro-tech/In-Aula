@@ -28,52 +28,60 @@ document.addEventListener("DOMContentLoaded", () => {
   const caixaPontosTopo = document.getElementById("caixaPontosTopo");
   const tituloTelaAtual = document.getElementById("tituloTelaAtual");
   const subtituloTelaAtual = document.getElementById("subtituloTelaAtual");
-  let setorAutenticado = localStorage.getItem("inaula_setor_autenticado") || null;
-  const perfilPaginaAtual = document.body.getAttribute("data-pagina-perfil");
-  if (perfilPaginaAtual === "professora" && setorAutenticado !== "instituicao") {
-    window.location.replace("index.html");
-    return;
-  }
-  if (perfilPaginaAtual === "estudante" && setorAutenticado === "instituicao") {
-    window.location.replace("professora-inicio.html");
-    return;
-  }
-  if (perfilPaginaAtual === "estudante" && setorAutenticado === "responsaveis") {
-    if (rotuloSetorEstudanteAtivo) rotuloSetorEstudanteAtivo.textContent = "Setor: Responsáveis";
-    if (cargoBarraTopo) cargoBarraTopo.textContent = "Acesso Responsável • Bruno Delorence (3°E)";
-  }
+  let setorAutenticado = null;
   const titulosTelas = {
     "estudante-inicio": ["Painel do Estudante", "Bruno Delorence • Turma 3°E • 1º Lugar"], "estudante-atividades": [ "Atividades e Trilhas Gamificadas", "Complete os níveis e tire dúvidas direto com seu professor", ], "estudante-loja": [ "Loja de Pontos IN AULA", "Troque seus pontos acumulados por materiais e prêmios", ], "estudante-classificacao": [ "Classificação de Engajamento", "Classificação oficial da Turma 3°E", ], "estudante-conversa": [ "Conversa com a Professora Tati", "Canal direto para reforço e dúvidas das atividades", ], "estudante-perfil": [ "Meu Perfil de Estudante", "Dados cadastrais e configurações da conta", ], "professora-inicio": [ "Painel Docente — Profª. Tatiane Soma", "Gestão de turmas, lembretes de evasão e reforço escolar", ], "professora-chamada": [ "Chamada Digital por Turma", "Controle de presença diária e alerta de faltas", ], "professora-notas": [ "Gestão de Notas e Frequência", "Boletim bimestral dos estudantes da Turma 3C", ], "professora-conversa": [ "Central de Dúvidas dos Alunos", "Atendimento virtual para reforço pedagógico", ], };
   const mostrarTela = (identificadorTela) => {
-    if (!identificadorTela) return;
-    if (identificadorTela.startsWith("professora-") && setorAutenticado !== "instituicao") { return; }
-    if (identificadorTela.startsWith("estudante-") && setorAutenticado === "instituicao") { return; }
-    const secaoLocal = document.getElementById(`tela-${identificadorTela}`);
-    if (secaoLocal) {
-      document.querySelectorAll(".tela-visualizacao").forEach((secao) => {
-        const ehAlvo = secao.id === `tela-${identificadorTela}`;
-        secao.hidden = !ehAlvo;
-        secao.style.display = ehAlvo ? "block" : "none";
-        secao.classList.toggle("ativo", ehAlvo);
-      });
-      document.querySelectorAll(".barra-lateral .item-navegacao").forEach((botao) => { botao.classList.toggle("ativo", botao.getAttribute("data-tela") === identificadorTela); });
-      if (titulosTelas[identificadorTela] && tituloTelaAtual && subtituloTelaAtual) { tituloTelaAtual.textContent = titulosTelas[identificadorTela][0]; subtituloTelaAtual.textContent = titulosTelas[identificadorTela][1]; }
+    if (
+      identificadorTela && identificadorTela.startsWith("professora-") && setorAutenticado !== "instituicao"
+    ) { return; }
+    if (
+      identificadorTela && identificadorTela.startsWith("estudante-") && setorAutenticado === "instituicao"
+    ) { return; }
+    document.querySelectorAll(".tela-visualizacao").forEach((secao) => {
+      const ehAlvo = secao.id === `tela-${identificadorTela}`;
+      secao.hidden = !ehAlvo;
+      secao.style.display = ehAlvo ? "block" : "none";
+      secao.classList.toggle("ativo", ehAlvo);
+    });
+    document.querySelectorAll(".barra-lateral .item-navegacao").forEach((botao) => { botao.classList.toggle("ativo", botao.getAttribute("data-tela") === identificadorTela); });
+    if (titulosTelas[identificadorTela] && tituloTelaAtual && subtituloTelaAtual) { tituloTelaAtual.textContent = titulosTelas[identificadorTela][0]; subtituloTelaAtual.textContent = titulosTelas[identificadorTela][1]; }
+  };
+  const definirModoPerfil = (modo) => {
+    const modoEfetivo = modo === "professora" && setorAutenticado === "instituicao" ? "professora" : "estudante";
+    const ehEstudante = modoEfetivo === "estudante";
+    if (seloSetorEstudanteAtivo) {
+      seloSetorEstudanteAtivo.hidden = !ehEstudante;
+      seloSetorEstudanteAtivo.style.display = ehEstudante ? "flex" : "none";
+      if (rotuloSetorEstudanteAtivo) { rotuloSetorEstudanteAtivo.textContent = setorAutenticado === "responsaveis" ? "Setor: Responsáveis" : "Setor: Estudante"; }
+    }
+    if (seloSetorProfessoraAtivo) { seloSetorProfessoraAtivo.hidden = ehEstudante; seloSetorProfessoraAtivo.style.display = ehEstudante ? "none" : "flex"; }
+    if (navegacaoEstudante) { navegacaoEstudante.hidden = !ehEstudante; navegacaoEstudante.style.display = ehEstudante ? "flex" : "none"; }
+    if (navegacaoProfessora) { navegacaoProfessora.hidden = ehEstudante; navegacaoProfessora.style.display = ehEstudante ? "none" : "flex"; }
+    if (caixaPontosTopo) { caixaPontosTopo.style.display = ehEstudante ? "flex" : "none"; }
+    if (ehEstudante) {
+      if (avatarBarraTopo) avatarBarraTopo.src = "assets/avatar-bruno.png";
+      if (nomeBarraTopo) nomeBarraTopo.textContent = "Bruno Delorence";
+      if (cargoBarraTopo) { cargoBarraTopo.textContent = setorAutenticado === "responsaveis" ? "Acesso Responsável • Bruno Delorence (3°E)" : "Estudante • 1º Lugar (3°E)"; }
+      mostrarTela("estudante-inicio");
     } else {
-      window.location.href = `${identificadorTela}.html`;
+      if (avatarBarraTopo) avatarBarraTopo.src = "assets/avatar-tatiane.png";
+      if (nomeBarraTopo) nomeBarraTopo.textContent = "Profª. Tatiane Soma";
+      if (cargoBarraTopo) cargoBarraTopo.textContent = "Docente • Matemática e Algoritmos";
+      mostrarTela("professora-inicio");
     }
   };
   const entrarPainel = (modo) => {
-    localStorage.setItem("inaula_setor_autenticado", setorAutenticado || (modo === "professora" ? "instituicao" : "estudante"));
-    if (modo === "professora" && setorAutenticado === "instituicao") {
-      window.location.href = "professora-inicio.html";
-    } else {
-      window.location.href = "estudante-inicio.html";
-    }
+    if (sobreposicaoTelaCheiaLogin) { sobreposicaoTelaCheiaLogin.hidden = true; sobreposicaoTelaCheiaLogin.style.display = "none"; }
+    if (aplicacaoPrincipalComputador) { aplicacaoPrincipalComputador.hidden = false; aplicacaoPrincipalComputador.style.display = "grid"; }
+    definirModoPerfil(modo);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const voltarTelaLogin = () => {
     setorAutenticado = null;
-    localStorage.removeItem("inaula_setor_autenticado");
-    window.location.href = "index.html";
+    if (aplicacaoPrincipalComputador) { aplicacaoPrincipalComputador.hidden = true; aplicacaoPrincipalComputador.style.display = "none"; }
+    if (sobreposicaoTelaCheiaLogin) { sobreposicaoTelaCheiaLogin.hidden = false; sobreposicaoTelaCheiaLogin.style.display = "flex"; }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const etapaCatalogoMaterias = document.getElementById("etapaCatalogoMaterias");
   const etapaTrilhaMateria = document.getElementById("etapaTrilhaMateria");
@@ -183,21 +191,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setTimeout(() => { if (mensagemRetornoRecuperacao) mensagemRetornoRecuperacao.textContent = ""; alternarAbaAutenticacao("login"); }, 2500);
   });
-  let pontosEstudante = Number(localStorage.getItem("inaula_pontos_estudante") || 2564);
-  let progressoEstudos = Number(localStorage.getItem("inaula_progresso_estudos") || 20);
+  let pontosEstudante = 2564;
+  let progressoEstudos = 20;
   const pontosGlobaisEstudante = document.getElementById("pontosGlobaisEstudante");
   const rotuloProgressoEstudos = document.getElementById("rotuloProgressoEstudos");
   const barraProgressoEstudos = document.getElementById("barraProgressoEstudos");
   const atualizarExibicaoPontos = () => {
-    localStorage.setItem("inaula_pontos_estudante", String(pontosEstudante));
-    localStorage.setItem("inaula_progresso_estudos", String(progressoEstudos));
     if (pontosGlobaisEstudante) { pontosGlobaisEstudante.textContent = String(pontosEstudante); }
-    if (rotuloProgressoEstudos && barraProgressoEstudos) {
-      rotuloProgressoEstudos.textContent = `${progressoEstudos}% de seu progresso!`;
-      barraProgressoEstudos.style.width = `${progressoEstudos}%`;
-    }
   };
-  atualizarExibicaoPontos();
   const campoBuscaAtividade = document.getElementById("campoBuscaAtividade");
   campoBuscaAtividade?.addEventListener("input", () => {
     const termoBusca = campoBuscaAtividade.value.toLowerCase().trim();
@@ -362,21 +363,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("botaoConcluirVoltarNiveis")?.addEventListener("click", () => { definirEtapaAtividade("niveis"); });
   document.getElementById("botaoRevisarDesafio")?.addEventListener("click", () => { abrirDesafioNivel("Nível 1: Soma", 0); });
   document.querySelectorAll("[data-materia], [data-abrir-materia]").forEach((cartao) => {
-    cartao.addEventListener("click", () => {
-      const materiaSelecionada = cartao.getAttribute("data-materia") || cartao.getAttribute("data-abrir-materia") || "Matemática";
-      if (!document.getElementById("etapaTrilhaMateria")) {
-        localStorage.setItem("inaula_materia_pendente", materiaSelecionada);
-        window.location.href = "estudante-atividades.html";
-        return;
-      }
-      abrirTrilhaMateria(materiaSelecionada);
-    });
+    cartao.addEventListener("click", () => { const materiaSelecionada = cartao.getAttribute("data-materia") || cartao.getAttribute("data-abrir-materia") || "Matemática"; abrirTrilhaMateria(materiaSelecionada); });
   });
-  const materiaPendente = localStorage.getItem("inaula_materia_pendente");
-  if (materiaPendente && document.getElementById("etapaTrilhaMateria")) {
-    localStorage.removeItem("inaula_materia_pendente");
-    abrirTrilhaMateria(materiaPendente);
-  }
   const produtosLoja = [
     { nome: "Caderno", pontos: 10, categoria: "objeto", corFundo: "#a4deff", imagem: "assets/shop-caderno.png" }, { nome: "Mochila", pontos: 25, categoria: "objeto", corFundo: "rgba(64,154,186,0.45)", imagem: "assets/shop-mochila.png" }, { nome: "Fones de ouvido", pontos: 50, categoria: "eletronicos", corFundo: "rgba(0,149,255,0.22)", imagem: "assets/shop-fones.png" }, { nome: "Notebook", pontos: 800, categoria: "eletronicos", corFundo: "rgba(183,223,245,0.35)", imagem: "assets/shop-notebook.png" }, { nome: "Tênis esportivo", pontos: 100, categoria: "objeto", corFundo: "rgba(202,247,147,0.35)", imagem: "assets/shop-tenis.png" }, { nome: "Camiseta esportiva", pontos: 150, categoria: "objeto", corFundo: "rgba(187,45,240,0.22)", imagem: "assets/shop-camiseta.png" }, { nome: "Calça moletom", pontos: 120, categoria: "objeto", corFundo: "rgba(239,185,11,0.25)", imagem: "assets/shop-calca.png" }, { nome: "CD Musical", pontos: 500, categoria: "objeto", corFundo: "rgba(216,17,10,0.22)", imagem: "assets/shop-cd.png" }, { nome: "DVD Filme", pontos: 520, categoria: "objeto", corFundo: "rgba(83,52,7,0.22)", imagem: "assets/shop-dvd.png" }, { nome: "Aparelho Blu-ray", pontos: 415, categoria: "eletronicos", corFundo: "rgba(211,176,224,0.35)", imagem: "assets/shop-bluray.png" }, { nome: "Videogame PS3", pontos: 3000, categoria: "eletronicos", corFundo: "rgba(253,229,152,0.35)", imagem: "assets/shop-ps3.png" }, { nome: "Vale-presente", pontos: 80, categoria: "objeto", corFundo: "rgba(24,216,149,0.25)", imagem: "assets/shop-vale.png" }, { nome: "Cesta básica", pontos: 65, categoria: "objeto", corFundo: "rgba(247,165,147,0.3)", imagem: "assets/shop-cesta.png" }, { nome: "Refrigerante", pontos: 40, categoria: "objeto", corFundo: "rgba(205,7,178,0.22)", imagem: "assets/shop-coca.png" }, { nome: "Ovo de Páscoa", pontos: 25, categoria: "objeto", corFundo: "rgba(253,229,152,0.35)", imagem: "assets/shop-ovo.png" }, { nome: "Kit Canetinhas", pontos: 5, categoria: "objeto", corFundo: "rgba(183,223,245,0.35)", imagem: "assets/shop-canetinhas.png" }, ];
   let categoriaAtivaLoja = "todos";
@@ -441,7 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
       renderizarClassificacao(multiplicador);
     });
   });
-  const conversasPadrao = [
+  const listaConversas = [
     {
       id: "bruno", nomeEstudante: "Bruno Delorence", topico: "Atividade de Operações", horario: "2 min", avatar: "assets/avatar-bruno.png", naoLida: true, mensagens: [
         { remetente: "estudante", texto: "Professora, como faço a soma de dois números?" }, { remetente: "professora", texto: "Basta pegar a quantidade e contar mais a outra!!" }, { remetente: "estudante", texto: "Verdade! Havia esquecido! Obrigado!!! :D" }, { remetente: "professora", texto: "Por nada, qualquer outra dúvida é só chamar." }, { remetente: "estudante", texto: "Tá bom professora, você é a melhor!" }, { remetente: "professora", texto: "Muito obrigada! Você também é um ótimo aluno." }, ], }, {
@@ -450,14 +438,6 @@ document.addEventListener("DOMContentLoaded", () => {
       id: "marcos", nomeEstudante: "Marcos Oliveira", topico: "Atividade de Operações", horario: "30 min", avatar: "assets/avatar-marvin.png", naoLida: true, mensagens: [ { remetente: "estudante", texto: "Não entendi o exercício 4 da trilha de Matemática." }, ], }, {
       id: "diego", nomeEstudante: "Diego Lima", topico: "Atividade de Equações", horario: "58 min", avatar: "assets/avatar-devon.png", naoLida: false, mensagens: [ { remetente: "estudante", texto: "Obrigado pela explicação de Equações de 1º grau!" }, { remetente: "professora", texto: "Excelente evolução, Diego! Continue praticando." }, ], }, {
       id: "helena", nomeEstudante: "Helena Pena", topico: "Atividade de Operações", horario: "17 h", avatar: "assets/avatar-eleanor.png", naoLida: false, mensagens: [ { remetente: "estudante", texto: "Concluí todos os níveis da semana!" }, { remetente: "professora", texto: "Parabéns, Helena!" }, ], }, ];
-  let listaConversas = conversasPadrao;
-  try {
-    const salvas = localStorage.getItem("inaula_conversas_chat");
-    if (salvas) listaConversas = JSON.parse(salvas);
-  } catch (_) {}
-  const salvarConversas = () => {
-    localStorage.setItem("inaula_conversas_chat", JSON.stringify(listaConversas));
-  };
   let idConversaAtiva = "bruno";
   const mensagensConversaEstudante = document.getElementById("mensagensConversaEstudante");
   const listaEntradaProfessora = document.getElementById("listaEntradaProfessora");
@@ -514,7 +494,6 @@ document.addEventListener("DOMContentLoaded", () => {
     conversaBruno.naoLida = true;
     conversaBruno.horario = "agora";
     campoMensagem.value = "";
-    salvarConversas();
     renderizarConversaEstudante();
     renderizarConversaProfessora();
   });
@@ -528,7 +507,8 @@ document.addEventListener("DOMContentLoaded", () => {
     conversaBruno.naoLida = true;
     conversaBruno.horario = "agora";
     campoDuvida.value = "";
-    salvarConversas();
+    renderizarConversaEstudante();
+    renderizarConversaProfessora();
     mostrarTela("estudante-conversa");
   });
   document.getElementById("formularioConversaProfessora")?.addEventListener("submit", (evento) => {
@@ -541,7 +521,6 @@ document.addEventListener("DOMContentLoaded", () => {
       conversaAtiva.mensagens.push({ remetente: "professora", texto: textoResposta });
       conversaAtiva.naoLida = false;
       campoResposta.value = "";
-      salvarConversas();
       renderizarConversaProfessora();
       renderizarConversaEstudante();
     }
