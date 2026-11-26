@@ -591,7 +591,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const conversaBruno = listaConversas.find((conversa) => conversa.id === "bruno");
     if (!conversaBruno) return;
     mensagensConversaEstudante.innerHTML = conversaBruno.mensagens.map(
-        (mensagem) => `<div class="balao-conversa ${mensagem.remetente === "estudante" ? "balao-conversa--recebido" : "balao-conversa--enviado"}"> ${mensagem.texto} </div>`
+        (mensagem) => `<div class="balao-conversa ${mensagem.remetente === "estudante" ? "balao-conversa--enviado" : "balao-conversa--recebido"}"> ${mensagem.texto} </div>`
       ).join("");
     mensagensConversaEstudante.scrollTop = mensagensConversaEstudante.scrollHeight;
   };

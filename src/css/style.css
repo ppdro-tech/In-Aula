@@ -258,7 +258,7 @@ button, input, select, textarea { font-family: inherit; }
 .selo-tendencia { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.72rem; color: #ffffff; font-weight: 800; }
 .tendencia--alta { background: #38b6ff; }
 .tendencia--baixa { background: #ef4444; }
-.painel-janela-conversa { flex: 1; display: flex; flex-direction: column; min-height: calc(100vh - 135px); }
+.painel-janela-conversa { flex: 1; display: flex; flex-direction: column; height: calc(100vh - 130px); min-height: 560px; }
 .janela-conversa__cabecalho { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid var(--cor-borda); margin-bottom: 1rem; }
 .janela-conversa__contato { display: flex; align-items: center; gap: 0.85rem; }
 .janela-conversa__avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
@@ -331,9 +331,10 @@ button, input, select, textarea { font-family: inherit; }
 .cartao-linha-estudante__nome { font-family: "Poppins", sans-serif; font-weight: 700; color: var(--azul-figma); font-size: 0.98rem; }
 .marcador-circular-presenca { width: 26px; height: 26px; accent-color: var(--azul-figma); cursor: pointer; }
 .grade-computador-conversa-professora { flex: 1; display: grid; grid-template-columns: 390px 1fr; gap: 1.75rem; align-items: stretch; }
+.grade-computador-conversa-professora > .painel-computador { display: flex; flex-direction: column; height: calc(100vh - 130px); min-height: 560px; }
 .barra-filtro-conversa-professora { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
 .opcao-excluir-respondidas { display: flex; align-items: center; gap: 0.45rem; font-size: 0.85rem; cursor: pointer; }
-.lista-entrada-professora { display: flex; flex-direction: column; gap: 0.65rem; }
+.lista-entrada-professora { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.65rem; }
 .item-entrada { display: flex; align-items: center; gap: 0.85rem; padding: 0.85rem 1rem; border-radius: 12px; background: var(--fundo-superficie-suave); border: 1px solid transparent; cursor: pointer; }
 .item-entrada.nao-lida { background: rgba(1, 51, 103, 0.09); }
 .item-entrada.ativo { border-color: var(--azul-figma); }
